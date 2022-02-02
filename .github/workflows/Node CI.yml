@@ -23,7 +23,7 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
-     run: npm ci
+      run: npm ci
 
     - name: Do Code Analysis
       run: echo "Do code analysis here..."
@@ -35,7 +35,7 @@ jobs:
       #   path: codecoverage
       run: echo "Upload code analysis coverage here..."
 
-     - name: Run Tests
+    - name: Run Tests
       run: npm run test
 
     - name: Upload Test coverage as Artifact
