@@ -1,36 +1,59 @@
-# This is a basic workflow to help you get started with Actions
+name:  CI
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+   paths:
+     - nodeapp/**
+    
+env:
+  NODE_VERSION: '14.x'                                             # set this to the node version to use
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+ 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+       node-version: ${{ env.NODE_VERSION }}
+       cache: 'npm'
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    - name: Install dependencies
+      run: npm ci
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    - name: Do Code Analysis
+      run: echo "Do code analysis here..."
+
+    - name: Upload Code coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: codeanalysis_coverage
+      #   path: codecoverage
+      run: echo "Upload code analysis coverage here..."
+
+    - name: Run Tests
+      run: npm run test
+
+    - name: Upload Test coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: test_coverage
+      #   path: testcoverage
+      run: echo "Upload test coverage here..."
+        
+    - name: Build project
+      if: github.event_name == 'push'
+      run: echo "Build the project here..."
+
+    - name: Upload Build folder as Artifact
+      if: github.event_name == 'push'
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build
+        path: build
+        
+  
