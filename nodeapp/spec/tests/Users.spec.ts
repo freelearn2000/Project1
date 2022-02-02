@@ -2,7 +2,7 @@ import supertest from 'supertest';
 import StatusCodes from 'http-status-codes';
 import { SuperTest, Test } from 'supertest';
 
-import app from 'src/Server1';
+import app from '@server';
 import UserDao from '@daos/User/UserDao.mock';
 import User, { IUser } from '@entities/User';
 import { pErr } from '@shared/functions';
