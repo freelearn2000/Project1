@@ -1,100 +1,63 @@
-// Load configuration informations first!
-import nconf from './shared/config';
-import logger from './shared/logger';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import path from 'path';
+import helmet from 'helmet';
 
-import express, {Response} from 'express';
-// import path from 'path';
-import routerUsers from './routes/v1/users.route';
-import routerAuthV1 from './routes/v1/auth.route';
-import routerAuthV2 from './routes/v2/auth.route';
-// import { createConnection } from 'typeorm';
-// import config from './typeormconfig';
-import responseMiddleware from './middlewares/response.middleware';
-import loggingMiddleware from './middlewares/logging.middleware';
-import { NotImplementedError } from './shared/common';
-import { ApiNotImplementedError } from './shared/common';
+import express, { NextFunction, Request, Response } from 'express';
+import StatusCodes from 'http-status-codes';
+import 'express-async-errors';
 
+import BaseRouter from './routes';
+import logger from '@shared/Logger';
+
+const app = express();
+const { BAD_REQUEST } = StatusCodes;
 
 
-const API_PREFIX_V1 = `/api/v1`;
-const API_PREFIX_V2 = `/api/v2`;
-const PORT = process.env.PORT || 3000;
 
-const server = express( );
-server.use( express.json() );
+/************************************************************************************
+ *                              Set basic express settings
+ ***********************************************************************************/
 
-logger.info( `Environment : ${nconf.get('NODE_ENV')}` );
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
 
+// Show routes called in console during development
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
 
-// Connect Adaptor to Persistance Layer (PostGres)
-// async/await (2015 - ES6)
-// Promise (2015 - ES6)
+// Security
+if (process.env.NODE_ENV === 'production') {
+    app.use(helmet());
+}
 
-// Using Promise
-// createConnection( config )
-//     .then( ( ) => logger.info(`Adaptor connected...`) )
-//     .catch( (error) => logger.error(`Adaptor failed to connect : `, error) );
+// Add APIs
+app.use('/api', BaseRouter);
 
-// Using async/await
-// async function connectToPostGres( ) {
-//     try {
-//         await createConnection(config);
-//         console.log(`Connection successful!`);
-//     } catch( error ) {
-//         console.log(`Connection failed : `, error);
-//     }
-// }
-// connectToPostGres( );
-
-// Logging middleware
-server.use( loggingMiddleware() );
-
-// Response Formatter
-server.use( responseMiddleware() );
-
-// Add Routes
-server.use( `${API_PREFIX_V1}/auth`, routerAuthV1 );
-server.use( `${API_PREFIX_V2}/auth`, routerAuthV2 );
-server.use( `${API_PREFIX_V1}/users`, routerUsers );
-
-// Handle all API's (not handled by routes)
-server.all( '/api/*', (req, res ) => {
-    throw new ApiNotImplementedError( `API ${req.method} on ${req.path} not implemented!`, `Main-Bad api request` );
+// Print API errors
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    logger.err(err, true);
+    return res.status(BAD_REQUEST).json({
+        error: err.message,
+    });
 });
 
-// Welcome message
-server.get( `*`, (req, res ) => {
-    res.status( 200 ).send( {message: `Welcome to Our Application!`} );
-} );
-// first message -fix1
-// second message -fix 2
-// third message feature2
-// fourth message breaking change 
-// fifth message :feature3
-// sixth message - breaking change 2
-// first message -fix1
-// first message -fix3
 
-// Handle GET requests not handled by Routes, send React App to Client
-// server.get( '*', (req, res) => {
-//     res.sendFile( path.resolve(__dirname, '../../node-project-2/src/client/index.html') );
-// });
 
-// Handle All other (POST, PATCH, DELETE) requets not handled by Routes
-server.all( '*', (req, res ) => {
-    throw new NotImplementedError( `Not implemented`, `Main-Bad request` );
+/************************************************************************************
+ *                              Serve front-end content
+ ***********************************************************************************/
+
+const viewsDir = path.join(__dirname, 'views');
+app.set('views', viewsDir);
+const staticDir = path.join(__dirname, 'public');
+app.use(express.static(staticDir));
+app.get('*', (req: Request, res: Response) => {
+    res.sendFile('index.html', {root: viewsDir});
 });
 
-// Global error handler
-server.use( (error: any, req: any, res: Response, next: any) => {
-
-    // res.send( {status: error.status, message: `Error occured!`} );
-    res.status( error.status ).send( {message: error.message} );
-
-    // Further log the Error Message & Origin to persistance layer (analytics)
-    logger.error( `Status: ${error.status}, Origin: ${error.origin}, Error: ${error.message}` );
-});
-
-server.listen( PORT, ( ) => {
-    logger.info(`Server running at ${PORT}...`);
-});
+// Export express instance
+export default app;

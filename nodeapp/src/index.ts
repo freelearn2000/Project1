@@ -1,5 +1,5 @@
 import './pre-start'; // Must be the first import
-import app from 'src/Server1';
+import app from '@server';
 import logger from '@shared/Logger';
 
 
