@@ -1,0 +1,58 @@
+name:  CI
+
+on:
+  push:
+   paths:
+     - reactapp/**
+    
+env:
+  NODE_VERSION: '14.x'                                             # set this to the node version to use
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Do Code Analysis
+      run: echo "Do code analysis here..."
+
+    - name: Upload Code coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: codeanalysis_coverage
+      #   path: codecoverage
+      run: echo "Upload code analysis coverage here..."
+
+    - name: Run Tests
+      run: npm run test
+
+    - name: Upload Test coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: test_coverage
+      #   path: testcoverage
+      run: echo "Upload test coverage here..."
+        
+    - name: Build project
+      if: github.event_name == 'push'
+      run: echo "Build the project here..."
+
+    - name: Upload Build folder as Artifact
+      if: github.event_name == 'push'
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build
+        path: build
+        
