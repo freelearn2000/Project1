@@ -22,19 +22,7 @@ jobs:
         with:
           github-token: ${{ secrets.monorepo_TOKEN }}
           filterOutClosed: true
-      
-      - id: file_changes
-        name: File Changes
-        uses: trilom/file-changes-action@v1.2.3
-        with:
-          prNumber: ${{ steps.pr.outputs.number }}
-          pushBefore: ''
-          pushAfter: ''
-        
-      - name: Ouput File Changes
-        run: echo '${{ steps.file_changes.outputs.files }}'
-
-      # Runs a single command using the runners shell
+    
       - name: Run one "build"
         run: echo Hello, nodeapp!
         if: contains(steps.file_changes.outputs.files , '"nodeapp/')
