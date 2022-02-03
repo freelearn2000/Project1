@@ -1,9 +1,10 @@
-name:  React CI
+name:  CI
 
 on:
-  push:
-    paths:
-      - 'Project1/reactapp/**'
+ pull_request:
+    branches: [develop, master]
+ push:
+    branches: [develop, master]
      
   
 env:
@@ -12,48 +13,35 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest 
- 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+          
+      - name: Get Current Pull Request
+        uses: 8BitJonny/gh-get-current-pr@1.0.1
+        id: pr
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          filterOutClosed: true
       
-    - name: Setup Node.js ${{ env.NODE_VERSION }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Do Code Analysis
-      run: echo "Do code analysis here..."
-
-    - name: Upload Code coverage as Artifact
-      # uses: actions/upload-artifact@v2
-      # with:
-      #   name: codeanalysis_coverage
-      #   path: codecoverage
-      run: echo "Upload code analysis coverage here..."
-
-    - name: Run Tests
-      run: npm run test
-
-    - name: Upload Test coverage as Artifact
-      # uses: actions/upload-artifact@v2
-      # with:
-      #   name: test_coverage
-      #   path: testcoverage
-      run: echo "Upload test coverage here..."
+      - id: file_changes
+        name: File Changes
+        uses: trilom/file-changes-action@v1.2.3
+        with:
+          prNumber: ${{ steps.pr.outputs.number }}
+          pushBefore: ''
+          pushAfter: ''
         
-    - name: Build project
-      if: github.event_name == 'push'
-      run: echo "Build the project here..."
+      - name: Ouput File Changes
+        run: echo '${{ steps.file_changes.outputs.files }}'
 
-    - name: Upload Build folder as Artifact
-      if: github.event_name == 'push'
-      uses: actions/upload-artifact@v2
-      with:
-        name: Build
-        path: build
+      # Runs a single command using the runners shell
+      - name: Run one "build"
+        run: echo Hello, nodeapp!
+        if: contains(steps.file_changes.outputs.files , '"nodeapp/')
         
+      - name: Run two "build"
+        if: contains(steps.file_changes.outputs.files , '"reactapp/')
+        run: echo Hello, reactapp!
+    
+     
