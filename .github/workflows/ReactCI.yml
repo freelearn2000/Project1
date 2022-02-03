@@ -1,14 +1,10 @@
-name:  CI
+name:  React CI
 
 on:
   push:
-   paths:
-     - 'reactapp/**'
-     
-  pull_request:
-    branches: [develop, master]
     paths:
-        - 'reactapp/**'      
+      - 'Project1/reactapp/**'
+     
   
 env:
   NODE_VERSION: '14.x'                                             # set this to the node version to use
