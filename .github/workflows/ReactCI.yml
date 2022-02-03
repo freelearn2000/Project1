@@ -3,14 +3,19 @@ name:  CI
 on:
   push:
    paths:
-     - nodeapp/**
-    
+     - 'reactapp/**'
+     
+  pull_request:
+    branches: [develop, master]
+    paths:
+        - 'reactapp/**'      
+  
 env:
   NODE_VERSION: '14.x'                                             # set this to the node version to use
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
  
     steps:
     - name: Checkout repository
@@ -56,4 +61,3 @@ jobs:
         name: Build
         path: build
         
-  
