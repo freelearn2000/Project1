@@ -1,0 +1,34 @@
+name:  CI
+
+on:
+ pull_request:
+    branches: [develop, master]
+ push:
+    branches: [develop, master]
+     
+  
+env:
+  NODE_VERSION: '14.x'                                             # set this to the node version to use
+
+jobs:
+  build:
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v2
+          
+      - name: Get Current Pull Request
+        uses: 8BitJonny/gh-get-current-pr@1.0.1
+        id: pr
+        with:
+          github-token: ${{ secrets.monorepo_TOKEN }}
+          filterOutClosed: true
+    
+      - name: Run one "build"
+        run: echo Hello, nodeapp!
+        if: contains(steps.file_changes.outputs.files , '"nodeapp/')
+        
+      - name: Run two "build"
+        if: contains(steps.file_changes.outputs.files , '"reactapp/')
+        run: echo Hello, reactapp!
+    
+     
