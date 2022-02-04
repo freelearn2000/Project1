@@ -16,7 +16,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with: 
-        repository: freelearn2000/Project1
+        repository: freelearn2000/Project1/nodeapp
         path: nodeapp
          
       
@@ -25,7 +25,7 @@ jobs:
       with:
        node-version: ${{ env.NODE_VERSION }}
        cache: 'npm'
-       repository: freelearn2000/Project1
+       repository: freelearn2000/Project1/nodeapp
        path: nodeapp
        
     - name: Install dependencies
