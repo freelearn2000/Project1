@@ -72,3 +72,13 @@ jobs:
         name: Build
         path: build
         
+  deploy-staging:
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url:  https://stagingdeploy.azurewebsites.net         # set application url
+
+    steps:
+    - name: Deploy to Staging Server
+      run: echo "Deploy build to staging here..."
