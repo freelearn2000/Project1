@@ -35,6 +35,7 @@ jobs:
         cache: 'npm'
         cache-dependency-path: nodeapp/package-lock.json
     - run: npm ci
+      working-directory: ./nodeapp
 
 
     - name: Do Code Analysis
