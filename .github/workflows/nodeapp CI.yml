@@ -34,7 +34,7 @@ jobs:
         node-version: '14'
         cache: 'npm'
         cache-dependency-path: nodeapp/package-lock.json
-    - run: npm ci
+    - run: npm install
       working-directory: ./nodeapp
 
 
