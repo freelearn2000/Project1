@@ -6,6 +6,10 @@ on:
  pull_request:
     branches: [develop, master]
     
+env:
+    NODE_VERSION: '14.x'                                             # set this to the node version to use
+
+    
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,7 +27,7 @@ jobs:
       with:
         repository: freelearn2000/Project1
         path: ./nodeapp
-        node-version: '14'
+        node-version: ${{ env.NODE_VERSION }}
        
      
     - name: Install dependencies
@@ -31,10 +35,10 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
         cache-dependency-path: nodeapp/package-lock.json
-    - run: npm install
+    - run: npm ci
       working-directory: ./nodeapp
 
 
@@ -70,5 +74,3 @@ jobs:
       with:
         name: Build
         path: build
-        
-  
