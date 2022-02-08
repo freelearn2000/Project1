@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v2
       with: 
         repository: freelearn2000/Project1
-        path: nodeapp/
+        path: .nodeapp/
          
       
     - name: Setup Node.js ${{ env.NODE_VERSION }}
