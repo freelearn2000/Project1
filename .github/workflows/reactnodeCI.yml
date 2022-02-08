@@ -1,0 +1,144 @@
+name: ReactNode  CI
+
+on:
+ pull_request:
+    branches: [develop, master]
+    
+env:
+  NODE_VERSION: '14.x'                                             # set this to the node version to use
+
+jobs:
+  Job1-Build-React:
+    runs-on: ubuntu-latest
+    
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+            
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+       
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+       
+    - name: Install dependencies ReactApp
+      run: npm install
+      working-directory: ./reactapp
+         
+    - name: Do Code Analysis ReactApp
+      run: echo "Do code analysis here..."
+
+    - name: Upload Code coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: codeanalysis_coverage_react
+      #   path: ./reactapp/codecoverage
+      run: echo "Upload code analysis coverage here..."
+
+    #- name: Run Tests
+    #  run: npm run test
+
+    - name: Upload Test coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: test_coverage_react
+      #   path: ./reactapp/testcoverage
+      run: echo "Upload test coverage here..."
+        
+    - name: Build project React
+      if: github.event_name == 'push'
+      run: npm run build --if-present
+      working-directory: ./reactapp
+
+    - name: Upload React Build folder as Artifact
+      if: github.event_name == 'push'
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build
+        path: ./reactapp/build
+  
+  Job2-Build-NodeApp:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+            
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+       
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+       
+    - name: Install dependencies NodeApp
+      run: npm install
+      working-directory: ./nodeapp
+
+    - name: Do Node App Code Analysis NodeApp
+      run: echo "Do code analysis here..."
+
+    - name: Upload Code coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: codeanalysis_coverage_node
+      #   path: ./nodeapp/codecoverage
+      run: echo "Upload code analysis coverage here..."
+
+    #- name: Run Tests
+    #  run: npm run test
+
+    - name: Upload Test coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: test_coverage_node
+      #   path: ./nodeapp/testcoverage
+      run: echo "Upload test coverage here..."
+        
+    - name: Build project
+      if: github.event_name == 'push'
+      run: npm run build --if-present
+      working-directory: ./nodeapp
+
+    - name: Upload Build folder as Artifact
+      if: github.event_name == 'push'
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build
+        path: ./nodeapp/build
+
+  deploy-staging-react:
+    needs: [Job1-Build-React]
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url:  https://stagingdeploy.azurewebsites.net         # set application url
+
+    steps:
+    - name: Deploy to react App Staging Server
+      run: echo "Deploy react App build to staging here..."
+
+  deploy-staging-node:
+    needs: [Job2-Build-NodeApp]
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url:  https://stagingdeploy.azurewebsites.net         # set application url
+
+    steps:
+    - name: Deploy to Node App Staging Server
+      run: echo "Deploy Node App build to staging here..."
