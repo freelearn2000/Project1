@@ -39,7 +39,7 @@ jobs:
 
        
     - name: Install dependencies
-      run: npm install
+      run: npm ci
       working-directory: ./nodeapp  
 
     - name: Do Code Analysis
