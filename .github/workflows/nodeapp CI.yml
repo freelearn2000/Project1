@@ -38,7 +38,7 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
         cache-dependency-path: nodeapp/package-lock.json
-    - run: npm install
+    - run: npm ci
       working-directory: ./nodeapp
 
 
