@@ -63,8 +63,8 @@ jobs:
       run: echo "Upload test coverage here..."
         
     - name: Build project
-      run: npm run build
-      working-directory: ./nodeapp
+      #run: npm run build
+      #working-directory: ./nodeapp
      
 
     - name: Upload Build folder as Artifact
