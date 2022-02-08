@@ -1,4 +1,4 @@
-name: ReactNode  CI
+name: ReactNode CI
 
 on:
  pull_request:
