@@ -63,13 +63,11 @@ jobs:
       run: echo "Upload test coverage here..."
         
     - name: Build project
-      if: github.event_name == 'push'
       run: npm run build
       working-directory: ./nodeapp
      
 
     - name: Upload Build folder as Artifact
-      if: github.event_name == 'push'
       uses: actions/upload-artifact@v2
       with:
         name: Build
