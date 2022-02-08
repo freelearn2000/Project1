@@ -1,8 +1,6 @@
 name: Nodeapp  CI
 
 on:
- push:
-    branches: [develop, master]
  pull_request:
     branches: [develop, master]
     
@@ -36,11 +34,13 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-
+       
+       
        
     - name: Install dependencies
       run: npm install
-      working-directory: ./nodeapp  
+           npm run build
+         
 
     - name: Do Code Analysis
       run: echo "Do code analysis here..."
@@ -64,9 +64,7 @@ jobs:
         
     - name: Build project
       if: github.event_name == 'push'
-      run: npm run build
-      working-directory: ./nodeapp
-     
+      run: echo "Build the project here..."
 
     - name: Upload Build folder as Artifact
       if: github.event_name == 'push'
