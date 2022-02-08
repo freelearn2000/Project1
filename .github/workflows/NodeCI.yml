@@ -1,15 +1,12 @@
-name: Nodeapp CI
+name: nodeapp CI
 
 on:
- push:
-    branches: [develop, master]
  pull_request:
     branches: [develop, master]
-    
+      
 env:
-    NODE_VERSION: '14.x'                                             # set this to the node version to use
+  NODE_VERSION: '14.x'                                             # set this to the node version to use
 
-    
 jobs:
   build:
     runs-on: ubuntu-latest
