@@ -3,8 +3,7 @@ name: Reactapp CI
 on:
  pull_request:
     branches: [develop, master]
-    
-     
+      
 env:
   NODE_VERSION: '14.x'                                             # set this to the node version to use
 
@@ -17,14 +16,13 @@ jobs:
       uses: actions/checkout@v2
       with: 
         repository: freelearn2000/Project1
-        path: reactapp/
-         
-      
+        path: ./reactapp
+            
     - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v2
       with:
         repository: freelearn2000/Project1
-        path: reactapp/
+        path: ./reactapp
         node-version: ${{ env.NODE_VERSION }}
        
     - name: Cache dependencies
@@ -34,13 +32,11 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('reactapp/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-       
-       
-       
+           
     - name: Install dependencies
       run: npm install
+      working-directory: ./reactapp
          
-
     - name: Do Code Analysis
       run: echo "Do code analysis here..."
 
