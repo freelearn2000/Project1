@@ -1,9 +1,13 @@
-name: nodeapp CI
+
+name: Nodeapp CI
 
 on:
+ push:
+    branches: [develop, master]
  pull_request:
     branches: [develop, master]
-      
+    
+     
 env:
   NODE_VERSION: '14.x'                                             # set this to the node version to use
 
@@ -26,16 +30,17 @@ jobs:
         path: ./nodeapp
         node-version: ${{ env.NODE_VERSION }}
        
-     
-    - name: Install dependencies
-    - uses: actions/setup-node@v2
+    - name: Cache dependencies
+      uses: actions/cache@v2
       with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-        cache-dependency-path: nodeapp/package-lock.json
-    - run: npm ci
-      working-directory: ./nodeapp
-
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+       
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./nodeapp  
 
     - name: Do Code Analysis
       run: echo "Do code analysis here..."
