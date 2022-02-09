@@ -26,21 +26,14 @@ jobs:
     - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v2
       with:
-        repository: freelearn2000/Project1
-        path: ./nodeapp
-        node-version: ${{ env.NODE_VERSION }}
-       
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-       
+        node-version: '14'
+        cache: 'npm'
+        cache-dependency-path: nodeapp/package-lock.json
+        
     - name: Install dependencies
       run: npm install
       working-directory: ./nodeapp  
+      
 
     - name: Do Code Analysis
       run: echo "Do code analysis here..."
