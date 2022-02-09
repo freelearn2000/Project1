@@ -7,9 +7,6 @@ on:
  pull_request:
     branches: [develop, master]
     
-env:
-  NODE_VERSION: '14.x'                                             # set this to the node version to use
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,7 +23,7 @@ jobs:
       with:
         node-version: '14'
         cache: 'npm'
-        cache-dependency-path: nodeapp/package-lock.json
+        cache-dependency-path: ./nodeapp/package-lock.json
         
     - name: Install dependencies
       run: npm install
