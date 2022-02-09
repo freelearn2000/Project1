@@ -29,14 +29,8 @@ jobs:
         repository: freelearn2000/Project1
         path: ./nodeapp
         node-version: ${{ env.NODE_VERSION }}
-       
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+        cache: 'npm'
+        cache-dependency-path: nodeapp/package-lock.json
        
     - name: Install dependencies
       run: npm install
