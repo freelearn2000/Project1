@@ -23,7 +23,7 @@ jobs:
       with:
         node-version: '14'
         cache: 'npm'
-        cache-dependency-path: ./nodeapp/package-lock.json
+        cache-dependency-path: nodeapp/package-lock.json
         
     - name: Install dependencies
       run: npm install
