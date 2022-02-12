@@ -1,6 +1,8 @@
 name: Reactapp CI
 
 on:
+ push:
+    branches: [develop, master]
  pull_request:
     branches: [develop, master]
       
@@ -47,23 +49,45 @@ jobs:
       #   path: codecoverage
       run: echo "Upload code analysis coverage here..."
 
-    #- name: Run Tests
-    #  run: npm run test
+    - name: Run Tests
+      run: npm run test
+      working-directory: ./reactapp
 
     - name: Upload Test coverage as Artifact
       # uses: actions/upload-artifact@v2
       # with:
-      #   name: test_coverage
-      #   path: testcoverage
+      #   name: test_coverage_react
+      #   path: ./reactapp/testcoverage
       run: echo "Upload test coverage here..."
         
-    - name: Build project
+    - name: Build project React
       if: github.event_name == 'push'
-      run: echo "Build the project here..."
+      run: npm run build --if-present
+      working-directory: ./reactapp
 
-    - name: Upload Build folder as Artifact
+    - name: Upload React Build folder as Artifact
       if: github.event_name == 'push'
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: build
+        path: ./reactapp/build
+       
+   
+    - name: Send message to Slack API
+      uses: rtCamp/action-slack-notify@v2
+      env:
+       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+       SLACK_LINK_NAMES: true
+
+        
+    - name: echo-default-env-variables
+      run: |
+          echo "Home: ${HOME}"
+          echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
+          echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
+          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+
+  
+       
+       
