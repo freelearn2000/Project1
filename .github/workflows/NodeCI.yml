@@ -12,19 +12,14 @@ jobs:
     runs-on: ubuntu-latest
  
     steps:
-    - name: Checkout repository
+      - name: Checkout repository
       uses: actions/checkout@v2
-      with: 
-        repository: freelearn2000/Project1
-        path: ./nodeapp
-         
+            
     - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
-        repository: freelearn2000/Project1
-        path: ./nodeapp
-        
+        node-version: ${{ env.NODE_VERSION }}
+       
     - name: Cache dependencies
       uses: actions/cache@v2
       with:
@@ -32,20 +27,19 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-           
-        
-    - name: Install dependencies
+       
+    - name: Install dependencies NodeApp
       run: npm install
-      working-directory: ./nodeapp  
-      
-    - name: Do Code Analysis
+      working-directory: ./nodeapp
+
+    - name: Do Node App Code Analysis NodeApp
       run: echo "Do code analysis here..."
 
     - name: Upload Code coverage as Artifact
       # uses: actions/upload-artifact@v2
       # with:
-      #   name: codeanalysis_coverage
-      #   path: codecoverage
+      #   name: codeanalysis_coverage_node
+      #   path: ./nodeapp/codecoverage
       run: echo "Upload code analysis coverage here..."
 
     - name: Run Tests
@@ -72,18 +66,3 @@ jobs:
         name: Build
         path: ./nodeapp/build
         
-    - name: Send message to Slack API
-      uses: rtCamp/action-slack-notify@v2
-      env:
-       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-       SLACK_LINK_NAMES: true
-
-        
-    - name: echo-default-env-variables
-      run: |
-          echo "Home: ${HOME}"
-          echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
-          echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
-          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
-
