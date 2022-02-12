@@ -71,3 +71,19 @@ jobs:
       with:
         name: Build
         path: ./nodeapp/build
+        
+    - name: Send message to Slack API
+      uses: rtCamp/action-slack-notify@v2
+      env:
+       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+       SLACK_LINK_NAMES: true
+
+        
+    - name: echo-default-env-variables
+      run: |
+          echo "Home: ${HOME}"
+          echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
+          echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
+          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+
