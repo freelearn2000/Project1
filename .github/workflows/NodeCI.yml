@@ -85,5 +85,8 @@ jobs:
           echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
           echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
           echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+          echo "GITHUB_SHA: ${GITHUB_SHA}"
+          echo "GITHUB_REF: ${GITHUB_REF}"
 
         
