@@ -76,7 +76,7 @@ jobs:
         token: ${{secrets.SEMANTIC_TOKEN}}
         assignees: ${{github.actor}}
         labels: workflow-failed
-        body: This issue was automatically created by GitHub Staging deploy ${{github.sha}}
+        body: This issue was automatically created by GitHub Staging deploy ${{github.actor}}
         
     - name: echo-default-env-variables
       run: |
