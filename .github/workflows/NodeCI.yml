@@ -52,11 +52,13 @@ jobs:
       run: npm run test
       working-directory: ./nodeapp 
 
-    - name: Upload Test coverage as Artifact
-      # uses: actions/upload-artifact@v2
-      # with:
-      #   name: test_coverage
-      #   path: testcoverage
+    - name: Upload Code coverage as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: codeanalysis_coverage
+        path: codecoverage
+        
+    - name: upload code coverage    
       run: echo "Upload test coverage here..."
         
     - name: Build project
