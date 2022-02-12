@@ -16,37 +16,32 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with: 
-        repository: freelearn2000/Project1
-        path: ./reactapp
             
     - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v2
       with:
-        repository: freelearn2000/Project1
-        path: ./reactapp
         node-version: ${{ env.NODE_VERSION }}
        
     - name: Cache dependencies
       uses: actions/cache@v2
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('reactapp/package-lock.json') }}
+        key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-           
-    - name: Install dependencies
+       
+    - name: Install dependencies ReactApp
       run: npm install
       working-directory: ./reactapp
          
-    - name: Do Code Analysis
+    - name: Do Code Analysis ReactApp
       run: echo "Do code analysis here..."
 
     - name: Upload Code coverage as Artifact
       # uses: actions/upload-artifact@v2
       # with:
-      #   name: codeanalysis_coverage
-      #   path: codecoverage
+      #   name: codeanalysis_coverage_react
+      #   path: ./reactapp/codecoverage
       run: echo "Upload code analysis coverage here..."
 
     - name: Run Tests
