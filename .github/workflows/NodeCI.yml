@@ -48,8 +48,8 @@ jobs:
       #   path: codecoverage
       run: echo "Upload code analysis coverage here..."
 
-    #- name: Run Tests
-    #  run: npm run test
+    - name: Run Tests
+      run: npm run test
 
     - name: Upload Test coverage as Artifact
       # uses: actions/upload-artifact@v2
