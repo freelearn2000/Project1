@@ -45,7 +45,7 @@ jobs:
 
     - name: Run Tests
       run: npm run test
-       working-directory: ./reactapp
+      working-directory: ./reactapp
 
     - name: Upload Test coverage as Artifact
       # uses: actions/upload-artifact@v2
