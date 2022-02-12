@@ -43,8 +43,9 @@ jobs:
       #   path: ./reactapp/codecoverage
       run: echo "Upload code analysis coverage here..."
 
-    #- name: Run Tests
-    #  run: npm run test
+    - name: Run Tests
+      run: npm run test
+       working-directory: ./reactapp
 
     - name: Upload Test coverage as Artifact
       # uses: actions/upload-artifact@v2
@@ -99,8 +100,10 @@ jobs:
       #   path: ./nodeapp/codecoverage
       run: echo "Upload code analysis coverage here..."
 
-    #- name: Run Tests
-    #  run: npm run test
+    - name: Run Tests
+      run: npm run test
+      working-directory: ./nodeapp
+
 
     - name: Upload Test coverage as Artifact
       # uses: actions/upload-artifact@v2
