@@ -50,26 +50,24 @@ jobs:
 
     - name: Run Tests
       run: npm run test
-      working-directory: ./nodeapp 
+      working-directory: ./nodeapp
 
-    - name: Upload Code coverage as Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: codeanalysis_coverage
-        path: codecoverage
-        
-    - name: upload code coverage    
+
+    - name: Upload Test coverage as Artifact
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: test_coverage_node
+      #   path: ./nodeapp/testcoverage
       run: echo "Upload test coverage here..."
         
     - name: Build project
       if: github.event_name == 'push'
-      run: echo "Build the project here..."
-      #run: npm run build
-      #working-directory: ./nodeapp
-     
+      run: npm run build --if-present
+      working-directory: ./nodeapp
+
     - name: Upload Build folder as Artifact
       if: github.event_name == 'push'
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: build
+        path: ./nodeapp/build
