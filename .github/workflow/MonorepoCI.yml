@@ -145,3 +145,13 @@ jobs:
     steps:
     - name: Deploy to Node App Staging Server
       run: echo "Deploy Node App build to staging here..."
+      
+    - name: Create Issue Action
+      if: ${{ failure() }}
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+        title: Automated Issue from 
+        token: ${{secrets.SEMANTIC_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: workflow-failed
+        body: This issue was automatically created by GitHub Staging deploy ${{github.sha}}
