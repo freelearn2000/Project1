@@ -1,12 +1,39 @@
-// import express from 'express';
+const express = require('express');
 // import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/users.service';
 // import { handleAsync, EntityNotFoundError } from '../../shared/common';
 // import valMiddleware from '../../middlewares/validation.middleware'; 
 // import { UserValidator } from '../../models/user.entity'  
 
-// let router = express.Router( );
+let router = express.Router( );
 
-// // API Endpoint '/users'
+// API Endpoint '/users'
+// For node project2....
+router.post(`/`, (req: any, res: any) => {
+
+    res.send( `${req.method} on /users ${req.path}` );            
+});
+
+router.get(`/`, (req: any, res: any) => {
+
+    res.send( `${req.method} on /users ${req.path}` );
+});
+
+router.get(`/:id`, (req: any, res: any) => {
+
+    res.send( `${req.method} on /users ${req.path}` );    
+});
+
+router.patch(`/:id`, (req: any, res: any) => {
+
+    res.send( `${req.method} on /users ${req.path}` );    
+});
+
+router.delete(`/:id`, (req: any, res: any) => {
+
+    res.send( `${req.method} on /users ${req.path}` );   
+});
+
+
 // router.post('/', valMiddleware( UserValidator ), async(req, res, next) => {
 
 //     const model = req.body;
@@ -80,4 +107,4 @@
 // });
 
 
-// export default router;
+export default router;
