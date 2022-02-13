@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "composite": true,
+      "incremental": true,
+      "outDir": "build",
+      "lib": ["es2015"],
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "target": "es2015"                                                         
+    },
+    "include": ["src/**/*"]
+}
