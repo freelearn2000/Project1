@@ -16,8 +16,13 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
-            
+      uses: actions/checkout@v2 
+      with: 
+        repository: freelearn2000/Project1
+        path: ./reactapp
+      
+      
+         
     - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v2
       with:
@@ -76,13 +81,10 @@ jobs:
       with: 
         repository: freelearn2000/Project1
         path: ./nodeapp
-         
-      
+             
     - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v2
       with:
-        repository: freelearn2000/Project1
-        path: ./nodeapp
         node-version: ${{ env.NODE_VERSION }}
        
     - name: Cache dependencies
@@ -93,45 +95,63 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
        
-    - name: Install dependencies
+    - name: Install dependencies NodeApp
       run: npm install
-      working-directory: ./nodeapp  
+      working-directory: ./nodeapp
 
-    - name: Do Code Analysis
+    - name: Do Node App Code Analysis NodeApp
       run: echo "Do code analysis here..."
 
     - name: Upload Code coverage as Artifact
       # uses: actions/upload-artifact@v2
       # with:
-      #   name: codeanalysis_coverage
-      #   path: codecoverage
+      #   name: codeanalysis_coverage_node
+      #   path: ./nodeapp/codecoverage
       run: echo "Upload code analysis coverage here..."
 
     - name: Run Tests
       run: npm run test
-      working-directory: ./nodeapp  
-
+      working-directory: ./nodeapp
+      
     - name: Upload Test coverage as Artifact
       # uses: actions/upload-artifact@v2
       # with:
-      #   name: test_coverage
-      #   path: testcoverage
+      #   name: test_coverage_node
+      #   path: ./nodeapp/testcoverage
       run: echo "Upload test coverage here..."
         
     - name: Build project
       if: github.event_name == 'push'
-      run: echo "Build the project here..."
-      #run: npm run build
-      #working-directory: ./nodeapp
-     
+      run: npm run build --if-present
+      working-directory: ./nodeapp
+
     - name: Upload Build folder as Artifact
       if: github.event_name == 'push'
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: build
-
-    
+        path: ./nodeapp/build
+        
+    - name: Create Issue Action
+      if: ${{ failure() }}
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+        title: Automated Issue from staging deploy
+        token: ${{secrets.SEMANTIC_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: workflow-failed
+        body: This issue was automatically created by GitHub Staging deploy ${{github.actor}}
+        
+    - name: echo-default-env-variables
+      run: |
+          echo "Home: ${HOME}"
+          echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
+          echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
+          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+          echo "GITHUB_SHA: ${GITHUB_SHA}"
+          echo "GITHUB_REF: ${GITHUB_REF}"
     
 
   deploy-staging-react:
@@ -164,4 +184,4 @@ jobs:
         token: ${{secrets.SEMANTIC_TOKEN}}
         assignees: ${{github.actor}}
         labels: workflow-failed
-        body: This issue was automatically created by GitHub Staging deploy ${{github.sha}} 
+        body: This issue was automatically created by GitHub Staging deploy ${{github.actor}} 
