@@ -73,10 +73,16 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-            
+      with: 
+        repository: freelearn2000/Project1
+        path: ./nodeapp
+         
+      
     - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v2
       with:
+        repository: freelearn2000/Project1
+        path: ./nodeapp
         node-version: ${{ env.NODE_VERSION }}
        
     - name: Cache dependencies
@@ -87,42 +93,45 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
        
-    - name: Install dependencies NodeApp
+    - name: Install dependencies
       run: npm install
-      working-directory: ./nodeapp
+      working-directory: ./nodeapp  
 
-    - name: Do Node App Code Analysis NodeApp
+    - name: Do Code Analysis
       run: echo "Do code analysis here..."
 
     - name: Upload Code coverage as Artifact
       # uses: actions/upload-artifact@v2
       # with:
-      #   name: codeanalysis_coverage_node
-      #   path: ./nodeapp/codecoverage
+      #   name: codeanalysis_coverage
+      #   path: codecoverage
       run: echo "Upload code analysis coverage here..."
 
     - name: Run Tests
       run: npm run test
-      working-directory: ./nodeapp
 
     - name: Upload Test coverage as Artifact
       # uses: actions/upload-artifact@v2
       # with:
-      #   name: test_coverage_node
-      #   path: ./nodeapp/testcoverage
+      #   name: test_coverage
+      #   path: testcoverage
       run: echo "Upload test coverage here..."
-    
-    
-      # - name: Build project
-      # run: npm run build
-      # working-directory: ./nodeapp
-
+        
+    - name: Build project
+      if: github.event_name == 'push'
+      run: echo "Build the project here..."
+      #run: npm run build
+      #working-directory: ./nodeapp
+     
     - name: Upload Build folder as Artifact
       if: github.event_name == 'push'
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: ./nodeapp/build
+        path: build
+
+    
+    
 
   deploy-staging-react:
     needs: [Job1-Build-React]
