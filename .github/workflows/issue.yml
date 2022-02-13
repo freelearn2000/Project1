@@ -5,7 +5,7 @@ on:
     types: [opened]
 
 env:
-  GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
   
 jobs:
   slack-message:
