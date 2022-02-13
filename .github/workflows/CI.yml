@@ -56,7 +56,7 @@ jobs:
       #   path: ./reactapp/testcoverage
       run: echo "Upload test coverage here..."
         
-    -  name: Build project React
+      # -  name: Build project React
       # run: npm run build 
       #  working-directory: ./reactapp
 
@@ -113,7 +113,7 @@ jobs:
       run: echo "Upload test coverage here..."
     
     
-    - name: Build project
+      # - name: Build project
       # run: npm run build
       # working-directory: ./nodeapp
 
