@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "extends": "../tsconfig.json",
     "references": [
         {
@@ -19,10 +18,3 @@
     },
     "include": ["."]
 }
-=======
-    "extends": "../tsconfig.base.json",
-    "references": [
-        {"path": "../src"}
-    ]
-}
->>>>>>> 0e90f7626fec734a7742a313c49d0e4eb6fa853a
