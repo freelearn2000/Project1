@@ -73,7 +73,7 @@ jobs:
       uses: nashmaniac/create-issue-action@v1.1
       with:
         title: Automated Issue from staging deploy
-        token: ${{secrets.SEMANTIC_TOKEN}}
+        token: ${{secrets.SEMANTIC_TOKEN1}}
         assignees: ${{github.actor}}
         labels: workflow-failed
         body: This issue was automatically created by GitHub Staging deploy ${{github.sha}}
