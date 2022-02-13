@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --build src",
+    "build": "tsc --composite false",
     "test": "jest",
     "coverage": "jest --coverage",
-    "tsconfig": "tsc --init",
     "start": "ts-node src/index.ts",
-    "prodstart": "node index.js"
+    "pstart": "node index.js"
   },
   "keywords": [],
   "author": "",
