@@ -30,7 +30,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
        
-    - name: Install dependencies ReactApp
+    - name: Install dependencies NodeApp
       run: npm install
       working-directory: ./nodeapp
          
