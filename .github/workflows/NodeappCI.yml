@@ -41,7 +41,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
          name: codeanalysis_coverage_react
-         path: ./reactapp/codecoverage
+         path: ./nodeapp/codecoverage
       
     - name: Run Tests
       run: npm run test
