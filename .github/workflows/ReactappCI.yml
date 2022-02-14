@@ -49,6 +49,7 @@ jobs:
       
     - name: add test coverage
       run: npm test -- --coverage
+      working-directory: ./reactapp
 
 
     - name: Upload Test coverage as Artifact
