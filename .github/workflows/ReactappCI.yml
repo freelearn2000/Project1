@@ -52,11 +52,10 @@ jobs:
       working-directory: ./reactapp
 
 
-    - name: Upload Test coverage as Artifact
+    - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
-        name: test_coverage_react
-        directory: ./reactapp/testcoverage
+       directory: ./reactapp/codecoverage
         
     - name: Build project React
       if: github.event_name == 'push'
