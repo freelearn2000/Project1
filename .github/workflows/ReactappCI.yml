@@ -37,23 +37,24 @@ jobs:
     - name: Do Code Analysis ReactApp
       run: echo "Do code analysis here..."
 
-    - name: Upload Code coverage as Artifact
-      # uses: actions/upload-artifact@v2
-      # with:
-      #   name: codeanalysis_coverage_react
-      #   path: ./reactapp/codecoverage
-      run: echo "Upload code analysis coverage here..."
-
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+         name: codeanalysis_coverage_react
+         directory: ./reactapp/codecoverage
+      
     - name: Run Tests
       run: npm run test
       working-directory: ./reactapp
+      
+    - name: add test coverage
+      run: jest --ci --coverage && codecov
 
     - name: Upload Test coverage as Artifact
-      # uses: actions/upload-artifact@v2
-      # with:
-      #   name: test_coverage_react
-      #   path: ./reactapp/testcoverage
-      run: echo "Upload test coverage here..."
+      uses: codecov/codecov-action@v1
+      with:
+        name: test_coverage_react
+        path: ./reactapp/testcoverage
         
     - name: Build project React
       if: github.event_name == 'push'
