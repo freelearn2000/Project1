@@ -14,7 +14,6 @@ jobs:
     steps:
     - name: Send Slack Message
       run: |
-       working-directory: ./nodeapp
         curl -X POST \
         -H 'Content-type: application/json' \
         --data '{"text":"New Issue created. <${{github.event.issue.html_url}}|${{github.event.issue.title}}>"}' \
