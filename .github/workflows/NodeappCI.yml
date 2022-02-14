@@ -72,11 +72,11 @@ jobs:
       if: ${{ failure() }}
       uses: nashmaniac/create-issue-action@v1.1
       with:
-        title: Automated Issue from staging deploy
+        title: Automated Issue from project1
         token: ${{secrets.SEMANTIC_TOKEN1}}
-        assignees: ${{github.actor}}
+        assignees: ${{GITHUB_ACTOR}}
         labels: workflow-failed
-        body: This issue was automatically created by GitHub Staging deploy ${{github.sha}}
+        body: This issue was automatically created for test failing(project1) ${{github.sha}}
         
     - name: echo-default-env-variables
       run: |
