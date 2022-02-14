@@ -56,7 +56,7 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         name: test_coverage_react
-        path: ./reactapp/testcoverage
+        directory: ./reactapp/testcoverage
         
     - name: Build project React
       if: github.event_name == 'push'
@@ -75,11 +75,11 @@ jobs:
       if: ${{ failure() }}
       uses: nashmaniac/create-issue-action@v1.1
       with:
-        title: Automated Issue from staging deploy
+        title: Automated Issue for test failure from project1
         token: ${{secrets.SEMANTIC_TOKEN1}}
         assignees: ${{github.actor}}
         labels: workflow-failed
-        body: This issue was automatically created by GitHub Staging deploy ${{github.actor}}
+        body:  Automated Issue for test failure from project1 ${{github.actor}}
         
     - name: echo-default-env-variables
       run: |
