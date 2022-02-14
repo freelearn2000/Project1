@@ -36,21 +36,24 @@ jobs:
          
     - name: Do Code Analysis NodeApp
       run: echo "Do code analysis here..."
-
-    - name: Upload Code coverage as Artifact
-      uses: actions/upload-artifact@v2
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
       with:
-         name: codeanalysis_coverage_react
-         path: ./reactapp/codecoverage
+         name: codeanalysis_coverage_node
+         path: ./nodeapp/codecoverage
       
     - name: Run Tests
       run: npm run test
       working-directory: ./nodeapp
+      
+    - name: add test coverage
+      run: jest --ci --coverage && codecov
 
     - name: Upload Test coverage as Artifact
-      uses: actions/upload-artifact@v2
+      uses: codecov/codecov-action@v1
       with:
-        name: test_coverage_react
+        name: test_coverage_node
         path: ./nodeapp/testcoverage
      
         
