@@ -41,7 +41,7 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
          name: codeanalysis_coverage_node
-         path: ./nodeapp/codecoverage
+         directory: ./nodeapp/codecoverage
       
     - name: Run Tests
       run: npm run test
@@ -55,7 +55,7 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         name: test_coverage_node
-        path: ./nodeapp/testcoverage
+        directory: ./nodeapp/testcoverage
      
         
     - name: Build project Node
@@ -75,7 +75,7 @@ jobs:
       if: ${{ failure() }}
       uses: nashmaniac/create-issue-action@v1.1
       with:
-        title: Automated Issue from project1
+        title: Automated Issue from Project1
         token: ${{secrets.SEMANTIC_TOKEN1}}
         assignees: ${{github.actor}}
         labels: workflow-failed
