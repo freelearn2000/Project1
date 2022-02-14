@@ -1,4 +1,4 @@
-name: Reactapp CI
+name: Nodeapp CI
 
 on:
  push:
@@ -30,56 +30,56 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
        
-    - name: Install dependencies ReactApp
+    - name: Install dependencies NodeApp
       run: npm install
-      working-directory: ./reactapp
+      working-directory: ./nodeapp
          
-    - name: Do Code Analysis ReactApp
+    - name: Do Code Analysis NodeApp
       run: echo "Do code analysis here..."
-
+      
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
-         name: codeanalysis_coverage_react
-         directory: ./reactapp/codecoverage
+         name: codeanalysis_coverage_node
+         directory: ./nodeapp/codecoverage
       
     - name: Run Tests
       run: npm run test
-      working-directory: ./reactapp
+      working-directory: ./nodeapp
       
     - name: add test coverage
       run: npm test -- --coverage
-      working-directory: ./reactapp
-
+      working-directory: ./nodeapp
 
     - name: Upload Test coverage as Artifact
       uses: codecov/codecov-action@v1
       with:
-        name: test_coverage_react
-        directory: ./reactapp/testcoverage
+        name: test_coverage_node
+        directory: ./nodeapp/testcoverage
+     
         
-    - name: Build project React
+    - name: Build project Node
       if: github.event_name == 'push'
       run: npm run build --if-present
-      working-directory: ./reactapp
+      working-directory: ./nodeapp
 
     - name: Upload React Build folder as Artifact
       if: github.event_name == 'push'
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: ./reactapp/build
+        path: ./nodeapp/build
        
    
     - name: Create Issue Action
       if: ${{ failure() }}
       uses: nashmaniac/create-issue-action@v1.1
       with:
-        title: Automated Issue for test failure from project1
+        title: Automated Issue from Project1
         token: ${{secrets.SEMANTIC_TOKEN1}}
         assignees: ${{github.actor}}
         labels: workflow-failed
-        body:  Automated Issue for test failure from project1 ${{github.actor}}
+        body: This issue was automatically created for test failing(project1) ${{github.sha}}
         
     - name: echo-default-env-variables
       run: |
