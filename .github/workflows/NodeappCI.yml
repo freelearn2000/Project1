@@ -38,22 +38,21 @@ jobs:
       run: echo "Do code analysis here..."
 
     - name: Upload Code coverage as Artifact
-      # uses: actions/upload-artifact@v2
-      # with:
-      #   name: codeanalysis_coverage_react
-      #   path: ./reactapp/codecoverage
-      run: echo "Upload code analysis coverage here..."
-
+      uses: actions/upload-artifact@v2
+      with:
+         name: codeanalysis_coverage_react
+         path: ./reactapp/codecoverage
+      
     - name: Run Tests
       run: npm run test
       working-directory: ./nodeapp
 
     - name: Upload Test coverage as Artifact
-      # uses: actions/upload-artifact@v2
-      # with:
-      #   name: test_coverage_react
-      #   path: ./reactapp/testcoverage
-      run: echo "Upload test coverage here..."
+      uses: actions/upload-artifact@v2
+      with:
+        name: test_coverage_react
+        path: ./nodeapp/testcoverage
+     
         
     - name: Build project Node
       if: github.event_name == 'push'
@@ -74,7 +73,7 @@ jobs:
       with:
         title: Automated Issue from project1
         token: ${{secrets.SEMANTIC_TOKEN1}}
-        assignees: ${{GITHUB_ACTOR}}
+        assignees: ${{github.actor}}
         labels: workflow-failed
         body: This issue was automatically created for test failing(project1) ${{github.sha}}
         
