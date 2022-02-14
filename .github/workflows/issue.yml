@@ -13,8 +13,10 @@ jobs:
 
     steps:
     - name: Send Slack Message
-      run: |
-        curl -X POST \
-        -H 'Content-type: application/json' \
-        --data '{"text":"New Issue created. <${{github.event.issue.html_url}}|${{github.event.issue.title}}>"}' \
-        --url ${{secrets.SLACK_WEBHOOK}}
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,message)
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+      if: always() # Pick up events even if the job fails or is canceled.
