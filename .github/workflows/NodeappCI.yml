@@ -48,7 +48,8 @@ jobs:
       working-directory: ./nodeapp
       
     - name: add test coverage
-      run: jest --ci --coverage && codecov
+      run: npm test -- --coverage
+      working-directory: ./nodeapp
 
     - name: Upload Test coverage as Artifact
       uses: codecov/codecov-action@v1
