@@ -48,7 +48,7 @@ jobs:
       working-directory: ./nodeapp
       
     - name: add test coverage
-      run: npm test -- --coverage
+      run: npm run coverage
       working-directory: ./nodeapp
 
     - name: Upload Test coverage as Artifact
