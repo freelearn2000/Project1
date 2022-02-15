@@ -48,18 +48,18 @@ jobs:
       working-directory: ./reactapp
       
     - name: add test coverage
-      run: npm test -- --coverage
+      run: npm run coverage
       working-directory: ./reactapp
       
-    - name: Create Issue Action
-      if: ${{ codecoverage<80 }} # only run codecoverage lessthan 80
-      uses: nashmaniac/create-issue-action@v1.1
-      with:
-       title: Code coverage less than 80%
-       token: ${{secrets.GITHUB_TOKEN}}
-       assignees: ${{github.actor}}
-       labels: refactoring-needed, help needed
-       body: codecoverage ${{github.sha}}
+    ##- name: Create Issue Action
+      #if: ${{ codecoverage<80 }} # only run codecoverage lessthan 80
+      #uses: nashmaniac/create-issue-action@v1.1
+      #with:
+       #title: Code coverage less than 80%
+       #token: ${{secrets.GITHUB_TOKEN}}
+       #assignees: ${{github.actor}}
+       #labels: refactoring-needed, help needed
+       #body: codecoverage ${{github.sha}}
 
     - name: Upload Test coverage as Artifact
       uses: codecov/codecov-action@v1
