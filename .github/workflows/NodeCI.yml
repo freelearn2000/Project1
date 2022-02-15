@@ -51,7 +51,7 @@ jobs:
       run: npm run coverage
       working-directory: ./nodeapp
       
-    - name: Create Issue Action
+    #- name: Create Issue Action
       #if: ${{ codecoverage<80 }} # only run codecoverage lessthan 80
       #uses: nashmaniac/create-issue-action@v1.1
       #with:
