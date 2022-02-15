@@ -1,6 +1,6 @@
 import request from "supertest";
-import { Server } from '../../src/server';
-import routerweather from '../../src/routes/v1/weather.route'
+import { Server } from '../../../../src/server';
+import routerweather from '../../../../src/routes/v1/weather.route'
 
 
 let express: any = null;

@@ -1,4 +1,4 @@
-import express, {Application, Request, Response} from "express";
+import express, {Request, Response} from "express";
 import routerWeather from './routes/v1/weather.route';
 
 
