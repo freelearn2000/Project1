@@ -1,4 +1,5 @@
 import express, {Application, Request, Response} from "express";
+import routerWeather from './routes/v1/weather.route';
 
 
 export class Server {
@@ -16,6 +17,8 @@ export class Server {
     }
 
     private addRoutes( ) {
+        
+        this.express.use( `/api/v1/weather`, routerWeather); 
         this.express.post('/api/users', (request: Request, response: Response) => {
 
             // Retreive username & passowrd from body
