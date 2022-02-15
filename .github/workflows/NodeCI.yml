@@ -57,15 +57,15 @@ jobs:
         name: test_coverage_node
         directory: ./nodeapp/testcoverage
         
-    - name: Create Issue Action
-      if: ${{ coverage<80 }} # only run codecoverage lessthan 80
-      uses: nashmaniac/create-issue-action@v1.1
-      with:
-       title: Code coverage less than 80%
-       token: ${{secrets.GITHUB_TOKEN}}
-       assignees: ${{github.actor}}
-       labels: refactoring-needed, help needed
-       body: codecoverage ${{github.sha}}
+    #- name: Create Issue Action
+      #if: ${{ coverage<80 }} # only run codecoverage lessthan 80
+      #uses: nashmaniac/create-issue-action@v1.1
+      #with:
+       #title: Code coverage less than 80%
+       #token: ${{secrets.GITHUB_TOKEN}}
+       #assignees: ${{github.actor}}
+       #labels: refactoring-needed, help needed
+       #body: codecoverage ${{github.sha}}
      
         
     - name: Build project Node
