@@ -2,6 +2,7 @@ import express, {Request, Response} from "express";
 import routerWeather from './routes/v1/weather.route';
 import routerBlogs from './routes/v1/blogs.route';
 import routerProjects from './routes/v1/projects.route';
+import routerNews from './routes/v1/news.route';
 
 
 
@@ -24,6 +25,7 @@ export class Server {
         this.express.use(`/api/v1/blogs`, routerBlogs)
         this.express.use( `/api/v1/projects`, routerProjects);
         this.express.use( `/api/v1/weather`, routerWeather); 
+        this.express.use( `/api/v1/news`, routerNews);
         this.express.post('/api/users', (request: Request, response: Response) => {
 
             // Retreive username & passowrd from body
