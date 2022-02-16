@@ -78,7 +78,7 @@ jobs:
        
    
     - name: Create Issue Action
-      if: ${{ failure() }}
+      if: ${{ github.action_status == 'failure' }}
       uses: nashmaniac/create-issue-action@v1.1
       with:
         title: Automated Issue from Project1
@@ -94,3 +94,4 @@ jobs:
           echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
           echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
           echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+          echo "ISSUE: ${{ github.event.issue.html_url }}"
