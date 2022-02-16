@@ -34,8 +34,8 @@ jobs:
       run: npm install
       working-directory: ./nodeapp
          
-    - name: Do Code Analysis NodeApp
-      run: echo "Do code analysis here..."
+    #- name: Do Code Analysis NodeApp
+    #  run: echo "Do code analysis here..."
       
     #- name: Upload coverage to Codecov
     #  uses: codecov/codecov-action@v1
