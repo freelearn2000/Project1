@@ -45,6 +45,7 @@ jobs:
       
     - name: Run Tests
       run: npm run test
+      id: test
       working-directory: ./nodeapp
       
     - name: Add test coverage
@@ -78,7 +79,7 @@ jobs:
        
    
     - name: Create Issue Action
-      if: ${{ failure() }}
+      if: steps.test.outcome=='failure'
       uses: nashmaniac/create-issue-action@v1.1
       with:
         title: Automated Issue for test failure from project1
