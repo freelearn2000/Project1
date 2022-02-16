@@ -77,6 +77,7 @@ describe('PATCH /api/v1/users/:id', () => {
     test('should respond with 200 status code if place is updated', async () => {
 
         const response = await request(express.use(routerweather)).patch('/25').send({ place: 'Sydney' });
+        
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBeDefined();
     });
