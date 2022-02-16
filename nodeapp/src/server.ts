@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import routerWeather from './routes/v1/weather.route';
 import routerBlogs from './routes/v1/blogs.route';
+import routerProjects from './routes/v1/projects.route';
 
 
 
@@ -21,6 +22,7 @@ export class Server {
     private addRoutes( ) {
         
         this.express.use(`/api/v1/blogs`, routerBlogs)
+        this.express.use( `/api/v1/projects`, routerProjects);
         this.express.use( `/api/v1/weather`, routerWeather); 
         this.express.post('/api/users', (request: Request, response: Response) => {
 
