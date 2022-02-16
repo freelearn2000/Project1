@@ -37,17 +37,17 @@ jobs:
     - name: Do Code Analysis NodeApp
       run: echo "Do code analysis here..."
       
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-         name: codeanalysis_coverage_node
-         directory: ./nodeapp/codecoverage
+    #- name: Upload coverage to Codecov
+    #  uses: codecov/codecov-action@v1
+    #  with:
+    #    name: codeanalysis_coverage_node
+    #    directory: ./nodeapp/codecoverage
       
     - name: Run Tests
       run: npm run test
       working-directory: ./nodeapp
       
-    - name: add test coverage
+    - name: Add test coverage
       run: npm run coverage
       working-directory: ./nodeapp
     
@@ -58,25 +58,25 @@ jobs:
         directory: ./nodeapp/testcoverage
         
     #- name: Create Issue Action
-      #if: ${{ coverage<80 }} # only run codecoverage lessthan 80
-      #uses: nashmaniac/create-issue-action@v1.1
-      #with:
-       #title: Code coverage less than 80%
-       #token: ${{secrets.GITHUB_TOKEN}}
-       #assignees: ${{github.actor}}
-       #labels: refactoring-needed, help needed
-       #body: codecoverage ${{github.sha}}
+    #  if: ${{ coverage<80 }} # only run codecoverage lessthan 80
+    #  uses: nashmaniac/create-issue-action@v1.1
+    #  with:
+    #     title: Code coverage less than 80%
+    #     token: ${{secrets.GITHUB_TOKEN}}
+    #     assignees: ${{github.actor}}
+    #     labels: refactoring-needed, help needed
+    #     body: codecoverage ${{github.sha}}
      
         
-    - name: Build project Node
-      run: npm run build 
-      working-directory: ./nodeapp
+    #- name: Build project Node
+    #  run: npm run build 
+    #  working-directory: ./nodeapp
 
-    - name: Upload React Build folder as Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: Build
-        path: ./nodeapp/build
+    #- name: Upload React Build folder as Artifact
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: Build
+    #     path: ./nodeapp/build
        
    
     - name: Create Issue Action
