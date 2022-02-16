@@ -79,13 +79,13 @@ jobs:
    
     - name: Create Issue Action
       if: ${{ failure() }}
-      run: |
-          new_issue_url="$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY" --repo "github/freelearn2000/Project1")"
-          echo 'NEW_ISSUE='$new_issue_url >> $GITHUB_ENV
-      env:
-          GITHUB_TOKEN: ${{secrets.SEMANTIC_TOKEN1}}
-          ISSUE_TITLE: ${{ github.event.issue.title }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+        title: Automated Issue for test failure from project1
+        token: ${{secrets.SEMANTIC_TOKEN1}}
+        assignees: ${{github.actor}}
+        labels: workflow-failed
+        body:  Automated Issue for test failure from project1 ${{github.actor}}
         
     - name: echo-default-env-variables
       run: |
