@@ -51,8 +51,9 @@ jobs:
       run: npm run coverage
       working-directory: ./nodeapp
       
-    - name: Test coverage
+    - name: Upload Test coverage
       run: npm run test:coverage
+      working-directory: ./nodeapp
         
     #- name: Create Issue Action
     #  if: ${{ coverage<80 }} # only run codecoverage lessthan 80
