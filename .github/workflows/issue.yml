@@ -17,6 +17,7 @@ jobs:
       with:
         status: ${{ job.status }}
         fields: repo,commit,author,ref,workflow 
+        ISSUE: ${{ github.event.issue.html_url }}
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} 
       if: always() # Pick up events even if the job fails or is canceled.
