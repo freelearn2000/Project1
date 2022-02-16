@@ -78,7 +78,7 @@ jobs:
        
    
     - name: Create Issue Action
-      if: ${{ failure }}
+      if: ${{ failure() }}
       run: |
           new_issue_url="$(gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY" --repo github/docs-content)"
           echo 'NEW_ISSUE='$new_issue_url >> $GITHUB_ENV
