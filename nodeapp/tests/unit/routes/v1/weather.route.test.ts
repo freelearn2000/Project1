@@ -13,7 +13,7 @@ afterAll(() => {
     express = null;
 });
 
-describe('POST /api/v1/users', () => {
+describe('POST /api/v1/weather', () => {
 
     test('should respond with 200 status code if weather & place correctly given', async () => {
 
@@ -22,7 +22,7 @@ describe('POST /api/v1/users', () => {
         expect(response.statusCode).toBe(200);
     });
 
-    test('should respond with 400 status code if weather & place missing', async () => {
+    test('should respond with 400 status code if weather or place missing', async () => {
 
         const response = await request(express.use(routerweather)).post('/').send({ password: '123' });
         expect(response.statusCode).toBe(400);
@@ -35,7 +35,7 @@ describe('POST /api/v1/users', () => {
     });
 });
 
-describe('GET /api/v1/users', () => {
+describe('GET /api/v1/weather', () => {
 
     test('should respond with 200 status code if weather & place correctly given', async () => {
 
@@ -53,46 +53,47 @@ describe('GET /api/v1/users', () => {
 
 });
 
-describe('PATCH /api/v1/users/:id', () => {
+describe('PATCH /api/v1/weather/:id', () => {
 
-    test('should respond with 400 status code if id not given', async () => {
+    test('should respond with 404 status code if id not given', async () => {
 
         const response = await request(express.use(routerweather)).patch('/').send({ place: 'Sydney', weather: 'Rainy' });
         expect(response.statusCode).toBe(404);
     });
 
-    test('should respond with 200 status code if weather & place updated', async () => {
+    test('should respond with 200 status code if weather & place got updated', async () => {
 
         const response = await request(express.use(routerweather)).patch('/25').send({ place: 'Sydney', weather: 'Rainy' });
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBeDefined();
     });
 
-    test('should respond with 200 status code if weather is updated', async () => {
+    test('should respond with 200 status code if weather is updated on given id', async () => {
 
         const response = await request(express.use(routerweather)).patch('/25').send({ weather: 'Rainy' });
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBeDefined();
     });
-    test('should respond with 200 status code if place is updated', async () => {
+    test('should respond with 200 status code if place is updated on given id', async () => {
 
         const response = await request(express.use(routerweather)).patch('/25').send({ place: 'Sydney' });
+        
         expect(response.statusCode).toBe(200);
         expect(response.body.message).toBeDefined();
     });
 
 });
 
-describe('DELETE /api/v1/users/:id', () => {
+describe('DELETE /api/v1/weather/:id', () => {
 
-    test('should respond with 400 status code if id not given', async () => {
+    test('should respond with 404 status code if id not given', async () => {
 
         const response = await request(express.use(routerweather)).delete('/').send();
 
         expect(response.statusCode).toBe(404);
     });
 
-    test('should respond with 200 status code if weather data is deleted', async () => {
+    test('should respond with 200 status code if weather data of given id is deleted', async () => {
 
         const response = await request(express.use(routerweather)).delete('/25').send();
         expect(response.body.message).toBeDefined();

@@ -7,7 +7,9 @@
       "module": "commonjs",
       "moduleResolution": "node",
       "esModuleInterop": true,
-      "target": "es2015"                                                         
+      "target": "es2015",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,                                                        
     },
     "include": ["src/**/*"]
 }
