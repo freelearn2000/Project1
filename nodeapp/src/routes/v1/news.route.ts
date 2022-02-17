@@ -6,6 +6,8 @@ import express from 'express';
 
 
 let router = express.Router( );
+
+// API Endpoint for '/news'
 router.post('/', async( request, response ) => {
 
     // Retreive title & content from body
@@ -17,7 +19,7 @@ router.post('/', async( request, response ) => {
         return;
     }
 
-    // Save to db & collect user info & send to client
+    // Save to db & collect news data & send to client
     response.send( {message : `news data saved to database`} );
 });
 
@@ -27,11 +29,9 @@ router.get('/', async( request, response ) => {
 });
 
 router.get('/:id', async( request, response ) => {
+
    const id = request.params.id;
-   if ( !id ) {
-       response.send( 404 );
-       return;
-   }
+   
    response.send( {message : `news data fetched from database`} );
 });
 
@@ -39,10 +39,7 @@ router.patch('/:id', async( request, response ) => {
 
    const id = request.params.id;
    const { title, content } = request.body;
-   if ( !id ) {
-       response.send( 404 );
-       return;
-   }
+   
    if( title && content ) {
        response.send( {message: `title and content updated on id: ${id}`} )
    }
@@ -55,11 +52,9 @@ router.patch('/:id', async( request, response ) => {
 });
 
 router.delete('/:id', async( request, response ) => {
+
    const id = request.params.id;
-   if ( !id ) {
-       response.send( 400 );
-       return;
-   }
+   
    response.send( {message:`news data deleted on id: ${id}`} );
 });
 

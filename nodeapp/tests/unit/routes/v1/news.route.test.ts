@@ -22,7 +22,7 @@ describe('POST /api/v1/news', ( ) => {
         expect( response.statusCode ).toBe( 200 );
     });
 
-    test('should respond with 400 status code if content & title are missing', async () => {
+    test('should respond with 400 status code if title is missing', async () => {
 
         const response = await request(express.use(routerNews)).post('/').send({ content: 'UKnewsContent' });
 
@@ -68,7 +68,7 @@ describe('PATCH /api/v1/news/:id', ( ) => {
         expect(response.statusCode).toBe( 404 );
     });
 
-    test('should respond with 200 status code if title & content of the news with id=2 are updated', async () => {
+    test('should respond with 200 status code if title & content of the news with id = 2 are updated', async () => {
 
         const response = await request( express.use(routerNews) ).patch('/2').send( {title: 'UKnews', content: 'UKnewsContent'} );
 
@@ -77,7 +77,7 @@ describe('PATCH /api/v1/news/:id', ( ) => {
         expect( response.body.message ).toBeDefined( );
     });
 
-    test('should respond with 200 status code if title of the news with id=2 is updated', async () => {
+    test('should respond with 200 status code if title of the news with id = 2 is updated', async () => {
 
         const response = await request( express.use(routerNews) ).patch('/2').send({ title: 'UKnews' });
 
@@ -85,7 +85,7 @@ describe('PATCH /api/v1/news/:id', ( ) => {
 
         expect( response.body.message ).toBeDefined( );
     });
-    test('should respond with 200 status code if content of the news with id=2 is updated', async () => {
+    test('should respond with 200 status code if content of the news with id = 2 is updated', async () => {
 
         const response = await request( express.use(routerNews) ).patch('/2').send( {content: 'UKnewsContent'} );
 
@@ -105,7 +105,7 @@ describe('DELETE /api/v1/news/:id', ( ) => {
         expect( response.statusCode ).toBe( 404 );
     });
 
-    test('should respond with 200 status code if news data with id=2 is deleted', async ( ) => {
+    test('should respond with 200 status code if news data with id = 2 is deleted', async ( ) => {
 
         const response = await request( express.use(routerNews) ).delete('/2').send( );
 
