@@ -29,6 +29,13 @@ describe('POST /api/v1/projects', () => {
         expect(response.statusCode).toBe(400);
     });
 
+    test('should specify json as content type in http header', async() => {
+
+        const response = await request(express.use(routerProjects)).post('/').send( {name: 'Project1', duration: '6 months'} );
+
+        expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    });
+
     test('should contain a string in response body for successfully providing name & duration', async () => {
 
         const response = await request(express.use(routerProjects)).post('/').send( {name: 'Project1', duration: '6 months'} );
@@ -98,7 +105,7 @@ describe('DELETE /api/v1/projects/:id', () => {
         expect(response.statusCode).toBe(404);
     });
 
-    test('should respond with 200 status code if projects data is deleted', async () => {
+    test('should respond with 200 status code if projects with id:1 is deleted', async () => {
 
         const response = await request(express.use(routerProjects)).delete('/1').send();
        

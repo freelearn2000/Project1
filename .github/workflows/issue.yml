@@ -12,12 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Send Slack Message
-      uses: 8398a7/action-slack@v3
+    - name: Report Status
+      if: always()
+      uses: ravsamhq/notify-slack-action@v1
       with:
         status: ${{ job.status }}
-        fields: repo,commit,author,ref,workflow 
-        ISSUE: ${{ github.event.issue.html_url }}
+        message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
+        
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} 
-      if: always() # Pick up events even if the job fails or is canceled.
+       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+       
