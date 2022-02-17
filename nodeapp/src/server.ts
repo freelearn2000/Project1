@@ -4,7 +4,7 @@ import routerBlogs from './routes/v1/blogs.route';
 import routerProjects from './routes/v1/projects.route';
 import routerNews from './routes/v1/news.route';
 import routerBooks from './routes/v1/books.route';
-
+import routerProducts from './routes/v1/products.route';
 
 
 export class Server {
@@ -28,6 +28,7 @@ export class Server {
         this.express.use( `/api/v1/weather`, routerWeather); 
         this.express.use( `/api/v1/news`, routerNews);
         this.express.use( `/api/v1/books`, routerBooks);
+        this.express.use( `/api/v1/products`, routerProducts);
         this.express.post('/api/users', (request: Request, response: Response) => {
 
             // Retreive username & passowrd from body
