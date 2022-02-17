@@ -48,6 +48,16 @@ jobs:
       id: test
       working-directory: ./nodeapp
       
+    - name: Create Issue Action
+      if: steps.test.outcome != 'success'
+      uses: nashmaniac/create-issue-action@v1.1
+      with:
+        title: Automated Issue for test failure from project1
+        token: ${{secrets.SEMANTIC_TOKEN1}}
+        assignees: ${{github.actor}}
+        labels: workflow-failed
+        body:  Automated Issue for test failure from project1 ${{github.actor}}
+      
     - name: Add test coverage
       run: npm run coverage
       working-directory: ./nodeapp
@@ -77,17 +87,7 @@ jobs:
     #    name: Build
     #     path: ./nodeapp/build
        
-   
-    - name: Create Issue Action
-      if: steps.test.outcome != 'success'
-      uses: nashmaniac/create-issue-action@v1.1
-      with:
-        title: Automated Issue for test failure from project1
-        token: ${{secrets.SEMANTIC_TOKEN1}}
-        assignees: ${{github.actor}}
-        labels: workflow-failed
-        body:  Automated Issue for test failure from project1 ${{github.actor}}
-        
+       
     - name: echo-default-env-variables
       run: |
           echo "Home: ${HOME}"
