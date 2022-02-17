@@ -1,7 +1,7 @@
 import express from 'express';
 // import validationMiddleware from '../../middlewaresponse/validation.middleware';
 // import { WeatherValidator } from '../../models/weather.entity';
-// import { createresponseource, findresponseource, findOneresponseource, patchresponseource, deleteresponseource } from '../../services/weather.service';
+// import { createresource, findresource, findOneresource, patchresource, deleteresource } from '../../services/weather.service';
 // import { handleAsync, EntityNotFoundError } from '../../shared/common';
 
 
@@ -10,7 +10,7 @@ let router = express.Router( );
 // API Endpoint for '/weather'
 router.post('/', async(request, response) => {
 
-     // Retreive username & passowrd from body
+     // Retreive place & weather from body
      const {place, weather} = request.body;
 
      // Validate the data retreived
@@ -30,10 +30,6 @@ router.get('/', async(request, response) => {
 
 router.get('/:id', async(request, response) => {
     const id = request.params.id;
-    if (!id) {
-        response.send(404);
-        return;
-    }
     response.send( { message : `weather data fetched from database` } );
 });
 
@@ -41,10 +37,7 @@ router.patch('/:id', async(request, response) => {
 
     const id = request.params.id;
     const {place, weather} = request.body;
-    if (!id) {
-        response.send(404);
-        return;
-    }
+
     if( place && weather ) {
         response.send( { message: `place and weather updated on id: ${id}` } )
     }
@@ -58,10 +51,6 @@ router.patch('/:id', async(request, response) => {
 
 router.delete('/:id', async(request, response) => {
     const id = request.params.id;
-    if (!id) {
-        response.send(400);
-        return;
-    }
     response.send( {message:`weather data deleted on id: ${id}`} );
 });
 
@@ -71,11 +60,11 @@ router.delete('/:id', async(request, response) => {
 //     const model = request.body;
 
 //     //  Call service
-//     const [ newresponseource, error ] = await handleAsync( createresponseource( model ) );
+//     const [ newresource, error ] = await handleAsync( createresource( model ) );
 
 //     if (error) return next (error);
 
-//     response.send( newresponseource );
+//     response.send( newresource );
 // });
 
 // router.get('/', async(request, response, next) => {
@@ -84,11 +73,11 @@ router.delete('/:id', async(request, response) => {
 //     let options: any = request.query;
 
 //     //  Call service
-//     const [ allresponseources, error ] = await handleAsync( findresponseource( options ) );
+//     const [ allresources, error ] = await handleAsync( findresource( options ) );
 
 //     if ( error ) return next ( error );
 
-//     response.send( allresponseources );
+//     response.send( allresources );
 // });
 
 // router.get('/:id', async(request, response, next) => {
@@ -100,11 +89,11 @@ router.delete('/:id', async(request, response) => {
 //      let options: any = request.query;
 
 //     //  Call service
-//     const [ responseource, error ] = await handleAsync( findOneresponseource( options, id ) );
+//     const [ resource, error ] = await handleAsync( findOneresource( options, id ) );
 //     if ( error ) return next ( error );
   
-//     if ( responseource ) {
-//       response.send( responseource );
+//     if ( resource ) {
+//       response.send( resource );
 //     } else {
 //       next( new EntityNotFoundError(id, 'weather.route->get/:id') );  
 //     }
@@ -115,12 +104,12 @@ router.delete('/:id', async(request, response) => {
 //     const id = Number( request.params.id );
 //     const patchedModel = request.body;
 
-//     const [ responseource, error ] = await handleAsync( patchresponseource( id, patchedModel ) );
+//     const [ resource, error ] = await handleAsync( patchresource( id, patchedModel ) );
 
 //     if (error) return next (error);
  
-//     if ( responseource ) {
-//       response.send( responseource );
+//     if ( resource ) {
+//       response.send( resource );
 //     } else {
 //       next( new EntityNotFoundError( id, ' weather.route->patch/:id ') );  
 //     }
@@ -131,7 +120,7 @@ router.delete('/:id', async(request, response) => {
 
 //     const id = Number(request.params.id);
 
-//     const [ responseult, error ] = await handleAsync( deleteresponseource( id ) );
+//     const [ responseult, error ] = await handleAsync( deleteresource( id ) );
 
 //     if ( error ) return next ( error );
  

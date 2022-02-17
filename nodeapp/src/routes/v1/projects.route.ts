@@ -1,4 +1,4 @@
-import express  from 'express';
+import express, { Request, Response}  from 'express';
 // import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/projects.service';
 // import { handleAsync, EntityNotFoundError  } from '../../shared/common';
 // import validationMiddleware from '../../middlewares/validation.middleware';
@@ -9,7 +9,7 @@ import express  from 'express';
 let router = express.Router( );
 
 // API Endpoint '/projects'
-router.post('/', async(request, response) => {
+router.post('/', async(request: Request, response: Response) => {
 
      // Retreive name & duration from body
      const {name, duration} = request.body;
@@ -24,12 +24,12 @@ router.post('/', async(request, response) => {
      response.send( {message : `projects data saved to database`} );
  });
 
-router.get('/', async(request, response) => {
+router.get('/', async(request: Request, response: Response) => {
     
     response.send( {message : `projects data fetched from database`} );
 });
 
-router.get('/:id', async(request, response) => {
+router.get('/:id', async(request: Request, response: Response) => {
     const id = request.params.id;
     if (!id) {
         response.send(400);
@@ -38,7 +38,7 @@ router.get('/:id', async(request, response) => {
     response.send( {message : `projects data fetched from database`} );
 });
 
-router.patch('/:id', async(request, response) => {
+router.patch('/:id', async(request: Request, response: Response) => {
 
     const id = request.params.id;
     const {name, duration} = request.body;
@@ -57,7 +57,7 @@ router.patch('/:id', async(request, response) => {
     }
 });
 
-router.delete('/:id', async(request, response) => {
+router.delete('/:id', async(request: Request, response: Response) => {
     const id = request.params.id;
     if (!id) {
         response.send(404);
