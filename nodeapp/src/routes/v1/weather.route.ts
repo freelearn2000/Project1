@@ -1,7 +1,7 @@
 import express from 'express';
 // import validationMiddleware from '../../middlewaresponse/validation.middleware';
 // import { WeatherValidator } from '../../models/weather.entity';
-// import { createresource, findresource, findOneresource, patchresource, deleteresource } from '../../services/weather.service';
+// import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/weather.service';
 // import { handleAsync, EntityNotFoundError } from '../../shared/common';
 
 
@@ -60,11 +60,11 @@ router.delete('/:id', async(request, response) => {
 //     const model = request.body;
 
 //     //  Call service
-//     const [ newresource, error ] = await handleAsync( createresource( model ) );
+//     const [ newResource, error ] = await handleAsync( createResource( model ) );
 
 //     if (error) return next (error);
 
-//     response.send( newresource );
+//     response.send( newResource );
 // });
 
 // router.get('/', async(request, response, next) => {
@@ -73,11 +73,11 @@ router.delete('/:id', async(request, response) => {
 //     let options: any = request.query;
 
 //     //  Call service
-//     const [ allresources, error ] = await handleAsync( findresource( options ) );
+//     const [ allResources, error ] = await handleAsync( findResource( options ) );
 
 //     if ( error ) return next ( error );
 
-//     response.send( allresources );
+//     response.send( allResources );
 // });
 
 // router.get('/:id', async(request, response, next) => {
@@ -89,7 +89,7 @@ router.delete('/:id', async(request, response) => {
 //      let options: any = request.query;
 
 //     //  Call service
-//     const [ resource, error ] = await handleAsync( findOneresource( options, id ) );
+//     const [ resource, error ] = await handleAsync( findOneResource( options, id ) );
 //     if ( error ) return next ( error );
   
 //     if ( resource ) {
@@ -104,7 +104,7 @@ router.delete('/:id', async(request, response) => {
 //     const id = Number( request.params.id );
 //     const patchedModel = request.body;
 
-//     const [ resource, error ] = await handleAsync( patchresource( id, patchedModel ) );
+//     const [ resource, error ] = await handleAsync( patchResource( id, patchedModel ) );
 
 //     if (error) return next (error);
  
@@ -120,11 +120,11 @@ router.delete('/:id', async(request, response) => {
 
 //     const id = Number(request.params.id);
 
-//     const [ responseult, error ] = await handleAsync( deleteresource( id ) );
+//     const [ result, error ] = await handleAsync( deleteResource( id ) );
 
 //     if ( error ) return next ( error );
  
-//     if ( responseult.affected ===1 ) {
+//     if ( result.affected ===1 ) {
 //       response.send( {deleted: true} );
 //     } else {
 //       response.send( {deleted: true} );
