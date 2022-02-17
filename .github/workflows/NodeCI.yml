@@ -79,7 +79,7 @@ jobs:
        
    
     - name: Create Issue Action
-      if: steps.test.outcome=='failure'
+      if: steps.test.outcome != 'success'
       uses: nashmaniac/create-issue-action@v1.1
       with:
         title: Automated Issue for test failure from project1
