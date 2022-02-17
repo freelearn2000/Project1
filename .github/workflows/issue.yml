@@ -1,4 +1,4 @@
-name: Notify On Issue
+name: Test failed
 
 on:
   issues:
