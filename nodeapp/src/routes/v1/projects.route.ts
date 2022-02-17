@@ -30,11 +30,9 @@ router.get('/', async(request: Request, response: Response) => {
 });
 
 router.get('/:id', async(request: Request, response: Response) => {
+    
     const id = request.params.id;
-    if (!id) {
-        response.send(400);
-        return;
-    }
+
     response.send( {message : `projects data fetched from database`} );
 });
 
@@ -42,10 +40,7 @@ router.patch('/:id', async(request: Request, response: Response) => {
 
     const id = request.params.id;
     const {name, duration} = request.body;
-    if (!id) {
-        response.send(404);
-        return;
-    }
+    
     if( name && duration ) {
         response.send( {message: `name and duration updated on id: ${id}`} )
     }
@@ -58,11 +53,9 @@ router.patch('/:id', async(request: Request, response: Response) => {
 });
 
 router.delete('/:id', async(request: Request, response: Response) => {
+    
     const id = request.params.id;
-    if (!id) {
-        response.send(404);
-        return;
-    }
+    
     response.send( {message:`projects data deleted on id: ${id}`} );
 });
 
