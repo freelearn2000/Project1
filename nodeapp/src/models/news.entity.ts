@@ -2,16 +2,16 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { IsNotEmpty, IsString } from 'class-validator';
 
 
-@Entity()
+@Entity( )
 export class News {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn( )
     id?: number;
 
-    @Column()
+    @Column( )
     title?: string;
 
-    @Column()
+    @Column( )
     content?: string;
 }
 
