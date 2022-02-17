@@ -30,7 +30,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
        
-    - name: Install dependencies NodeApp
+    - name: Install NodeApp dependencies
       run: npm install
       working-directory: ./nodeapp
          
@@ -48,16 +48,24 @@ jobs:
       id: test
       working-directory: ./nodeapp
       continue-on-error: true
+
+    - name: Deploy Test Report to GitHub Page
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
+        publish_dir: ./nodeapp/testreports
+        publish_branch: gh-pages
     
-    - name: Create Issue Action
+    - name: Create Issue (If Test Fail)
       if: steps.test.outcome != 'success'
       uses: nashmaniac/create-issue-action@v1.1
       with:
-        title: Automated Issue for test failure from project1
+        title: Automated Issue
         token: ${{secrets.SEMANTIC_TOKEN1}}
         assignees: ${{github.actor}}
-        labels: workflow-failed
-        body:  Automated Issue for test failure from project1 ${{github.actor}}
+        labels: test-failed
+        body:  '[Test Failed Report is out.](https://freelearn2000.github.io/Project1/index.html)'
         
     - name: Report Status
       if: always()
@@ -71,13 +79,13 @@ jobs:
       env:
        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
       
-    - name: Add test coverage
-      run: npm run coverage
-      working-directory: ./nodeapp
+    # - name: Add test coverage
+    #   run: npm run coverage
+    #   working-directory: ./nodeapp
       
-    - name: Upload Test coverage
-      run: npm run test:coverage
-      working-directory: ./nodeapp
+    # - name: Upload Test coverage
+    #   run: npm run test:coverage
+    #   working-directory: ./nodeapp
         
     #- name: Create Issue Action
     #  if: ${{ coverage<80 }} # only run codecoverage lessthan 80

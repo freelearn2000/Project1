@@ -29,20 +29,6 @@ export class Server {
         this.express.use( `/api/v1/news`, routerNews);
         this.express.use( `/api/v1/books`, routerBooks);
         this.express.use( `/api/v1/products`, routerProducts);
-        this.express.post('/api/users', (request: Request, response: Response) => {
-
-            // Retreive username & passowrd from body
-            const {username, password} = request.body;
-        
-            // Validate the data retreived
-            if (!username || !password) {
-                response.send(400);
-                return;
-            }
-        
-            // Save to db & collect user info & send to client
-            response.send({userId: "USR0001"});
-        });
     }
 
     public listen( port: number ) {
