@@ -1,11 +1,8 @@
 name: Nodeapp CI
 
 on:
- push:
+ [push,pull_request]
    
- pull_request:
-   
-      
 env:
   NODE_VERSION: '16.x'                                             # set this to the node version to use
 
