@@ -27,6 +27,7 @@
     "express": "4.17.2",
     "express-mung": "0.5.1",
     "jest": "27.5.1",
+    "jest-html-reporter": "^3.4.2",
     "nconf": "0.11.3",
     "njwt": "1.1.0",
     "pg": "8.7.1",
@@ -48,6 +49,7 @@
       "ts-jest": {
         "tsconfig": "./tests/tsconfig.json"
       }
-    }
+    },
+    "testResultsProcessor": "./node_modules/jest-html-reporter"
   }
 }
