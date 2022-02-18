@@ -1,0 +1,7 @@
+{
+    "pageTitle": "Free Learn Test Suite Results",
+    "outputPath": "./testreports/index.html",
+    "includeFailureMsg": true,
+    "includeSuiteFailure": true
+
+}

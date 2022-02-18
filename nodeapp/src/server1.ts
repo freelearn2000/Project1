@@ -29,20 +29,6 @@ const server = express( );
 //     response.send('Welcome to our User APIs!');
 // });
 
-server.post('/api/users', (request: Request, response: Response) => {
-
-    // Retreive username & passowrd from body
-    const {username, password} = request.body;
-
-    // Validate the data retreived
-    if (!username || !password) {
-        response.send(400);
-        return;
-    }
-
-    // Save to db & collect user info & send to client
-    response.send({userId: "USR0001"});
-});
 
 // logger.info( `Environment : ${nconf.get('NODE_ENV')}` );
 
