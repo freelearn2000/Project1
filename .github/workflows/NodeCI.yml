@@ -7,7 +7,7 @@ on:
     branches: [develop, master]
       
 env:
-  NODE_VERSION: '17.x'                                             # set this to the node version to use
+  NODE_VERSION: '14.x'                                             # set this to the node version to use
 
 jobs:
   build:
