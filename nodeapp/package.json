@@ -6,10 +6,10 @@
   "scripts": {
     "build": "tsc --composite false",
     "test": "jest",
-    "coverage": "jest --coverage",
-    "test:coverage": "jest --silent --testLocationInResults --ci --all --coverage --json --outputFile=\"report.json\"",
+    "test:coverage": "jest --collectCoverage",
+    "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage --json --outputFile=\"report.json\"",
     "start": "ts-node src/index.ts",
-    "pstart": "node index.js"
+    "start:prod": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -50,6 +50,23 @@
         "tsconfig": "./tests/tsconfig.json"
       }
     },
+    "verbose": true,
+    "roots": ["./src/", "./tests/"],
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!**/reports/**",
+      "!**/index.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 20,
+        "functions":20,
+        "lines": 20,
+        "statements": 20
+      }
+    },
+    "coverageDirectory": "./reports/coverage",
     "testResultsProcessor": "./node_modules/jest-html-reporter"
   }
 }

@@ -1,5 +1,5 @@
 import winston from 'winston';
-import nconf from '../shared/config';
+import nconf from './config';
 
 
 const mycustomLevels = {
@@ -16,7 +16,7 @@ const mycustomLevels = {
         debug: 'grey'
     }
 };
-
+//
 const logConfiguration = {
     levels: mycustomLevels.levels,
     format: winston.format.combine(
