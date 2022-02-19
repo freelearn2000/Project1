@@ -16,7 +16,7 @@ const mycustomLevels = {
         debug: 'grey'
     }
 };
-
+//
 const logConfiguration = {
     levels: mycustomLevels.levels,
     format: winston.format.combine(
