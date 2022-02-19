@@ -1,16 +1,24 @@
-name: Nodeapp CI
+name: Node App CI
 
 on:
- [push,pull_request]
-   
+  pull_request:
+    types: [opened, reopened]
+    branches: [develop, master]
+
 env:
-  NODE_VERSION: '16.x'                                             # set this to the node version to use
+  NODE_VERSION: '16.x'
 
 jobs:
-  build:
+
+  Job1-NodeApp:
+    name: Node App
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nodeapp
  
     steps:
+
     - name: Checkout repository
       uses: actions/checkout@v2
             
@@ -19,71 +27,72 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
        
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-       
-    - name: Install NodeApp dependencies
-      run: npm install
-      working-directory: ./nodeapp
-         
-    #- name: Do Code Analysis NodeApp
-    #  run: echo "Do code analysis here..."
+    - name: Install App dependencies
+      run: npm ci
       
-    #- name: Upload coverage to Codecov
-    #  uses: codecov/codecov-action@v1
-    #  with:
-    #    name: codeanalysis_coverage_node
-    #    directory: ./nodeapp/codecoverage
-      
-    - name: Run Tests
-      run: npm run test
+    - name: Run Unit Tests
       id: test
-      working-directory: ./nodeapp
-      continue-on-error: true
+      run: npm test
+      env:
+        CI: true
+      # continue-on-error: true
 
-    - name: Deploy Test Report to GitHub Page
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run test:coverage
+      env:
+        CI: true
+
+    - name: Deploy Unit Test Report/Coverage to GitHub Page
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
-        publish_dir: ./nodeapp/testreports
+        publish_dir: ./nodeapp/reports
         publish_branch: gh-pages
-    
-    - name: Create Issue (If Test Fail)
-      if: steps.test.outcome != 'success'
-      uses: nashmaniac/create-issue-action@v1.1
-      with:
-        title: Automated Issue
-        token: ${{secrets.SEMANTIC_TOKEN1}}
-        assignees: ${{github.actor}}
-        labels: test-failed
-        body:  '[Test Failed Report is out.](https://freelearn2000.github.io/Project1/index.html)'
-        
-    - name: Send Error messge to  Slack
-      if: steps.test.outcome != 'success'
-      id: slack
-      uses: slackapi/slack-github-action@v1.18.0
-      with:
-        payload: |
-          {
-            "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
-                }
-              }
-            ]
-          }
+
+    - name: Create Issue (If Test/Coverage Fail)
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      uses: JasonEtco/create-an-issue@v2
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Node App Tests/Coverage Failed
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/index.html)
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/coverage/lcov-report/index.html)
+      with:
+        assignees: ${{github.actor}}
+
+    # - name: Create Issue (If Test Fail)
+    #   if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+    #   uses: nashmaniac/create-issue-action@v1.1
+    #   with:
+    #     title: Automated Issue - Node App Tests/Coverage Failed
+    #     token: ${{secrets.SEMANTIC_TOKEN1}}
+    #     assignees: ${{github.actor}}
+    #     labels: test
+    #     body:  '[Test Failed Report is out.](https://freelearn2000.github.io/Project1/index.html)'
+        
+    # - name: Send Error messge to  Slack
+    #   if: steps.test.outcome != 'success'
+    #   id: slack
+    #   uses: slackapi/slack-github-action@v1.18.0
+    #   with:
+    #     payload: |
+    #       {
+    #         "blocks": [
+    #           {
+    #             "type": "section",
+    #             "text": {
+    #               "type": "mrkdwn",
+    #               "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
+    #             }
+    #           }
+    #         ]
+    #       }
+    #   env:
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       
     # - name: Add test coverage
     #   run: npm run coverage
@@ -115,11 +124,11 @@ jobs:
     #     path: ./nodeapp/build
        
        
-    - name: echo-default-env-variables
-      run: |
-          echo "Home: ${HOME}"
-          echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
-          echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
-          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
-          echo "ISSUE: ${{ github.event.issue.html_url }}"
+    # - name: echo-default-env-variables
+    #   run: |
+    #       echo "Home: ${HOME}"
+    #       echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
+    #       echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
+    #       echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+    #       echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+    #       echo "ISSUE: ${{ github.event.issue.html_url }}"
