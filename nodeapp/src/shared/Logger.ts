@@ -1,5 +1,5 @@
 import winston from 'winston';
-import nconf from '../shared/config';
+import nconf from './config';
 
 
 const mycustomLevels = {
