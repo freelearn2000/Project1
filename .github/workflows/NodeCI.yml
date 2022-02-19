@@ -64,17 +64,26 @@ jobs:
         labels: test-failed
         body:  '[Test Failed Report is out.](https://freelearn2000.github.io/Project1/index.html)'
         
-    - name: Report Status
-      if: always()
-      uses: ravsamhq/notify-slack-action@v1
+    - name: Send Error messge to  Slack
+      if: steps.test.outcome != 'success'
+      id: slack
+      uses: slackapi/slack-github-action@v1.18.0
       with:
-        status: ${{ job.steps.test.status }} 
-        notification_title: '{workflow} has {status_message}'
-        message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
-        footer: '[Test Report is out.](https://freelearn2000.github.io/Project1/index.html)'
-        
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
+                }
+              }
+            ]
+          }
       env:
-       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       
     # - name: Add test coverage
     #   run: npm run coverage
