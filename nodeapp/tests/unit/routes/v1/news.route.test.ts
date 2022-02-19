@@ -13,103 +13,106 @@ afterAll(( ) => {
     express = null;
 });
 
-describe('POST /api/v1/news', ( ) => {
+describe('/api/v1/news', ( ) => {
 
-    test('should respond with 200 status code if content & title are correctly given', async ( ) => {
+    describe('POST', ( ) => {
 
-        const response = await request( express.use(routerNews) ).post('/').send( {title: 'UKnews', content: 'UKnewsContent'} );
+        test('should respond with 200 status code if content & title are correctly given', async ( ) => {
 
-        expect( response.statusCode ).toBe( 200 );
+            const response = await request( express.use(routerNews) ).post('/').send( {title: 'UKnews', content: 'UKnewsContent'} );
+
+            expect( response.statusCode ).toBe( 200 );
+        });
+
+        test('should respond with 400 status code if title is missing', async () => {
+
+            const response = await request(express.use(routerNews)).post('/').send({ content: 'UKnewsContent' });
+
+            expect( response.statusCode ).toBe( 400 );
+        });
+
+        test('should contain a string in response body for successfully providing title & content', async () => {
+
+            const response = await request( express.use(routerNews) ).post('/').send( {title: 'UKnews', content: 'UKnewsContent'} );
+
+            expect( response.body.message ).toBeDefined( );
+        });
     });
 
-    test('should respond with 400 status code if title is missing', async () => {
+    describe('GET', ( ) => {
 
-        const response = await request(express.use(routerNews)).post('/').send({ content: 'UKnewsContent' });
+        test('should respond with 200 status code if weather & place correctly fetched', async ( ) => {
 
-        expect( response.statusCode ).toBe( 400 );
+            const response = await request(express.use(routerNews)).get('/').send();
+
+            expect( response.statusCode ).toBe( 200 );
+
+            expect( response.body.message ).toBeDefined( );
+        });
+
+        test('should respond with 200 status code if title and content correctly fetched with id = 2', async ( ) => {
+
+            const response = await request(express.use(routerNews)).get('/2').send( );
+
+            expect( response.statusCode ).toBe( 200 );
+
+            expect( response.body.message ).toBeDefined( );
+        });
+
     });
 
-    test('should contain a string in response body for successfully providing title & content', async () => {
+    describe('PATCH', ( ) => {
 
-        const response = await request( express.use(routerNews) ).post('/').send( {title: 'UKnews', content: 'UKnewsContent'} );
+        test('should respond with 404 status code if id not given', async () => {
 
-        expect( response.body.message ).toBeDefined( );
-    });
-});
+            const response = await request( express.use(routerNews) ).patch('/').send({ title: 'UKnews', content: 'UKnewsContent' });
 
-describe('GET /api/v1/news', ( ) => {
+            expect(response.statusCode).toBe( 404 );
+        });
 
-    test('should respond with 200 status code if weather & place correctly fetched', async ( ) => {
+        test('should respond with 200 status code if title & content of the news with id = 2 are updated', async () => {
 
-        const response = await request(express.use(routerNews)).get('/').send();
+            const response = await request( express.use(routerNews) ).patch('/2').send( {title: 'UKnews', content: 'UKnewsContent'} );
 
-        expect( response.statusCode ).toBe( 200 );
+            expect( response.statusCode ).toBe( 200 );
 
-        expect( response.body.message ).toBeDefined( );
-    });
+            expect( response.body.message ).toBeDefined( );
+        });
 
-    test('should respond with 200 status code if title and content correctly fetched with id = 2', async ( ) => {
+        test('should respond with 200 status code if title of the news with id = 2 is updated', async () => {
 
-        const response = await request(express.use(routerNews)).get('/2').send( );
+            const response = await request( express.use(routerNews) ).patch('/2').send({ title: 'UKnews' });
 
-        expect( response.statusCode ).toBe( 200 );
+            expect( response.statusCode ).toBe( 200 );
 
-        expect( response.body.message ).toBeDefined( );
-    });
+            expect( response.body.message ).toBeDefined( );
+        });
+        
+        test('should respond with 200 status code if content of the news with id = 2 is updated', async () => {
 
-});
+            const response = await request( express.use(routerNews) ).patch('/2').send( {content: 'UKnewsContent'} );
 
-describe('PATCH /api/v1/news/:id', ( ) => {
+            expect( response.statusCode ).toBe( 200 );
 
-    test('should respond with 404 status code if id not given', async () => {
+            expect( response.body.message ).toBeDefined( );
+        });
 
-        const response = await request( express.use(routerNews) ).patch('/').send({ title: 'UKnews', content: 'UKnewsContent' });
-
-        expect(response.statusCode).toBe( 404 );
-    });
-
-    test('should respond with 200 status code if title & content of the news with id = 2 are updated', async () => {
-
-        const response = await request( express.use(routerNews) ).patch('/2').send( {title: 'UKnews', content: 'UKnewsContent'} );
-
-        expect( response.statusCode ).toBe( 200 );
-
-        expect( response.body.message ).toBeDefined( );
     });
 
-    test('should respond with 200 status code if title of the news with id = 2 is updated', async () => {
+    describe('DELETE', ( ) => {
 
-        const response = await request( express.use(routerNews) ).patch('/2').send({ title: 'UKnews' });
+        test('should respond with 404 status code if id not given', async ( ) => {
 
-        expect( response.statusCode ).toBe( 200 );
+            const response = await request( express.use(routerNews) ).delete('/').send( );
 
-        expect( response.body.message ).toBeDefined( );
+            expect( response.statusCode ).toBe( 404 );
+        });
+
+        test('should respond with 200 status code if news data with id = 2 is deleted', async ( ) => {
+
+            const response = await request( express.use(routerNews) ).delete('/2').send( );
+
+            expect( response.statusCode ).toBe( 200 );
+        });
     });
-    test('should respond with 200 status code if content of the news with id = 2 is updated', async () => {
-
-        const response = await request( express.use(routerNews) ).patch('/2').send( {content: 'UKnewsContent'} );
-
-        expect( response.statusCode ).toBe( 200 );
-
-        expect( response.body.message ).toBeDefined( );
-    });
-
-});
-
-describe('DELETE /api/v1/news/:id', ( ) => {
-
-    test('should respond with 404 status code if id not given', async ( ) => {
-
-        const response = await request( express.use(routerNews) ).delete('/').send( );
-
-        expect( response.statusCode ).toBe( 404 );
-    });
-
-    test('should respond with 200 status code if news data with id = 2 is deleted', async ( ) => {
-
-        const response = await request( express.use(routerNews) ).delete('/2').send( );
-
-        expect( response.statusCode ).toBe( 200 );
-    });
-
 });

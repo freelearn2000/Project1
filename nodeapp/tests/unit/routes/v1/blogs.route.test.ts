@@ -13,104 +13,107 @@ afterAll(() => {
     express = null;
 });
 
-describe('POST /api/v1/blogs', () => {
+describe('/api/v1/blogs', () => {
 
-    test('should respond with 200 status code if name & content correctly given', async() => {
+    describe('POST', () => {    
 
-        const response = await request(express.use(routerBlogs)).post('/').send( {name: 'Bob', content: 'bob_blog'} );
+        test('should respond with 200 status code if name & content correctly given', async() => {
 
-        expect(response.statusCode).toBe(200);
+            const response = await request(express.use(routerBlogs)).post('/').send( {name: 'Bob', content: 'bob_blog'} );
+
+            expect(response.statusCode).toBe(200);
+        });
+
+        test('should respond with 400 status code if name & content missing', async() => {
+
+            const response = await request(express.use(routerBlogs)).post('/').send( {content: 'bob_blog'} );
+
+            expect(response.statusCode).toBe(400);
+        });
+
+        test('should specify json as content type in http header', async() => {
+
+            const response = await request(express.use(routerBlogs)).post('/').send( {name: 'Bob', content: 'bob_blog'} );
+
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+        });
+
+        test('should contain string in response body for successfully created name & content', async() => {
+
+            const response = await request(express.use(routerBlogs)).post('/').send( {name: 'Bob', content: 'bob_blog'} );
+
+            expect(response.body.message).toBeDefined();
+        });
     });
 
-    test('should respond with 400 status code if name & content missing', async() => {
+    describe('GET', () => {
 
-        const response = await request(express.use(routerBlogs)).post('/').send( {content: 'bob_blog'} );
+        test('should respond with 200 status code if name & content correctly fetched', async () => {
 
-        expect(response.statusCode).toBe(400);
+            const response = await request(express.use(routerBlogs)).get('/').send();
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBeDefined();
+        });
+
+        test('should respond with 200 status code if name & content correctly fetched with id', async () => {
+
+            const response = await request(express.use(routerBlogs)).get('/2').send();
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBeDefined();
+        });
     });
 
-    test('should specify json as content type in http header', async() => {
+    describe('PATCH', () => {
 
-        const response = await request(express.use(routerBlogs)).post('/').send( {name: 'Bob', content: 'bob_blog'} );
+        test('should respond with 404 status code if id not given', async () => {
 
-        expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+            const response = await request(express.use(routerBlogs)).patch('/').send( {name: 'Bob', content: 'bob_blog'} );
+
+            expect(response.statusCode).toBe(404);
+        });
+
+        test('should respond with 200 status code if name & content updated', async () => {
+
+            const response = await request(express.use(routerBlogs)).patch('/2').send( {name: 'Jim', content: 'Jim_blog'} );
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBeDefined();
+        });
+
+        test('should respond with 200 status code if name is updated', async () => {
+
+            const response = await request(express.use(routerBlogs)).patch('/2').send( {name: 'John'} );
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBeDefined();
+        });
+
+        test('should respond with 200 status code if content is updated', async () => {
+
+            const response = await request(express.use(routerBlogs)).patch('/2').send( {content: 'John_blog'} );
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body.message).toBeDefined();
+        });
     });
 
-    test('should contain string in response body for successfully created name & content', async() => {
+    describe('DELETE', () => {
 
-        const response = await request(express.use(routerBlogs)).post('/').send( {name: 'Bob', content: 'bob_blog'} );
+        test('should respond with 404 status code if id not given', async () => {
 
-        expect(response.body.message).toBeDefined();
-    });
-});
+            const response = await request(express.use(routerBlogs)).delete('/').send();
 
-describe('GET /api/v1/blogs', () => {
+            expect(response.statusCode).toBe(404);
+        });
 
-    test('should respond with 200 status code if name & content correctly fetched', async () => {
+        test('should respond with 200 status code if blog with id:2 is deleted', async () => {
 
-        const response = await request(express.use(routerBlogs)).get('/').send();
+            const response = await request(express.use(routerBlogs)).delete('/2').send();
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body.message).toBeDefined();
-    });
-
-    test('should respond with 200 status code if name & content correctly fetched with id', async () => {
-
-        const response = await request(express.use(routerBlogs)).get('/2').send();
-
-        expect(response.statusCode).toBe(200);
-        expect(response.body.message).toBeDefined();
-    });
-});
-
-describe('PATCH /api/v1/blogs/:id', () => {
-
-    test('should respond with 404 status code if id not given', async () => {
-
-        const response = await request(express.use(routerBlogs)).patch('/').send( {name: 'Bob', content: 'bob_blog'} );
-
-        expect(response.statusCode).toBe(404);
-    });
-
-    test('should respond with 200 status code if name & content updated', async () => {
-
-        const response = await request(express.use(routerBlogs)).patch('/2').send( {name: 'Jim', content: 'Jim_blog'} );
-
-        expect(response.statusCode).toBe(200);
-        expect(response.body.message).toBeDefined();
-    });
-
-    test('should respond with 200 status code if name is updated', async () => {
-
-        const response = await request(express.use(routerBlogs)).patch('/2').send( {name: 'John'} );
-
-        expect(response.statusCode).toBe(200);
-        expect(response.body.message).toBeDefined();
-    });
-
-    test('should respond with 200 status code if content is updated', async () => {
-
-        const response = await request(express.use(routerBlogs)).patch('/2').send( {content: 'John_blog'} );
-
-        expect(response.statusCode).toBe(200);
-        expect(response.body.message).toBeDefined();
-    });
-});
-
-describe('DELETE /api/v1/blogs/:id', () => {
-
-    test('should respond with 404 status code if id not given', async () => {
-
-        const response = await request(express.use(routerBlogs)).delete('/').send();
-
-        expect(response.statusCode).toBe(404);
-    });
-
-    test('should respond with 200 status code if blog with id:2 is deleted', async () => {
-
-        const response = await request(express.use(routerBlogs)).delete('/2').send();
-
-        expect(response.statusCode).toBe(201);
+            expect(response.statusCode).toBe(201);
+        });
     });
 });
 
