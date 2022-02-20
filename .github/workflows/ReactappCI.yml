@@ -40,7 +40,9 @@ jobs:
     - name: Run Tests Coverage
       id: coverage
       if: always()
-      run: npm run coverage
+      run: |
+            npm run coverage
+            npm run report
       env:
         CI: true
 
