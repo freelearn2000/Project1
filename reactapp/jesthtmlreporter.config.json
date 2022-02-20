@@ -1,6 +1,6 @@
 {
     "pageTitle": "ReactApp Test Suite Results",
-    "outputPath": "ut-report/index.html",
+    "outputPath": "report/index.html",
     "includeFailureMsg": true,
     "includeSuiteFailure": true
   }
