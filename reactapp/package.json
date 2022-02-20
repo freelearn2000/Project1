@@ -11,6 +11,7 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "jest": "^27.5.1",
+    "jest-html-reporter": "^3.4.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
@@ -21,6 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "report": "set CI=true &&react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
     "coverage": "npm test -- --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
@@ -28,7 +30,8 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
-      "!<rootDir>/path/to/dir/"
+      "!<rootDir>/path/to/dir/",
+      "!**/reports/**"
     ],
     "coverageThreshold": {
       "global": {
@@ -39,7 +42,7 @@
       }
     }
   },
-    "eslintConfig": {
+  "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
@@ -58,4 +61,3 @@
     ]
   }
 }
-
