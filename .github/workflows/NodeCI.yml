@@ -59,8 +59,8 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: Node App Tests/Coverage Failed
-          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html)
-          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/coverage/lcov-report/index.html)
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
 
