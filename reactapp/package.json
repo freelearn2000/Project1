@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "report": "set CI=true &&react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
-    "coverage": "npm test -- --coverage --watchAll=false",
+    "coverage": "npm test -- --coverage --coverageDirectory='./reports/coverage' --watchAll=false",
     "eject": "react-scripts eject"
   },
   "jest": {
