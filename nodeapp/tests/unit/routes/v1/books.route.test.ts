@@ -113,8 +113,9 @@ describe('/api/v1/books', () => {
 
             const response = await request(express.use(routerBooks)).delete('/5').send();
 
-            expect(response.statusCode).toBe(201);
+            expect(response.statusCode).toBe(200);
         });
     });
+    // to
 
 });
