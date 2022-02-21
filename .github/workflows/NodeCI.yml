@@ -1,8 +1,9 @@
 name: Node App CI
 
 on:
- push:
-  paths:
+  pull_request:
+   branches: [develop, master]
+   paths:
       - 'nodeapp/**'
       - '.github/workflows/NodeCI.yml'
 
