@@ -89,11 +89,10 @@ jobs:
     #       }
     #   env:
     #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-     
+    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK 
         
-    #- name: Build project React
-    #  run: npm run build 
+    - name: Build project React
+      run:  npm run build 
 
     #- name: Upload React Build folder as Artifact
     #  uses: actions/upload-artifact@v2
