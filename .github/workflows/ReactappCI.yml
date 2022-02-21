@@ -1,18 +1,23 @@
-name: Reactapp CI
+name: React App CI
 
 on:
   pull_request:
     types: [opened, reopened]
     branches: [develop, master]
-      
 env:
-  NODE_VERSION: '14.x'                                             # set this to the node version to use
+  NODE_VERSION: '16.x'
 
 jobs:
-  build:
+
+  Job1-ReactApp:
+    name: React App
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: reactapp
  
     steps:
+
     - name: Checkout repository
       uses: actions/checkout@v2
             
@@ -21,74 +26,73 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
        
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('nodeapp/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-       
-    - name: Install dependencies ReactApp
-      run: npm install
-      working-directory: ./reactapp
-         
-    - name: Do Code Analysis ReactApp
-      run: echo "Do code analysis here..."
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-         name: codeanalysis_coverage_react
-         directory: ./reactapp/codecoverage
+    - name: Install App dependencies
+      run: npm ci
       
-    - name: Run Tests
-      run: npm run test
-      working-directory: ./reactapp
-   
-    ##- name: Create Issue Action
-      #if: ${{ codecoverage<80 }} # only run codecoverage lessthan 80
-      #uses: nashmaniac/create-issue-action@v1.1
-      #with:
-       #title: Code coverage less than 80%
-       #token: ${{secrets.GITHUB_TOKEN}}
-       #assignees: ${{github.actor}}
-       #labels: refactoring-needed, help needed
-       #body: codecoverage ${{github.sha}}
+    - name: Run Unit Tests
+      id: test
+      run: npm test
+      env:
+        CI: true
+      # continue-on-error: true
 
-    #- name: Upload Test coverage as Artifact
-      #uses: codecov/codecov-action@v1
-     # with:
-        #name: test_coverage_react
-        #directory: ./reactapp/testcoverage
-        
-    - name: Build project React
-      if: github.event_name == 'push'
-      run: npm run build --if-present
-      working-directory: ./reactapp
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run coverage
+      env:
+        CI: true
 
-    - name: Upload React Build folder as Artifact
-      if: github.event_name == 'push'
-      uses: actions/upload-artifact@v2
+    - name: Deploy Unit Test Report/Coverage to GitHub Page
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        name: Build
-        path: ./reactapp/build
-       
-   
-    - name: Create Issue Action
-      if: ${{ failure() }}
-      uses: nashmaniac/create-issue-action@v1.1
+        github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
+        publish_dir: ./reactapp/coverage
+        publish_branch: gh-pages
+        destination_dir: ./reactapp
+
+    - name: Create Issue (If Test/Coverage Fail)
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: React App Tests/Coverage Failed
+          LABEL: test
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/index.html)
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
       with:
-        title: Automated Issue for test failure from project1
-        token: ${{secrets.SEMANTIC_TOKEN1}}
         assignees: ${{github.actor}}
-        labels: workflow-failed
-        body:  Automated Issue for test failure from project1 ${{github.actor}}
+
         
-    - name: echo-default-env-variables
-      run: |
-          echo "Home: ${HOME}"
-          echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
-          echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
-          echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-          echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+    # - name: Send Error messge to  Slack
+    #   if: steps.test.outcome != 'success'
+    #   id: slack
+    #   uses: slackapi/slack-github-action@v1.18.0
+    #   with:
+    #     payload: |
+    #       {
+    #         "blocks": [
+    #           {
+    #             "type": "section",
+    #             "text": {
+    #               "type": "mrkdwn",
+    #               "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
+    #             }
+    #           }
+    #         ]
+    #       }
+    #   env:
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+     
+        
+    #- name: Build project React
+    #  run: npm run build 
+
+    #- name: Upload React Build folder as Artifact
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: Build
+    #     path: ./reactapp/build
+       

@@ -52,7 +52,6 @@ jobs:
         publish_dir: ./nodeapp/reports
         publish_branch: gh-pages
         destination_dir: ./nodeapp
-        keep_files: false
 
     - name: Create Issue (If Test/Coverage Fail)
       if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
@@ -60,28 +59,15 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: Node App Tests/Coverage Failed
+          LABEL: test
           TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html)
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html)
       with:
         assignees: ${{github.actor}}
-
-    - name: Build project Node (If )
-      if: success()
-
-
-    # - name: Create Issue (If Test Fail)
-    #   if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
-    #   uses: nashmaniac/create-issue-action@v1.1
-    #   with:
-    #     title: Automated Issue - Node App Tests/Coverage Failed
-    #     token: ${{secrets.SEMANTIC_TOKEN1}}
-    #     assignees: ${{github.actor}}
-    #     labels: test
-    #     body:  '[Test Failed Report is out.](https://freelearn2000.github.io/Project1/index.html)'
+        
         
     # - name: Send Error messge to  Slack
     #   if: steps.test.outcome != 'success'
-    #   id: slack
     #   uses: slackapi/slack-github-action@v1.18.0
     #   with:
     #     payload: |
