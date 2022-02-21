@@ -89,7 +89,9 @@ jobs:
     #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
         
     - name: Build project Node
+      if: steps.test.outcome == 'success'
       run: npm run build
+      
 
     #- name: Upload React Build folder as Artifact
     #  uses: actions/upload-artifact@v2
