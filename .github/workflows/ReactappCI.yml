@@ -2,8 +2,11 @@ name: React App CI
 
 on:
   pull_request:
-    types: [opened, reopened]
-    branches: [develop, master]
+   branches: [develop, master]
+   paths:
+      - 'reactapp/**'
+      - '.github/workflows/ReactappCI.yml'
+ 
 
 env:
   NODE_VERSION: '16.x'
@@ -61,7 +64,6 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: React App Tests/Coverage Failed
-          LABEL: ReactTest
           TEST_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/index.html)
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
       with:
