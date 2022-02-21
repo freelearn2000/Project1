@@ -1,6 +1,6 @@
 ---
 title: Automated Issue - {{ env.TITLE }}
-labels: test
+labels: {{ env.LABEL }}
 ---
 
 Someone just pushed, oh no! Here's who did it: {{ payload.sender.login }}.
