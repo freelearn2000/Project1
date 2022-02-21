@@ -40,14 +40,14 @@ jobs:
         CI: true
       # continue-on-error: true
 
-    - name: Run Tests Coverage
-      id: coverage
-      if: always()
-      run: |
-            npm run coverage
-            npm run report
-      env:
-        CI: true
+  #  - name: Run Tests Coverage
+  #    id: coverage
+  #    if: always()
+  #    run: |
+  #          npm run coverage
+  #          npm run report
+  #    env:
+  #      CI: true
 
     - name: Deploy Unit Test Report/Coverage to GitHub Page
       if: always()
@@ -59,13 +59,13 @@ jobs:
         destination_dir: ./reactapp
 
     - name: Create Issue (If Test/Coverage Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      if: ${{ always() && steps.test.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: React App Tests/Coverage Failed
           TEST_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/index.html)
-          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
+#          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
 
