@@ -1,9 +1,11 @@
 name: Node App CI
 
 on:
-  pull_request:
-    types: [opened, reopened]
-    branches: [develop, master]
+ push:
+  paths:
+      - 'nodeapp/**'
+      - '.github/workflows/NodeCI.yml'
+ 
 
 env:
   NODE_VERSION: '16.x'
