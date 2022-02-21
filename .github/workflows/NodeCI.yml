@@ -51,6 +51,8 @@ jobs:
         github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
         publish_dir: ./nodeapp/reports
         publish_branch: gh-pages
+        destination_dir: ./nodeapp
+        keep_files: false
 
     - name: Create Issue (If Test/Coverage Fail)
       if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
@@ -58,10 +60,14 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: Node App Tests/Coverage Failed
-          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/index.html)
-          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/coverage/lcov-report/index.html)
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html)
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html)
       with:
         assignees: ${{github.actor}}
+
+    - name: Build project Node (If )
+      if: success()
+
 
     # - name: Create Issue (If Test Fail)
     #   if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}

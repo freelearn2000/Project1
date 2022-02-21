@@ -1,7 +1,9 @@
 name: Reactapp CI
 
 on:
- push
+  pull_request:
+    types: [opened, reopened]
+    branches: [develop, master]
       
 env:
   NODE_VERSION: '14.x'                                             # set this to the node version to use
