@@ -2,8 +2,12 @@ name: React App CI
 
 on:
   pull_request:
-    types: [opened, reopened]
-    branches: [develop, master]
+   branches: [develop, master]
+   paths:
+      - 'reactapp/**'
+      - '.github/workflows/ReactappCI.yml'
+ 
+
 env:
   NODE_VERSION: '16.x'
 
@@ -36,31 +40,32 @@ jobs:
         CI: true
       # continue-on-error: true
 
-    - name: Run Tests Coverage
-      id: coverage
-      if: always()
-      run: npm run coverage
-      env:
-        CI: true
+  #  - name: Run Tests Coverage
+  #    id: coverage
+  #    if: always()
+  #    run: |
+  #          npm run coverage
+  #          npm run report
+  #    env:
+  #      CI: true
 
     - name: Deploy Unit Test Report/Coverage to GitHub Page
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
-        publish_dir: ./reactapp/coverage
+        publish_dir: ./reactapp/reports
         publish_branch: gh-pages
         destination_dir: ./reactapp
 
     - name: Create Issue (If Test/Coverage Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      if: ${{ always() && steps.test.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: React App Tests/Coverage Failed
-          LABEL: test
           TEST_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/index.html)
-          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
+#          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
 
@@ -84,11 +89,11 @@ jobs:
     #       }
     #   env:
     #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-     
+    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK 
         
-    #- name: Build project React
-    #  run: npm run build 
+    - name: Build project React
+      if: steps.test.outcome == 'success'
+      run:  npm run build 
 
     #- name: Upload React Build folder as Artifact
     #  uses: actions/upload-artifact@v2

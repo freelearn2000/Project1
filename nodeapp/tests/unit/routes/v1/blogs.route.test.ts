@@ -112,7 +112,7 @@ describe('/api/v1/blogs', () => {
 
             const response = await request(express.use(routerBlogs)).delete('/2').send();
 
-            expect(response.statusCode).toBe(201);
+            expect(response.statusCode).toBe(200);
         });
     });
 });

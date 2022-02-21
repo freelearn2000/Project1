@@ -3,7 +3,6 @@ import nconf from 'nconf';
 import path from 'path';
 
 
-
 // Read .env file & populate Environment variables
 dotenv.config( );
 

@@ -2,8 +2,10 @@ name: Node App CI
 
 on:
   pull_request:
-    types: [opened, reopened]
-    branches: [develop, master]
+   branches: [develop, master]
+   paths:
+      - 'nodeapp/**'
+      - '.github/workflows/NodeCI.yml'
 
 env:
   NODE_VERSION: '16.x'
@@ -59,9 +61,8 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: Node App Tests/Coverage Failed
-          LABEL: test
-          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html)
-          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html)
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
         
@@ -85,29 +86,11 @@ jobs:
     #   env:
     #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
     #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-      
-    # - name: Add test coverage
-    #   run: npm run coverage
-    #   working-directory: ./nodeapp
-      
-    # - name: Upload Test coverage
-    #   run: npm run test:coverage
-    #   working-directory: ./nodeapp
         
-    #- name: Create Issue Action
-    #  if: ${{ coverage<80 }} # only run codecoverage lessthan 80
-    #  uses: nashmaniac/create-issue-action@v1.1
-    #  with:
-    #     title: Code coverage less than 80%
-    #     token: ${{secrets.GITHUB_TOKEN}}
-    #     assignees: ${{github.actor}}
-    #     labels: refactoring-needed, help needed
-    #     body: codecoverage ${{github.sha}}
-     
-        
-    #- name: Build project Node
-    #  run: npm run build 
-    #  working-directory: ./nodeapp
+    - name: Build project Node
+      if: steps.test.outcome == 'success'
+      run: npm run build
+      
 
     #- name: Upload React Build folder as Artifact
     #  uses: actions/upload-artifact@v2
