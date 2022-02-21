@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/models/project.entity.ts</title>
+    <title>Code coverage report for src/shared/config.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/models</a> project.entity.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/shared</a> config.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -86,14 +86,9 @@
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -102,52 +97,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";</span>
-<span class="cstat-no" title="statement not covered" >import { IsNotEmpty, IsString, IsDefined } from "class-validator";</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import dotenv from 'dotenv';</span>
+<span class="cstat-no" title="statement not covered" >import nconf from 'nconf';</span>
+<span class="cstat-no" title="statement not covered" >import path from 'path';</span>
 &nbsp;
 &nbsp;
+// Read .env file &amp; populate Environment variables
+<span class="cstat-no" title="statement not covered" >dotenv.config( );</span>
 &nbsp;
-@Entity( )
-<span class="cstat-no" title="statement not covered" >export class <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >Project </span>{</span></span>
 &nbsp;
-    @PrimaryGeneratedColumn( )
-<span class="cstat-no" title="statement not covered" >    id?: number;</span>
+<span class="cstat-no" title="statement not covered" >nconf.argv().env();</span>
 &nbsp;
-    @Column( )
-<span class="cstat-no" title="statement not covered" >    name?: string;</span>
-&nbsp;
-    @Column( )
-<span class="cstat-no" title="statement not covered" >    duration?: string;</span>
+<span class="cstat-no" title="statement not covered" >switch ( process.env.NODE_ENV ) {</span>
+    case `production`:
+<span class="cstat-no" title="statement not covered" >        nconf.file(`prod`, path.resolve(__dirname, `../../config/production.json`));</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    case `staging`:
+<span class="cstat-no" title="statement not covered" >        nconf.file(`prod`, path.resolve(__dirname, `../../config/staging.json`));</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    default:
+<span class="cstat-no" title="statement not covered" >        nconf.file(`prod`, path.resolve(__dirname, `../../config/default.json`));</span>
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export class P</span>rojectValidator {
-&nbsp;
-    //@IsDefined( {message:'Name should be defined'})
-    @IsString( {message: 'Name should be a string'} )
-    @IsNotEmpty( {message: 'Name should be defined'} )
-<span class="cstat-no" title="statement not covered" >    name?: string;</span>
-    
-    @IsString( {message: 'Duration should be a string'} )
-    @IsNotEmpty( {message: 'Duration should be defined'} )
-<span class="cstat-no" title="statement not covered" >    duration?: string;</span>
-}</pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >export default nconf;</span>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
