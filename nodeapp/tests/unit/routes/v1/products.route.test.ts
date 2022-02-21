@@ -110,7 +110,7 @@ describe('api/v1/products', () => {
     
             const response = await request(express.use(routerProducts)).delete('/2').send();
     
-            expect(response.statusCode).toBe(201);
+            expect(response.statusCode).toBe(200);
         });
     });
 
