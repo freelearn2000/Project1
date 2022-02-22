@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Server } from './server';
 
 
@@ -9,8 +10,14 @@ export class Bootstrap {
         this.server = new Server( );
     }
 
-    public launchServer( port: number ) {
-        this.server.listen( port );
+    public async launchServer( port: number ) {
+        try {
+            await this.server.initializeDatabase();
+            this.server.listen(port);
+        } catch(error) {
+            console.log('Cannot launch application! :', error)
+        }
+       
     }
 }
 

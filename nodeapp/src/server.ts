@@ -1,4 +1,6 @@
 import express, {Request, Response} from "express";
+import { createConnection } from 'typeorm';
+import config from './typeorm.config';
 import routerWeather from './routes/v1/weather.route';
 import routerBlogs from './routes/v1/blogs.route';
 import routerProjects from './routes/v1/projects.route';
@@ -12,17 +14,27 @@ export class Server {
     public express: any = null;
 
     constructor( ) {
+        console.log(`Initializing application...`);
         this.express = express( );
-        this.addMiddleware();
-        this.addRoutes();
+        this.registerMiddlewares();
+        this.registerRoutes();
     }
 
-    private addMiddleware( ) {
+    public async initializeDatabase( ) {
+        try {
+            await createConnection(config);
+            console.log(`Database connected!`);
+        } catch( error ) {
+            console.log(`Database connection failed : `, error);
+            throw error;
+        }
+    }
+
+    private registerMiddlewares( ) {
         this.express.use( express.json() );
     }
 
-    private addRoutes( ) {
-        
+    private registerRoutes( ) {
         this.express.use(`/api/v1/blogs`, routerBlogs)
         this.express.use( `/api/v1/projects`, routerProjects);
         this.express.use( `/api/v1/weather`, routerWeather); 
