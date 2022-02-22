@@ -1,7 +1,7 @@
 import { Application } from 'express';
 import request from "supertest";
-import { Server } from '../../../../src/server';
-import routerBlogs from '../../../../src/routes/v1/blogs.route';
+import { Server } from '../../../../server';
+import routerBlogs from '../../../../routes/v1/blogs.route';
 
 
 let express: Application = null;

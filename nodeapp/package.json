@@ -8,7 +8,8 @@
     "test": "jest",
     "test:coverage": "jest --collectCoverage",
     "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage --json --outputFile=\"report.json\"",
-    "start": "ts-node src/index.ts",
+    "start1": "ts-node src/index.ts",
+    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start:prod": "node index.js"
   },
   "keywords": [],
@@ -44,32 +45,30 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node",
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "./tests/tsconfig.json"
-      }
-    },
-    "verbose": true,
-    "roots": [
-      "./src/",
-      "./tests/"
+    "testMatch": [
+      "**/?(*.)+(test).ts",
+      "!**/config/**"
     ],
+    "resetMocks": true,
+    "clearMocks": true,
+    "verbose": true,
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
-      "!**/node_modules/**",
-      "!**/reports/**",
-      "!**/index.ts"
-    ],
-    "coverageThreshold": {
+      "!**/index.ts",
+      "!**/ormconfig.ts",
+      "!**/src/models/**",
+      "!**/config/**"
+  ],
+  "coverageThreshold": {
       "global": {
-        "branches": 20,
-        "functions": 20,
-        "lines": 20,
-        "statements": 20
+          "functions": 50,
+          "statements": 50,
+          "branches":40,
+          "lines": 50
       }
-    },
-    "coverageDirectory": "./reports/coverage",
-    "testResultsProcessor": "./node_modules/jest-html-reporter"
+  },
+  "coverageReporters": ["html"],
+  "coverageDirectory": "./reports/coverage",
+  "testResultsProcessor": "./node_modules/jest-html-reporter"
   }
 }

@@ -13,11 +13,10 @@ export class Bootstrap {
     public async launchServer( port: number ) {
         try {
             await this.server.initializeDatabase();
-            this.server.listen(port);
+            this.server.listen(Number(process.env.PORT));
         } catch(error) {
             console.log('Cannot launch application! :', error)
         }
-       
     }
 }
 
