@@ -10,7 +10,7 @@ export class Bootstrap {
         this.server = new Server( );
     }
 
-    public async launchServer( port: number ) {
+    public async launchServer( ) {
         try {
             await this.server.initializeDatabase();
             this.server.listen(Number(process.env.PORT));
@@ -20,5 +20,5 @@ export class Bootstrap {
     }
 }
 
-new Bootstrap().launchServer(8080);
+new Bootstrap().launchServer();
 
