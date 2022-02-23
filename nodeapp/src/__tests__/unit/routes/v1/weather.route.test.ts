@@ -2,7 +2,7 @@ import { Application } from 'express';
 import request from "supertest";
 import { Server } from '../../../../server';
 import routerweather from '../../../../routes/v1/weather.route'
-import { EventSubscriber } from 'typeorm';
+
 
 let express: Application = null;
 let server: Server = null;
