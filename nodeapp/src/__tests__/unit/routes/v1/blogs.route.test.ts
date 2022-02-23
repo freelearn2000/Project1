@@ -1,22 +1,26 @@
 import { Application } from 'express';
 import request from "supertest";
+import { newDb } from 'pg-mem';
+import { Connection } from 'typeorm';
 import { Server } from '../../../../server';
-import routerBlogs from '../../../../routes/v1/blogs.route';
+// import routerBlogs from '../../../../routes/v1/blogs.route';
+import { Blog } from '../../../../models/blog.entity';
 
 
-let express: Application = null;
-let server: Server = null;
+let express: Application = new Server().express;
+let connection: Connection;
 
 
-beforeAll(() => {
-    server = new Server();
-    express = server.express;
-    server.initializeDatabase();
+beforeAll(async() => {
+    connection = await newDb().adapters.createTypeormConnection({
+        type: 'postgres',
+        entities: [Blog],
+        synchronize: true
+    })
 });
 
 afterAll(() => {
-    express = null;
-    server = null;
+    connection.close();
 });
 
 
@@ -24,11 +28,24 @@ describe('/api/v1/blogs', () => {
 
     describe('POST', () => {    
 
-        test('should respond with 200 status code if name & content correctly given', async() => {
+        test('should respond with 200 status code if valid new blog given', async() => {
 
-            const response = await request(express.use(routerBlogs)).post('/').send( {name: 'Bob', content: 'bob_blog'} );
+            const response = await request(express).post('/api/v1/blogs').send({name: 'Bob', content: 'bob_blog...'});
 
             expect(response.statusCode).toBe(200);
+            expect(response.headers['content-type']).toEqual('json');
+            expect(response.body.name).toBeDefined();
+            expect(response.body.name).toBe('Bob');
+            expect(response.body.content).toBeDefined();
+            expect(response.body.name).toBe('bob_blog...');
+        });
+
+        test('should respond with 400 status code if invalid new blog given', async() => {
+
+            const response = await request(express).post('/api/v1/blogs').send({name2: 'Bob', content: 'bob_blog...'});
+
+            expect(response.statusCode).toBe(400);
+            expect(response.body.message).toBe('Data is not valid!');
         });
 
         // test('should respond with 400 status code if name & content missing', async() => {

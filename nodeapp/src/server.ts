@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express from "express";
 import { createConnection } from 'typeorm';
 import config from './typeorm.config';
 import routerWeather from './routes/v1/weather.route';
@@ -7,8 +7,7 @@ import routerProjects from './routes/v1/projects.route';
 import routerNews from './routes/v1/news.route';
 import routerBooks from './routes/v1/books.route';
 import routerProducts from './routes/v1/products.route';
-import logger from "./shared/logger";
-import { ApiNotImplementedError, NotImplementedError } from "./shared/common";
+import { errorHandlingMiddleware } from './middlewares/error.middleware';
 
 
 export class Server {
@@ -20,7 +19,7 @@ export class Server {
         this.express = express( );
         this.registerMiddlewares();
         this.registerRoutes();
-        this.errorHandler();  
+        this.registerErrorHandlers();  
     }
 
     public async initializeDatabase( ) {
@@ -46,29 +45,9 @@ export class Server {
         this.express.use( `/api/v1/products`, routerProducts);
     }
   
-    private errorHandler() {
-
-        // Handle all API's (not handled by routes)
-        this.express.all( '/api/*', ( req: Request, res: Response ) => {
-            throw new ApiNotImplementedError( `${req.method} on ${req.path} not implemented!`, `Main- Bad API request` );
-        });
-
-        // Handle all GET requets not handled by Routes
-        this.express.get( '*', ( req: Request, res: Response) => {
-            res.send( "Welcome to NodeApp" );
-        });
-
-        // Handle all other (POST, PATCH, DELETE) requets not handled by Routes
-        this.express.all( '*', (req: Request, res: Response ) => {
-            throw new NotImplementedError( `Not implemented`, `Main- Bad request` );
-        });
-
+    private registerErrorHandlers() {
         // Global Error Handler
-        this.express.use( (error: any, req: Request, res: Response, next: any) => {
-            res.status( error.status ).send( { message: error.message } );
-            // Further log the Error Message & Origin to persistance layer (analytics)
-            logger.error( `Status: ${error.status}, Origin: ${error.origin}, Error: ${error.message}` );
-        });
+        this.express.use(errorHandlingMiddleware);
     }
 
     public listen( port: number ) {
