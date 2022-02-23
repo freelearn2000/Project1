@@ -25,3 +25,6 @@ yarn-error.log*
 
 # Visual Studio Code Settings
 .vscode
+
+# local environment varaible file
+.env

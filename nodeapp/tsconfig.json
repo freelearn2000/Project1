@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-      "composite": true,
-      "incremental": true,
-      "outDir": "build",
-      "lib": ["es2015"],
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "target": "es2015",
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,                                                        
-    },
-    "include": ["src/**/*"]
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "CommonJS",
+    "outDir": "./build",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "exclude": [
+      "**/*.test.ts"
+  ]
 }
