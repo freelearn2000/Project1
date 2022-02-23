@@ -88,7 +88,7 @@ jobs:
     #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
         
     - name: Build project Node
-      if: steps.test.outcome == 'success'
+    # if: steps.test.outcome == 'success'
       run: npm run build
       
 
