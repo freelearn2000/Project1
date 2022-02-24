@@ -1,67 +1,75 @@
+import { Application } from 'express';
 import request from "supertest";
-import { Server } from '../../../../src/server';
-import routerProjects from '../../../../src/routes/v1/projects.route'
+import { newDb } from 'pg-mem';
+import { Connection } from 'typeorm';
+import { Server } from '../../../../server';
+import { Project } from '../../../../models/project.entity';
 
 
-let express: any = null;
+let express: Application = new Server().express;
+let connection: Connection;
 
-beforeAll(() => {
-    express = new Server().express;
+
+beforeAll(async() => {
+    connection = await newDb().adapters.createTypeormConnection({
+        type: 'postgres',
+        entities: [Project],
+        synchronize: true
+    })
 });
 
 afterAll(() => {
-    express = null;
+    connection.close();
 });
+
 
 describe('/api/v1/projects', () => {
 
-    describe('POST', () => { 
+    describe('POST', () => {    
 
-        test('should respond with 200 status code if name & duration correctly given', async () => {
+        test('should respond with 200 status code if valid new project given', async() => {
 
-            const response = await request(express.use(routerProjects)).post('/').send( {name: 'Project1', duration: '6 months'} );
+            const response = await request(express).post('/api/v1/projects').send({name: 'Project1', duration: '6 months'});
+
+            console.log(response.body);
 
             expect(response.statusCode).toBe(200);
-        });
-
-        test('should respond with 400 status code if name & duration missing', async () => {
-
-            const response = await request(express.use(routerProjects)).post('/').send( {duration: '6 months'} );
-
-            expect(response.statusCode).toBe(400);
-        });
-
-        test('should specify json as content type in http header', async() => {
-
-            const response = await request(express.use(routerProjects)).post('/').send( {name: 'Project1', duration: '6 months'} );
-
             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+            expect(response.body.name).toBeDefined();
+            expect(response.body.name).toBe('Project1');
+            expect(response.body.duration).toBeDefined();
+            expect(response.body.duration).toBe('6 months');
         });
 
-        test('should contain a string in response body for successfully providing name & duration', async () => {
+        test('should respond with 400 status code if invalid new project given', async() => {
 
-            const response = await request(express.use(routerProjects)).post('/').send( {name: 'Project1', duration: '6 months'} );
-
-            expect(response.body.message).toBeDefined();
+            const response = await request(express).post('/api/v1/projects').send({name2: 'Project1', duration: '6 months'});
+            
+            expect(response.statusCode).toBe(400);
+            // expect(response.body.message).toBe('Data is not valid!');
         });
+
     });
 
     describe('GET', () => {
 
-        test('should respond with 200 status code if name & duration correctly fetched', async () => {
+        test('should respond with 200 status code if name & content of project is correctly fetched', async () => {
 
-            const response = await request(express.use(routerProjects)).get('/').send();
-
+            const response = await request(express).get('/api/v1/projects').send();
+            console.log(response.body);
             expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+            
+            
         });
 
-        test('should respond with 200 status code if name & duration correctly fetched with id', async () => {
+        test('should respond with 200 status code if name & content of project is correctly fetched with id', async () => {
 
-            const response = await request(express.use(routerProjects)).get('/1').send();
+            const response = await request(express).get(`/api/v1/projects/1`).send();
 
             expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+            
         });
     });
 
@@ -69,49 +77,63 @@ describe('/api/v1/projects', () => {
 
         test('should respond with 404 status code if id not given', async () => {
 
-            const response = await request(express.use(routerProjects)).patch('/').send( {name: 'Project1', duration: '6 months'} );
-            
+            const response = await request(express).patch('/api/v1/projects').send( {name: 'Project1', duration: '6 months'} );
+
             expect(response.statusCode).toBe(404);
+
         });
 
-        test('should respond with 200 status code if name & duration is updated', async () => {
+        test('should respond with 200 status code if name & content updated', async () => {
 
-            const response = await request(express.use(routerProjects)).patch('/1').send( {name: 'Project2', duration: '12 months'} );
-            
+            const response = await request(express).patch('/api/v1/projects/1').send( {name: 'Project2', duration: '12 months'} );
+
             expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            expect(response.body.name).toBeDefined();
+            expect(response.body.name).toBe('Project2');
+            expect(response.body.duration).toBeDefined();
+            expect(response.body.duration).toBe('12 months');
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
         });
 
-        test('should respond with 200 status code if duration is updated', async () => {
-
-            const response = await request(express.use(routerProjects)).patch('/1').send( {duration: '20 months'} );
-            
-            expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
-        });
         test('should respond with 200 status code if name is updated', async () => {
 
-            const response = await request(express.use(routerProjects)).patch('/1').send( {name: 'Project3'} );
-        
+            const response = await request(express).patch('/api/v1/projects/1').send( {name: 'Project3'} );
+
             expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            expect(response.body.name).toBeDefined();
+            expect(response.body.name).toBe('Project3');
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+        });
+
+        test('should respond with 200 status code if content is updated', async () => {
+
+            const response = await request(express).patch('/api/v1/projects/1').send( {duration: '18 months'} );
+
+            expect(response.statusCode).toBe(200);
+            expect(response.body.duration).toBeDefined();
+            expect(response.body.duration).toBe('18 months');
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
         });
     });
 
     describe('DELETE', () => {
 
-        test('should respond with 404 status code if id not given', async () => {
+        test('should respond with 404 status code if invalid id for project is not given', async () => {
 
-            const response = await request(express.use(routerProjects)).delete('/').send();
+            const response = await request(express).delete('/api/v1/projects').send();
 
             expect(response.statusCode).toBe(404);
         });
 
-        test('should respond with 200 status code if projects with id:1 is deleted', async () => {
+        test('should respond with 200 status code if project with id:1 is deleted', async () => {
 
-            const response = await request(express.use(routerProjects)).delete('/1').send();
-        
+            const response = await request(express).delete('/api/v1/projects/1').send();
+
+            console.log(response.body);
+
             expect(response.statusCode).toBe(200);
         });
     });
 });
+
+

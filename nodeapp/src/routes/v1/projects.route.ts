@@ -3,7 +3,6 @@ import { createResource, findResource, findOneResource, patchResource, deleteRes
 import { handleAsync, EntityNotFoundError  } from '../../shared/common';
 import validationMiddleware from '../../middlewares/validation.middleware';
 import { ProjectValidator } from '../../models/project.entity';
-import logger from '../../shared/logger';
 
 
 let router = express.Router( );
@@ -12,14 +11,14 @@ let router = express.Router( );
 router.post(`/`, validationMiddleware( ProjectValidator ), async(req, res, next) => {
 
     const model = req.body;
-    logger.info(`Body : `, model);
+   
 
     // Call service
     const [ newResourse, error ] = await handleAsync( createResource(model) );
     if ( error ) return next ( error );
 
     res.send( newResourse );
-    res.send( `Post on /projects` );
+
 });
 
 router.get(`/`, async(req, res, next) => {
@@ -31,8 +30,7 @@ router.get(`/`, async(req, res, next) => {
     const [ allResources, error ] = await handleAsync( findResource(options) );
     if ( error ) return next ( error );
 
-   res.send( allResources );
-   res.send( `Get on /projects` );    
+   res.send( allResources );  
 });
 
 router.get(`/:id`, async(req, res, next) => {
@@ -47,9 +45,8 @@ router.get(`/:id`, async(req, res, next) => {
     if ( resource ) {
         res.send( resource );
     } else {
-        next ( new EntityNotFoundError( id, `users.route->get/:id` ) );
+        next ( new EntityNotFoundError( id, `projects.route->get/:id` ) );
     }
-    res.send( `Get/:id on /projects` );
 });
 
 router.patch(`/:id`, validationMiddleware( ProjectValidator, { skipMissingProperties: true } ), async(req, res, next) => {
@@ -64,9 +61,8 @@ router.patch(`/:id`, validationMiddleware( ProjectValidator, { skipMissingProper
     if ( resource ) {
         res.send( resource );
     } else {
-        next ( new EntityNotFoundError( id, `users.route->patch` ) );
+        next ( new EntityNotFoundError( id, `projects.route->patch` ) );
     }
-    res.send( `Patch/:id on /projects` );
 });
 
 router.delete(`/:id`, async(req, res, next) => {
@@ -80,9 +76,8 @@ router.delete(`/:id`, async(req, res, next) => {
     if ( result.affected === 1 ) {
         res.send( {deleted: true} );
    } else {
-        next ( new EntityNotFoundError( id, `users.route->delete` ) );
+        next ( new EntityNotFoundError( id, `projects.route->delete` ) );
    }
-    res.send( `Delete/:id on /projects` );
 });
 
 export default router;
