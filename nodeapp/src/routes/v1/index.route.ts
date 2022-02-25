@@ -1,22 +1,23 @@
+
 import express, { Request, Response, NextFunction} from "express";
 import { Service } from '../../services/index.service';
 import { handleAsync, EntityNotFoundError } from '../../shared/common';
 import validationMiddleware  from '../../middlewares/validation.middleware';
-import { Blog, BlogValidator } from '../../models/blog.entity';
+import { BlogValidator } from '../../models/blog.entity';
 
 
-export class BlogRoute {
+export class Route {
 
     public router = express.Router( );
     private service: Service;
 
 
-    constructor( ) {
-        this.service = new Service(Blog);
-        this.router.post(`/`, validationMiddleware(BlogValidator), this.create);
+    constructor( entity: any, validator: any ) {
+        this.service = new Service(entity);
+        this.router.post(`/`, validationMiddleware(validator), this.create);
         this.router.get(`/`, this.find);
         this.router.get(`/:id`, this.get);
-        this.router.patch(`/:id`, validationMiddleware( BlogValidator, { skipMissingProperties: true} ), this.patch);
+        this.router.patch(`/:id`, validationMiddleware( validator, { skipMissingProperties: true} ), this.patch);
         this.router.delete(`/:id`, this.delete);
     }
  

@@ -22,7 +22,7 @@ export class Service {
         return newResource;        
     }
 
-    find = async( options: any ) => {
+    public find = async( options: any ) => {
      
         let allResource = null;
         let error = null;
@@ -57,7 +57,7 @@ export class Service {
         return allResource;
     }
 
-    findOne = async( id: number, options: any ) => {
+    public findOne = async( id: number, options: any ) => {
 
         const filter = fieldFilter(options);
     
@@ -75,7 +75,7 @@ export class Service {
         return resource;
     }
 
-    patch = async( id: number, patchModel: any ) => {
+    public patch = async( id: number, patchModel: any ) => {
 
         let [ , error ] = await handleAsync( getRepository(this.entity).update(id, patchModel) );
         if ( error ) throw new ServerError( error.message, `blogs.route->patchResource` );
@@ -86,7 +86,7 @@ export class Service {
         return resource; 
     }
 
-    delete = async( id: number ) => {
+    public delete = async( id: number ) => {
 
         let [ result, error ] = await handleAsync( getRepository(this.entity).delete(id) );
         if ( error ) throw new ServerError( error.message, `blogs.route->deleteResource` );

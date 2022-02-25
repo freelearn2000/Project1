@@ -56,15 +56,17 @@
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
       "!**/index.ts",
-      "!**/ormconfig.ts",
+      "!**/typeorm.config.ts",
       "!**/src/models/**",
+      "!**/src/middlewares/**",
+      "!**/src/shared/**",
       "!**/config/**"
     ],
     "coverageThreshold": {
       "global": {
         "functions": 50,
         "statements": 50,
-        "branches": 40,
+        "branches": 50,
         "lines": 50
       }
     },

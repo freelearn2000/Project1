@@ -9,13 +9,14 @@ export const handleAllapi = ( request: Request, response: Response ) => {
 
 // Handle all GET requets not handled by Routes
 export const handleAllGETrequets = ( request: Request, response: Response ) => {
-    response.send( "Welcome to NodeApp" );
+    // Give React App index.html
 };
 
 // Handle all other (POST, PATCH, DELETE) requets not handled by Routes
-export const handleAllOtherRequets = ( request: Request, response: Response ) => {
-    throw new NotImplementedError( `Not implemented`, `Main- Bad request` );
-};
+// export const handleAllOtherRequets = ( request: Request, response: Response ) => {
+//     // Send
+//     throw new NotImplementedError( `Not implemented`, `Main- Bad request` );
+// };
 
 export const errorHandlingMiddleware = (error: MyError, request: Request, response: Response, next: NextFunction) => {
     

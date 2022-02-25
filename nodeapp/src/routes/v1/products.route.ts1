@@ -47,7 +47,7 @@ router.patch(`/:id`, async(request: Request, response: Response) => {
     }
     else if( name ) {
         response.send( {message:`name updated on id: ${id}`} )
-        }
+    }
     else if( price ) {
         response.send( {message:`price updated on id: ${id}`} )
     }

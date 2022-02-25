@@ -71,7 +71,7 @@ export class AuthenticationError extends MyError {
 export class ApiNotImplementedError extends MyError {
 
     constructor( message: string, origin: string ) {
-        super( 404, message, origin, `API is not implemented` );
+        super( 404, message, origin, `API not implemented` );
     }
 }
 

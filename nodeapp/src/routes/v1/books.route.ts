@@ -7,9 +7,7 @@ import { BookValidator } from '../../models/book.entity';
 
 let router = express.Router();
 
-
 // API Endpoint '/books'
-
 router.post(`/`, validationMiddleware( BookValidator ), async(req, res, next) => {
 
     const model = req.body;
