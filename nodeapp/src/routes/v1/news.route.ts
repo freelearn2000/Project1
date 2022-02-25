@@ -1,62 +1,84 @@
 import express from 'express';
-// import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/news.service';
-// import { handleAsync, EntityNotFoundError } from '../../shared/common';
-// import valMiddleware from '../../middlewares/validation.middleware'
-// import { NewsValidator } from '../../models/news.entity'
+import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/news.service';
+import { handleAsync, EntityNotFoundError } from '../../shared/common';
+import valMiddleware from '../../middlewares/validation.middleware'
+import { NewsValidator } from '../../models/news.entity'
 
 
 let router = express.Router( );
 
-// API Endpoint for '/news'
-router.post('/', async( request, response ) => {
+// API Endpoint '/news'
+router.post('/', valMiddleware( NewsValidator ), async (req, res, next) => {
 
-    // Retreive title & content from body
-    const { title, content } = request.body;
+    const model = req.body;
+  
+    // Call service 
+    const [ newResource, error ] = await handleAsync( createResource(model) );
+    if ( error ) return next( error );
 
-    // Validate the data retreived
-    if (!title || !content) {
-        response.send(400);
-        return;
+    res.send( newResource );
+});  
+
+router.get('/', async (req, res, next) => {
+
+    // Retreive fields from Query params
+    let options: any = req.query;
+    
+    // Call service
+    const [ allResources, error ] = await handleAsync( findResource(options) );
+    if ( error ) return next( error );
+
+    res.send( allResources );
+});  
+
+router.get(`/:id`, async(req, res, next) => {
+
+    // Retreive id from Route params
+    const id = Number( req.params.id );
+
+    let options: any = req.query;
+
+    // Call service
+    const [ resource, error ] = await handleAsync( findOneResource(id, options) );
+    if ( error ) return next( error );
+
+    if ( resource ) {
+        res.send( resource );
+    } else {
+        next( new EntityNotFoundError(id, `news.route -> get/:id`) );
     }
+});  
+    
+router.patch('/:id', valMiddleware( NewsValidator, {skipMissingProperties: true} ), async(req, res, next) => {
 
-    // Save to db & collect news data & send to client
-    response.send( {message : `news data saved to database`} );
-});
+    const id = Number( req.params.id );
+    const patchedModel = req.body;
 
-router.get('/', async( request, response ) => {
+    // Call service
+    const [ resource, error ] = await handleAsync( patchResource(id, patchedModel) ) ;
+    if ( error ) return next( error );
+
+    if ( resource ) {
+        res.send( resource );
+    } else {
+        next(new EntityNotFoundError(id, `news.route -> patch`) );
+    }
+});  
    
-   response.send( {message : `news data fetched from database` } );
+router.delete('/:id', async(req, res, next) => {
+
+    const id = Number( req.params.id );
+
+    //Call service
+    const [ result, error ] = await handleAsync( deleteResource(id) ) ;
+    if ( error ) return next( error );
+
+    if ( result.affected === 1 ) {
+        res.send( {deleted : true} );
+    } else {
+        next( new EntityNotFoundError(id, `products.route -> delete`) );
+    }
 });
 
-router.get('/:id', async( request, response ) => {
-
-   const id = request.params.id;
-   
-   response.send( {message : `news data fetched from database`} );
-});
-
-router.patch('/:id', async( request, response ) => {
-
-   const id = request.params.id;
-   const { title, content } = request.body;
-   
-   if( title && content ) {
-       response.send( {message: `title and content updated on id: ${id}`} )
-   }
-   else if( title ) {
-       response.send( {message:`title updated on id: ${id}`} )
-   }
-   else if( content ) {
-       response.send( {message:`content updated on id: ${id}`} )
-   }
-});
-
-router.delete('/:id', async( request, response ) => {
-
-   const id = request.params.id;
-   
-   response.send( {message:`news data deleted on id: ${id}`} );
-});
-
-
+    
 export default router;
