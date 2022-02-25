@@ -3,17 +3,17 @@ import { MyError, ApiNotImplementedError, NotImplementedError } from "../shared/
 
 
  // Handle all API's (not handled by routes)
-export const HandleAllapi = ( request: Request, response: Response ) => {
+export const handleAllapi = ( request: Request, response: Response ) => {
     throw new ApiNotImplementedError( `${request.method} on ${request.path} not implemented!`, `Main- Bad API request` );
 };
 
 // Handle all GET requets not handled by Routes
-export const HandleAllGETrequets = ( request: Request, response: Response ) => {
+export const handleAllGETrequets = ( request: Request, response: Response ) => {
     response.send( "Welcome to NodeApp" );
 };
 
 // Handle all other (POST, PATCH, DELETE) requets not handled by Routes
-export const HandleAllOtherRequets = ( request: Request, response: Response ) => {
+export const handleAllOtherRequets = ( request: Request, response: Response ) => {
     throw new NotImplementedError( `Not implemented`, `Main- Bad request` );
 };
 

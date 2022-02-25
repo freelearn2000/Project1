@@ -7,7 +7,7 @@ import routerProjects from './routes/v1/projects.route';
 import routerNews from './routes/v1/news.route';
 import routerBooks from './routes/v1/books.route';
 import routerProducts from './routes/v1/products.route';
-import { HandleAllapi, HandleAllGETrequets, HandleAllOtherRequets, errorHandlingMiddleware } from './middlewares/error.middleware';
+import { handleAllapi, handleAllGETrequets, handleAllOtherRequets, errorHandlingMiddleware } from './middlewares/error.middleware';
 
 
 export class Server {
@@ -47,11 +47,11 @@ export class Server {
   
     private registerErrorHandlers() {
         // Handle all API's (not handled by routes)
-        this.express.all( '/api/*', HandleAllapi);
+        this.express.all( '/api/*', handleAllapi);
         // Handle all GET requets not handled by Routes
-        this.express.get( '*', HandleAllGETrequets);
+        this.express.get( '*', handleAllGETrequets);
         // Handle all other (POST, PATCH, DELETE) requets not handled by Routes
-        this.express.all( '*', HandleAllOtherRequets);
+        this.express.all( '*', handleAllOtherRequets);
         // Global Error Handler
         this.express.use(errorHandlingMiddleware);
     }
