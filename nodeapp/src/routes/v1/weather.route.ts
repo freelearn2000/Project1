@@ -66,7 +66,6 @@ router.patch('/:id',validationMiddleware( WeatherValidator, {skipMissingProperti
     } else {
       next( new EntityNotFoundError( id, ' weather.route->patch/:id ') );  
     }
-    response.send( `${request.method} method called on /weather${request.path}` );
 });
 
 router.delete('/:id', async(request, response, next) => {
