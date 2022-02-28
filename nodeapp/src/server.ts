@@ -12,6 +12,8 @@ import { Route } from './routes/v1/index.route';
 import { Blog, BlogValidator } from './models/blog.entity';
 import { Book, BookValidator } from "./models/book.entity";
 import { Project, ProjectValidator } from "./models/project.entity";
+import { Product, ProductValidator } from "./models/product.entity";
+
 import { News, NewsValidator } from './models/news.entity';
 import { Weather, WeatherValidator } from './models/weather.entity'; 
 
@@ -48,7 +50,7 @@ export class Server {
         this.express.use( `/api/v1/weather`, new WeatherRoute(Weather, WeatherValidator).router); 
         this.express.use( `/api/v1/news`, new NewsRoute(News, NewsValidator).router);
         this.express.use( `/api/v1/books`, new Route(Book, BookValidator).router);
-        // this.express.use( `/api/v1/products`, routerProducts);
+        this.express.use( `/api/v1/products`, new Route(Product, ProductValidator).router);
     }
   
     private registerErrorHandlers() {
