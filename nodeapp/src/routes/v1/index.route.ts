@@ -3,13 +3,12 @@ import express, { Request, Response, NextFunction} from "express";
 import { Service } from '../../services/index.service';
 import { handleAsync, EntityNotFoundError } from '../../shared/common';
 import validationMiddleware  from '../../middlewares/validation.middleware';
-import { BlogValidator } from '../../models/blog.entity';
 
 
 export class Route {
 
     public router = express.Router( );
-    private service: Service;
+    public service: Service;
 
 
     constructor( entity: any, validator: any ) {
@@ -21,72 +20,72 @@ export class Route {
         this.router.delete(`/:id`, this.delete);
     }
  
-    public create = async(req:Request, res:Response, next:NextFunction) => {
+    public create = async(request:Request, response:Response, next:NextFunction) => {
 
-        const model = req.body;
+        const model = request.body;
         
         // Call service 
         const [ newResource, error ] = await handleAsync( this.service.create(model) );
         if ( error ) return next( error );
     
-        res.send( newResource );
+        response.send( newResource );
                  
     }
 
-    public find = async(req:Request, res:Response, next:NextFunction) => {
+    public find = async(request:Request, response:Response, next:NextFunction) => {
 
-        let options: any = req.query;
+        let options: any = request.query;
         
         // Call service
         const [ allResources, error ] = await handleAsync( this.service.find(options) );
         if ( error ) return next( error );
     
-        res.send( allResources);
+        response.send( allResources);
     }
 
-    public get = async(req:Request, res:Response, next:NextFunction) => {
+    public get = async(request:Request, response:Response, next:NextFunction) => {
 
         // Retrive data from Route params
-        const id = Number( req.params.id );
-        let options: any = req.query;
+        const id = Number( request.params.id );
+        let options: any = request.query;
     
         // Call service
         const [ resource, error ] = await handleAsync( this.service.findOne(id, options) );
         if ( error ) return next( error );
     
         if( resource ) {    
-            res.send( resource );
+            response.send( resource );
         } else {
             next( new EntityNotFoundError(id, `blogs.route->get/:id`) );
         }
     }
 
-    public patch = async(req:Request, res:Response, next:NextFunction) => {
+    public patch = async(request:Request, response:Response, next:NextFunction) => {
 
-        const id = Number( req.params.id );
-        const patchedModel = req.body;
+        const id = Number( request.params.id );
+        const patchedModel = request.body;
     
         // Call service
         const [ resource, error ] = await handleAsync( this.service.patch(id, patchedModel) );
         if ( error ) return next( error );
     
         if ( resource ) {
-            res.send( resource );
+            response.send( resource );
         } else {
             next( new EntityNotFoundError( id, `blogs.route->patch`) );
         }
     }
 
-    public delete = async(req:Request, res:Response, next:NextFunction) => {
+    public delete = async(request:Request, response:Response, next:NextFunction) => {
 
-        const id = Number( req.params.id );
+        const id = Number( request.params.id );
     
         // Call service
         const [ result, error ] = await handleAsync( this.service.delete(id) );
         if ( error ) return next( error );
     
         if ( result.affected === 1 ) {
-            res.send( {Deleted: true} ); 
+            response.send( {Deleted: true} ); 
         } else {
             next( new EntityNotFoundError( id, `blogs.route->delete`) );
         }

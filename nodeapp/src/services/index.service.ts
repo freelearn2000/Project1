@@ -17,7 +17,7 @@ export class Service {
         const tempObject = getRepository( this.entity ).create( model );
     
         let [ newResource, error ] = await handleAsync( getRepository(this.entity).save(tempObject) );  
-        if ( error ) throw new ServerError( error.message, `blogs.route->createResource` );
+        if ( error ) throw new ServerError( error.message, `index.route->create` );
     
         return newResource;        
     }
@@ -52,7 +52,7 @@ export class Service {
             .getMany( ) 
          );
         
-        if ( error ) throw new ServerError( error.message, `blogs.route->findResource` );
+        if ( error ) throw new ServerError( error.message, `index.route->find` );
     
         return allResource;
     }
@@ -70,7 +70,7 @@ export class Service {
         );
     
         // let [ resource, error ] = await handleAsync( getRepository(blog).findOne(id) );
-        if ( error ) throw new ServerError( error.message, `blogs.route->findOneResource` );
+        if ( error ) throw new ServerError( error.message, `index.route->findOne` );
     
         return resource;
     }
@@ -78,10 +78,10 @@ export class Service {
     public patch = async( id: number, patchModel: any ) => {
 
         let [ , error ] = await handleAsync( getRepository(this.entity).update(id, patchModel) );
-        if ( error ) throw new ServerError( error.message, `blogs.route->patchResource` );
+        if ( error ) throw new ServerError( error.message, `index.route->patch` );
     
         let [ resource, error2 ] = await handleAsync( getRepository(this.entity).findOne(id) );
-        if ( error2 ) throw new ServerError( error2.message, `blogs.route->patchResource` );
+        if ( error2 ) throw new ServerError( error2.message, `index.route->patch` );
     
         return resource; 
     }
@@ -89,7 +89,7 @@ export class Service {
     public delete = async( id: number ) => {
 
         let [ result, error ] = await handleAsync( getRepository(this.entity).delete(id) );
-        if ( error ) throw new ServerError( error.message, `blogs.route->deleteResource` );
+        if ( error ) throw new ServerError( error.message, `index.route->delete` );
     
         return result;
     }

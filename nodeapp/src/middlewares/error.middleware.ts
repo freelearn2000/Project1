@@ -7,7 +7,7 @@ export const unhandledApiRequests = ( request: Request, response: Response ) => 
     throw new ApiNotImplementedError( `${request.method} on ${request.path} not implemented!`, `Main- Bad API request` );
 };
 
-export const sendReactApplicationBack = ( request: Request, response: Response ) => {
+export const sendReactApplication = ( request: Request, response: Response ) => {
 
     // Give React App index.html
 };
