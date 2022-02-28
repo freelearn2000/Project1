@@ -1,7 +1,8 @@
 import express from "express";
 import { createConnection } from 'typeorm';
 import config from './typeorm.config';
-import {WeatherRoute} from '../src/routes/v1/weather.route'
+import { WeatherRoute } from '../src/routes/v1/weather.route';
+import { NewsRoute } from '../src/routes/v1/news.route'
 
 // import routerProducts from './routes/v1/products.route.ts1';
 import { unhandledApiRequests, sendReactApplication, errorHandlingMiddleware } from './middlewares/error.middleware';
@@ -45,7 +46,7 @@ export class Server {
         this.express.use(`/api/v1/blogs`, new Route(Blog, BlogValidator).router)
         this.express.use( `/api/v1/projects`, new Route(Project, ProjectValidator).router);
         this.express.use( `/api/v1/weather`, new WeatherRoute(Weather, WeatherValidator).router); 
-        this.express.use( `/api/v1/news`, new Route(News, NewsValidator).router);
+        this.express.use( `/api/v1/news`, new NewsRoute(News, NewsValidator).router);
         this.express.use( `/api/v1/books`, new Route(Book, BookValidator).router);
         // this.express.use( `/api/v1/products`, routerProducts);
     }
