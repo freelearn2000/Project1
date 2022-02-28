@@ -11,8 +11,8 @@ export class Route {
     public service: Service;
 
 
-    constructor( entity: any, validator: any ) {
-        this.service = new Service(entity);
+    constructor( validator: any, service: any ) {
+        this.service = service;
         this.router.post(`/`, validationMiddleware(validator), this.create);
         this.router.get(`/`, this.find);
         this.router.get(`/:id`, this.get);

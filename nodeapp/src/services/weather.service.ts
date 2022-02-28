@@ -9,7 +9,6 @@ export class WeatherService extends Service {
         super( entity );
     }
 
-   
     public find = async( options: any ) => {
      
         let allResource = null;
@@ -44,7 +43,6 @@ export class WeatherService extends Service {
     
         return allResource;
     }
-
 }
 
 
