@@ -69,7 +69,7 @@ jobs:
         
         
     - name: Send Error messge to  Slack
-      if: steps.test.outcome != 'success'
+      if: always()
       uses: slackapi/slack-github-action@v1.18.0
       with:
          payload: |
