@@ -1,63 +1,68 @@
 import { Application } from 'express';
 import request from "supertest";
+import { newDb } from 'pg-mem';
+import { Connection } from 'typeorm';
 import { Server } from '../../../../server';
-import routerweather from '../../../../routes/v1/weather.route'
-import { EventSubscriber } from 'typeorm';
-
-let express: Application = null;
-let server: Server = null;
+import { Weather } from '../../../../models/weather.entity';
 
 
-beforeAll(() => {
-    server = new Server();
-    express = server.express;
-    server.initializeDatabase();
+
+let express: Application = new Server().express;
+let connection: Connection;
+
+beforeAll(async() => {
+    connection = await newDb().adapters.createTypeormConnection({
+        type: 'postgres',
+        entities: [Weather],
+        synchronize: true
+    })
 });
 
 afterAll(() => {
-    express = null;
-    server = null;
+    connection.close();
 });
-
 
 describe('/api/v1/weather', () => {
 
     describe('POST', () => {
 
-        test('should respond with 200 status code if weather & place correctly given', async () => {
+        test('should respond with 200 status code if valid new weather given', async () => {
 
-            const response = await request(express.use(routerweather)).post('/').send({ place: 'Sydney', weather: 'Rainy' });
+            const response = await request(express).post('/api/v1/weather').send({ place: 'Sydney', info: 'Rainy' });
     
+            console.log(response.body);
+
             expect(response.statusCode).toBe(200);
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+            expect(response.body.info).toBeDefined();
+            expect(response.body.info).toBe('Rainy');
+            expect(response.body.place).toBeDefined();
+            expect(response.body.place).toBe('Sydney');
         });
     
-        test('should respond with 400 status code if weather or place missing', async () => {
+        test('should respond with 400 status code if invalid new blog given', async () => {
     
-            const response = await request(express.use(routerweather)).post('/').send({ password: '123' });
+            const response = await request(express).post('/api/v1/weather').send({ password: '123' });
             expect(response.statusCode).toBe(400);
         });
     
-        test('should contain a string in response body for successfully providing weather & place', async () => {
-    
-            const response = await request(express.use(routerweather)).post('/').send({ place: 'Sydney', weather: 'Rainy' });
-            expect(response.body.message).toBeDefined();
-        });
     });
 
     describe('GET', () => {
 
-        test('should respond with 200 status code if weather & place correctly given', async () => {
+        test('should respond with 200 status code if weather & place correctly fetched', async () => {
 
-            const response = await request(express.use(routerweather)).get('/').send();
+            const response = await request(express).get('/api/v1/weather').send();
+            console.log(response.body);
             expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
         });
     
         test('should respond with 200 status code if weather & place correctly given with id', async () => {
     
-            const response = await request(express.use(routerweather)).get('/25').send();
+            const response = await request(express).get('/api/v1/weather/1').send();
             expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
         });
     });
 
@@ -65,29 +70,33 @@ describe('/api/v1/weather', () => {
 
         test('should respond with 404 status code if id not given', async () => {
 
-            const response = await request(express.use(routerweather)).patch('/').send({ place: 'Sydney', weather: 'Rainy' });
+            const response = await request(express).patch('/api/v1/weather').send({ place: 'Sydney', info: 'Rainy' });
             expect(response.statusCode).toBe(404);
         });
     
         test('should respond with 200 status code if weather & place got updated', async () => {
     
-            const response = await request(express.use(routerweather)).patch('/25').send({ place: 'Sydney', weather: 'Rainy' });
-            expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            const response = await request(express).patch('/api/v1/weather/1').send({ place: 'Newyork', info: 'Sunny' });
+            expect(response.body.place).toBeDefined();
+            expect(response.body.place).toBe('Newyork');
+            expect(response.body.info).toBeDefined();
+            expect(response.body.info).toBe('Sunny');
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
         });
     
         test('should respond with 200 status code if weather is updated on given id', async () => {
     
-            const response = await request(express.use(routerweather)).patch('/25').send({ weather: 'Rainy' });
-            expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            const response = await request(express).patch('/api/v1/weather/1').send({ info: 'Rainy' });
+            expect(response.body.info).toBeDefined();
+            expect(response.body.info).toBe('Rainy');
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
         });
         test('should respond with 200 status code if place is updated on given id', async () => {
     
-            const response = await request(express.use(routerweather)).patch('/25').send({ place: 'Sydney' });
-            
-            expect(response.statusCode).toBe(200);
-            expect(response.body.message).toBeDefined();
+            const response = await request(express).patch('/api/v1/weather/1').send({ place: 'Newyork' });
+            expect(response.body.place).toBeDefined();
+            expect(response.body.place).toBe('Newyork');
+            expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
         });
     });
 
@@ -95,15 +104,15 @@ describe('/api/v1/weather', () => {
 
         test('should respond with 404 status code if id not given', async () => {
 
-            const response = await request(express.use(routerweather)).delete('/').send();
+            const response = await request(express).delete('/api/v1/weather').send();
     
             expect(response.statusCode).toBe(404);
         });
     
         test('should respond with 200 status code if weather data of given id is deleted', async () => {
     
-            const response = await request(express.use(routerweather)).delete('/25').send();
-            expect(response.body.message).toBeDefined();
+            const response = await request(express).delete('/api/v1/weather/1').send();
+            expect(response.statusCode).toBe(200);
         });
     });
 });

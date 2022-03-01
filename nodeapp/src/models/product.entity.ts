@@ -22,7 +22,6 @@ export class ProductValidator {
     @IsNotEmpty( {message: `title should be defined`} )
     name?: string;
     
-    @IsString( {message: `price should be string`} )
     @IsNotEmpty( {message: `price should be defined`} )
     price?: number;
 }
