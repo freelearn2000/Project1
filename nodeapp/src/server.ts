@@ -1,14 +1,23 @@
-import express, {Request, Response} from "express";
+import express from "express";
 import { createConnection } from 'typeorm';
 import config from './typeorm.config';
-import routerWeather from './routes/v1/weather.route';
-import routerBlogs from './routes/v1/blogs.route';
-import routerProjects from './routes/v1/projects.route';
-import routerNews from './routes/v1/news.route';
-import routerBooks from './routes/v1/books.route';
-import routerProducts from './routes/v1/products.route';
-import logger from "./shared/logger";
-import { ApiNotImplementedError, NotImplementedError } from "./shared/common";
+
+// import routerProducts from './routes/v1/products.route.ts1';
+import { unhandledApiRequests, sendReactApplication, errorHandlingMiddleware } from './middlewares/error.middleware';
+
+import { Route } from './routes/v1/index.route';
+
+import { Blog, BlogValidator } from './models/blog.entity';
+import { Book, BookValidator } from "./models/book.entity";
+import { Project, ProjectValidator } from "./models/project.entity";
+import { Product, ProductValidator } from "./models/product.entity";
+
+import { News, NewsValidator } from './models/news.entity';
+import { Weather, WeatherValidator } from './models/weather.entity';
+
+import { Service } from './services/index.service';
+import { WeatherService } from "./services/weather.service";
+import { NewsService } from "./services/news.service";
 
 
 export class Server {
@@ -20,7 +29,7 @@ export class Server {
         this.express = express( );
         this.registerMiddlewares();
         this.registerRoutes();
-        this.errorHandler();  
+        this.registerErrorHandlers();  
     }
 
     public async initializeDatabase( ) {
@@ -38,37 +47,21 @@ export class Server {
     }
 
     private registerRoutes( ) {
-        this.express.use(`/api/v1/blogs`, routerBlogs)
-        this.express.use( `/api/v1/projects`, routerProjects);
-        this.express.use( `/api/v1/weather`, routerWeather); 
-        this.express.use( `/api/v1/news`, routerNews);
-        this.express.use( `/api/v1/books`, routerBooks);
-        this.express.use( `/api/v1/products`, routerProducts);
+        this.express.use(`/api/v1/blogs`, new Route(BlogValidator, new Service(Blog)).router)
+        this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(Project)).router);
+        this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(Weather)).router); 
+        this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(News)).router);
+        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book)).router);
+        this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product)).router);
     }
   
-    private errorHandler() {
-
+    private registerErrorHandlers() {
         // Handle all API's (not handled by routes)
-        this.express.all( '/api/*', ( req: Request, res: Response ) => {
-            throw new ApiNotImplementedError( `${req.method} on ${req.path} not implemented!`, `Main- Bad API request` );
-        });
-
-        // Handle all GET requets not handled by Routes
-        this.express.get( '*', ( req: Request, res: Response) => {
-            res.send( "Welcome to NodeApp" );
-        });
-
-        // Handle all other (POST, PATCH, DELETE) requets not handled by Routes
-        this.express.all( '*', (req: Request, res: Response ) => {
-            throw new NotImplementedError( `Not implemented`, `Main- Bad request` );
-        });
-
+        this.express.all( '/api/*', unhandledApiRequests );
+        // Handle all requets not handled by Routes
+        this.express.get( '*', sendReactApplication );
         // Global Error Handler
-        this.express.use( (error: any, req: Request, res: Response, next: any) => {
-            res.status( error.status ).send( { message: error.message } );
-            // Further log the Error Message & Origin to persistance layer (analytics)
-            logger.error( `Status: ${error.status}, Origin: ${error.origin}, Error: ${error.message}` );
-        });
+        this.express.use( errorHandlingMiddleware );
     }
 
     public listen( port: number ) {
