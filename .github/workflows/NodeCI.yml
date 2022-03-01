@@ -32,28 +32,29 @@ jobs:
     - name: Install App dependencies
       run: npm ci
       
-   # - name: Run Unit Tests
-   #    id: test
-   #   run: npm test
-   #   env:
-   #     CI: true
+    - name: Run Unit Tests
+      id: test
+      run: npm test
+      env:
+        CI: true
     
 
-   # - name: Run Tests Coverage
-   #   id: coverage
-   #   if: always()
-   #   run: npm run test:coverage
-   #   env:
-   #     CI: true
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run test:coverage
+      env:
+        CI: true
 
-   # - name: Deploy Unit Test Report/Coverage to GitHub Page
-   #   if: always()
-   #   uses: peaceiris/actions-gh-pages@v3
-   #   with:
-   #     github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
-   #     publish_dir: ./nodeapp/reports
-   #     publish_branch: gh-pages
-   #     destination_dir: ./nodeapp
+    - name: Deploy Unit Test Report/Coverage to GitHub Page
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
+        publish_dir: ./nodeapp/reports
+        publish_branch: gh-pages
+        destination_dir: ./nodeapp
+    
 
     - name: Create Issue (If Test/Coverage Fail)
       if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
@@ -67,43 +68,35 @@ jobs:
         assignees: ${{github.actor}}
         
         
-    # - name: Send Error messge to  Slack
-    #   if: steps.test.outcome != 'success'
-    #   uses: slackapi/slack-github-action@v1.18.0
-    #   with:
-    #     payload: |
-    #       {
-    #         "blocks": [
-    #           {
-    #             "type": "section",
-    #             "text": {
-    #               "type": "mrkdwn",
-    #               "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
-    #             }
-    #           }
-    #         ]
-    #       }
-    #   env:
-    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-        
-    - name: Build project Node
-    # if: steps.test.outcome == 'success'
-      run: npm run build
+    - name: Send Error messge to  Slack
+      if: steps.test.outcome != 'success'
+      uses: slackapi/slack-github-action@v1.18.0
+      with:
+         payload: |
+           {
+             "blocks": [
+               {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
+                 }
+               }
+             ]
+           }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       
-
-    #- name: Upload React Build folder as Artifact
-    #  uses: actions/upload-artifact@v2
-    #  with:
-    #    name: Build
-    #     path: ./nodeapp/build
+    - name: Build project Node
+      if: steps.test.outcome == 'success'
+      run: npm run build
+        
+    - name: Upload React Build folder as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build
+        path: ./nodeapp/build
        
        
-    # - name: echo-default-env-variables
-    #   run: |
-    #       echo "Home: ${HOME}"
-    #       echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
-    #       echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
-    #       echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-    #       echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
-    #       echo "ISSUE: ${{ github.event.issue.html_url }}"
+    
