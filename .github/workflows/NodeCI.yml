@@ -5,7 +5,6 @@ on:
    branches: [develop, master]
    paths:
       - 'nodeapp/**'
-      - '.github/workflows/NodeCI.yml'
 
 env:
   NODE_VERSION: '16.x'
@@ -66,7 +65,7 @@ jobs:
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
-        
+        filename: .github/ISSUE_TEMPLATE.md
         
     - name: Send Error messge to  Slack
       if: always()
