@@ -30,6 +30,9 @@ jobs:
        
     - name: Install App dependencies
       run: npm ci
+
+    - name: Code analysis
+      run: npm run lint
       
     - name: Run Unit Tests
       id: test
@@ -37,7 +40,6 @@ jobs:
       env:
         CI: true
     
-
     - name: Run Tests Coverage
       id: coverage
       if: always()
