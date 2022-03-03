@@ -5,8 +5,7 @@ on:
    branches: [develop, master]
    paths:
       - 'nodeapp/**'
-      - '.github/workflows/NodeCI.yml'
-
+     
 env:
   NODE_VERSION: '16.x'
 
@@ -47,6 +46,12 @@ jobs:
       run: npm run test:coverage
       env:
         CI: true
+        
+    - name: Build error message
+      if: steps.coverage.outcome == 'failure'
+      uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
+      with: 
+       filename: .github/BUILD_TEMPLATE.md
 
     - name: Deploy Unit Test Report/Coverage to GitHub Page
       if: always()
@@ -96,11 +101,11 @@ jobs:
       if: steps.test.outcome == 'success'
       run: npm run build
       
-   # - name: Build error message
-   #   if: steps.build.outcome == 'failure'
-   #    uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
-   #   with: 
-   #    filename: .github/BUILD_TEMPLATE.md
+    - name: Build error message
+      if: steps.build.outcome == 'failure'
+      uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
+      with: 
+       filename: .github/BUILD_TEMPLATE.md
         
     - name: Upload React Build folder as Artifact
       uses: actions/upload-artifact@v2
