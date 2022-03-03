@@ -5,8 +5,7 @@ on:
    branches: [develop, master]
    paths:
       - 'nodeapp/**'
-      - '.github/workflows/NodeCI.yml'
-
+     
 env:
   NODE_VERSION: '16.x'
 
@@ -47,6 +46,12 @@ jobs:
       run: npm run test:coverage
       env:
         CI: true
+        
+    - name: Build error message
+      if: steps.coverage.outcome == 'failure'
+      uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
+      with: 
+       filename: .github/BUILD_TEMPLATE.md
 
     - name: Deploy Unit Test Report/Coverage to GitHub Page
       if: always()
@@ -60,7 +65,7 @@ jobs:
 
     - name: Create Issue (If Test/Coverage Fail)
       id: issue
-      if: failure
+      if: failure()
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
