@@ -5,7 +5,6 @@ on:
    branches: [develop, master]
    paths:
       - 'nodeapp/**'
-      - '.github/workflows/NodeCI.yml'
 
 env:
   NODE_VERSION: '16.x'
@@ -31,6 +30,9 @@ jobs:
        
     - name: Install App dependencies
       run: npm ci
+
+    - name: Code analysis
+      run: npm run lint
       
     - name: Run Unit Tests
       id: test
@@ -38,7 +40,6 @@ jobs:
       env:
         CI: true
     
-
     - name: Run Tests Coverage
       id: coverage
       if: always()
@@ -66,10 +67,10 @@ jobs:
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
-        
+        filename: .github/ISSUE_TEMPLATE.md
         
     - name: Send Error messge to  Slack
-      if: steps.test.outcome != 'success'
+      if: always()
       uses: slackapi/slack-github-action@v1.18.0
       with:
          payload: |

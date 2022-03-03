@@ -4,7 +4,7 @@ import { Server } from './server';
 
 export class Bootstrap {
 
-    public server: Server;;
+    public server: Server;
 
     constructor( ) {
         this.server = new Server( );
