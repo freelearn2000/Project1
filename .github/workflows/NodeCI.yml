@@ -69,7 +69,7 @@ jobs:
         assignees: ${{github.actor}}
         if: steps.test.outcome == 'failure'
         filename: .github/ISSUE_TEMPLATE.md
-        else if: steps.build.outcome == 'failure'
+        if: steps.build.outcome == 'failure'
         filename: .github/BUILD_TEMPLATE.md
         
     - name: Send Error messge to  Slack
