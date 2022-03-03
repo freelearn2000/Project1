@@ -32,7 +32,7 @@ jobs:
       run: npm ci
 
     - name: Code analysis
-      run: npm run lint
+      run: echo "npm run lint"
       
     - name: Run Unit Tests
       id: test
@@ -58,7 +58,7 @@ jobs:
     
 
     - name: Create Issue (If Test/Coverage Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      if: failure
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -67,7 +67,10 @@ jobs:
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
+        if: steps.test.outcome == 'failure'
         filename: .github/ISSUE_TEMPLATE.md
+        if: steps.build.outcome == 'failure'
+        filename: .github/BUILD_TEMPLATE.md
         
     - name: Send Error messge to  Slack
       if: always()
@@ -90,6 +93,7 @@ jobs:
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       
     - name: Build project Node
+      id: build
       if: steps.test.outcome == 'success'
       run: npm run build
         
