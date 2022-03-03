@@ -69,11 +69,11 @@ jobs:
       with:
         assignees: ${{github.actor}}
         
-    - name: Build error message
-      if: steps.coverage.outcome != 'success'
-      uses: freelearn2000/Project1/.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
-      with: 
-       filename: .github/BUILD_TEMPLATE.md
+   # - name: Build error message
+   #   if: steps.coverage.outcome != 'success'
+   #   uses: freelearn2000/Project1/.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
+   #   with: 
+   #    filename: .github/BUILD_TEMPLATE.md
              
     - name: Send Error messge to  Slack
       if: always()
