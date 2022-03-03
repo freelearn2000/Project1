@@ -48,11 +48,11 @@ jobs:
       env:
         CI: true
         
-   # - name: Build error message
-   #   if: steps.coverage.outcome == 'failure'
-   #   uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
-   #   with: 
-   #    filename: .github/BUILD_TEMPLATE.md
+    - name: Build error message
+      if: steps.coverage.outcome == 'failure'
+      uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
+      with: 
+       filename: .github/BUILD_TEMPLATE.md
 
     - name: Deploy Unit Test Report/Coverage to GitHub Page
       if: always()
