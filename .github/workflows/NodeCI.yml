@@ -6,7 +6,7 @@ on:
    paths:
       - 'nodeapp/**'
       - '.github/workflows/NodeCI.yml'
-
+     
 env:
   NODE_VERSION: '16.x'
 
@@ -47,7 +47,7 @@ jobs:
       run: npm run test:coverage
       env:
         CI: true
-
+        
     - name: Deploy Unit Test Report/Coverage to GitHub Page
       if: always()
       uses: peaceiris/actions-gh-pages@v3
@@ -56,11 +56,10 @@ jobs:
         publish_dir: ./nodeapp/reports
         publish_branch: gh-pages
         destination_dir: ./nodeapp
-    
-
+  
     - name: Create Issue (If Test/Coverage Fail)
       id: issue
-      if: failure
+      if: failure()
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -69,8 +68,13 @@ jobs:
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
-       
         
+   # - name: Build error message
+   #   if: steps.coverage.outcome != 'success'
+   #   uses: freelearn2000/Project1/.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
+   #   with: 
+   #    filename: .github/BUILD_TEMPLATE.md
+             
     - name: Send Error messge to  Slack
       if: always()
       uses: slackapi/slack-github-action@v1.18.0
@@ -98,7 +102,7 @@ jobs:
       
    # - name: Build error message
    #   if: steps.build.outcome == 'failure'
-   #    uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
+   #   uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
    #   with: 
    #    filename: .github/BUILD_TEMPLATE.md
         
