@@ -58,8 +58,7 @@ jobs:
         destination_dir: ./nodeapp
   
     - name: Create Issue (If Test/Coverage Fail)
-      id: issue
-      if: failure()
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -68,13 +67,8 @@ jobs:
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
+        filename: .github/ISSUE_TEMPLATE.md
         
-   # - name: Build error message
-   #   if: steps.coverage.outcome != 'success'
-   #   uses: freelearn2000/Project1/.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
-   #   with: 
-   #    filename: .github/BUILD_TEMPLATE.md
-             
     - name: Send Error messge to  Slack
       if: always()
       uses: slackapi/slack-github-action@v1.18.0
@@ -86,8 +80,8 @@ jobs:
                  "type": "section",
                  "text": {
                    "type": "mrkdwn",
-                   "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
-                 }
+                   "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}/nodeapp/index.html>\n>*REPO : *${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
+                  }  
                }
              ]
            }
@@ -99,7 +93,17 @@ jobs:
       id: build
       if: steps.test.outcome == 'success'
       run: npm run build
-      
+  
+    - name: Create Issue (If Test/Coverage Fail)
+      if: steps.build.outcome == 'failure'
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Build failed   
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/BUILD_TEMPLATE.md
+
    # - name: Build error message
    #   if: steps.build.outcome == 'failure'
    #   uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
