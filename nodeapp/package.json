@@ -11,7 +11,8 @@
     "start1": "ts-node src/index.ts",
     "start": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start:prod": "node index.js",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "lint-report": "eslint **/*.ts -f html -o ./reports/lint-results.html"
   },
   "keywords": [],
   "author": "",
