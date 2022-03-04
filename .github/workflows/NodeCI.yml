@@ -59,7 +59,7 @@ jobs:
   
     - name: Create Issue (If Test/Coverage Fail)
       id: issue
-      if: failure()
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -68,12 +68,13 @@ jobs:
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
+        filename: .github/ISSUE_TEMPLATE.md
         
    # - name: Build error message
    #   if: steps.coverage.outcome != 'success'
    #   uses: freelearn2000/Project1/.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
    #   with: 
-   #    filename: .github/BUILD_TEMPLATE.md
+   #   filename: .github/BUILD_TEMPLATE.md
              
     - name: Send Error messge to  Slack
       if: always()
@@ -99,7 +100,20 @@ jobs:
       id: build
       if: steps.test.outcome == 'success'
       run: npm run build
-      
+  
+    - name: Create Issue (If Test/Coverage Fail)
+      id: issue
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Node App Tests/Coverage Failed
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/ISSUE_TEMPLATE.md
+
    # - name: Build error message
    #   if: steps.build.outcome == 'failure'
    #   uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
