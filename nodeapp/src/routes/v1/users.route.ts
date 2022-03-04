@@ -1,4 +1,5 @@
-const express = require('express');
+// const express = require('express');
+import express from "express";
 // import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/users.service';
 // import { handleAsync, EntityNotFoundError } from '../../shared/common';
 // import valMiddleware from '../../middlewares/validation.middleware'; 
