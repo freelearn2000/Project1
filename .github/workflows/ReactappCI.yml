@@ -33,6 +33,10 @@ jobs:
     - name: Install App dependencies
       run: npm ci
       
+    - name: Code analysis
+      id: lint
+      run: npm run lint
+      
     - name: Run Unit Tests
       id: test
       run: npm test
@@ -48,7 +52,7 @@ jobs:
       env:
         CI: true
 
-    - name: Deploy Unit Test Report/Coverage to GitHub Page
+    - name: Deploy Unit Test Report/Coverage/Lint to GitHub Page
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -65,6 +69,7 @@ jobs:
           TITLE: React App Tests/Coverage Failed
           TEST_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/index.html)
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
+          LINT_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/reports/lint-results.html
       with:
         assignees: ${{github.actor}}
 
