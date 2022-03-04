@@ -63,11 +63,11 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: Node App Tests/Coverage Failed
-          #TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
-          #COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
-        filename: .github/BUILD_TEMPLATE.md
+        filename: .github/ISSUE_TEMPLATE.md
         
     - name: Send Error messge to  Slack
       if: always()
@@ -95,7 +95,6 @@ jobs:
       run: npm run build
   
     - name: Create Issue (If Test/Coverage Fail)
-      id: issue
       if: steps.build.outcome == 'failure'
       uses: JasonEtco/create-an-issue@v2
       env:
