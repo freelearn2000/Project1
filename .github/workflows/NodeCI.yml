@@ -41,12 +41,12 @@ jobs:
       env:
         CI: true
     
-   # - name: Run Tests Coverage
-   #  id: coverage
-   #   if: always()
-   #  run: npm run test:coverage
-   #    env:
-   #     CI: true
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run test:coverage
+      env:
+        CI: true
         
     - name: Deploy Unit Test Report/Coverage to GitHub Page
       if: always()
@@ -63,11 +63,11 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: Node App Tests/Coverage Failed
-          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
-          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
+          #TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
+          #COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
-        filename: .github/ISSUE_TEMPLATE.md
+        filename: .github/BUILD_TEMPLATE.md
         
     - name: Send Error messge to  Slack
       if: always()
