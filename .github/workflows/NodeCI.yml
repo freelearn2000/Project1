@@ -62,7 +62,7 @@ jobs:
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          #TITLE: Node App Tests/Coverage Failed
+          TITLE: Node App Tests/Coverage Failed
           #TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
           #COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
       with:
