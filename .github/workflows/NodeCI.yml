@@ -103,6 +103,26 @@ jobs:
       with:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md
+        
+    - name: Send Error messge to  Slack
+      if: failure()
+      uses: slackapi/slack-github-action@v1.18.0
+      with:
+         payload: |
+            {
+             "blocks": [
+               {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": "*Build result: `${{ steps.build.outcome }}`*\n REPO : *${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n*GITHUB ACTOR:* ${{github.actor}}"
+                  }  
+               }
+             ]
+            }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK   
 
    # - name: Build error message
    #   if: steps.build.outcome == 'failure'
