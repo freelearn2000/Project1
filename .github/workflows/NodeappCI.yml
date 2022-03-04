@@ -105,7 +105,7 @@ jobs:
         filename: .github/BUILD_TEMPLATE.md
         
     - name: Send Error messge to  Slack
-      if: failure()
+      if: ${{ always() && steps.build.outcome == 'failure' }}
       uses: slackapi/slack-github-action@v1.18.0
       with:
          payload: |
