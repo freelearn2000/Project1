@@ -34,9 +34,8 @@ jobs:
 
     - name: Code analysis
       id: lint
-      run: |
-         echo npm run lint
-         echo npm run lint-report
+      run: echo npm run lint
+    - run: echo npm run lint-report
          
     - name: Run Unit Tests
       id: test
@@ -44,12 +43,12 @@ jobs:
       env:
         CI: true
     
-    - name: Run Tests Coverage
-      id: coverage
-      if: always()
-      run: npm run test:coverage
-      env:
-        CI: true
+    #- name: Run Tests Coverage
+    #  id: coverage
+    #  if: always()
+    #  run: npm run test:coverage
+    #  env:
+    #    CI: true
         
     - name: Deploy Unit Test Report/Coverage/Lint to Github page
       if: always()

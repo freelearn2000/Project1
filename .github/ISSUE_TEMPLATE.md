@@ -7,3 +7,4 @@ Someone just pushed, oh no! Here's who did it: {{ payload.sender.login }}.
 
 [Check test report here.]({{ env.TEST_REPORT_URL }})
 [Check coverage report here.]({{ env.COVERAGE_REPORT_URL }})
+[Check lint report here.]({{ env.LINT_REPORT_URL}})
