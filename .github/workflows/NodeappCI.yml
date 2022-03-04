@@ -33,8 +33,11 @@ jobs:
       run: npm ci
 
     - name: Code analysis
-      run: echo npm run lint
-      
+      id: lint
+      run: |
+         echo npm run lint
+         echo npm run lint-report
+         
     - name: Run Unit Tests
       id: test
       run: npm test
@@ -48,7 +51,7 @@ jobs:
       env:
         CI: true
         
-    - name: Deploy Unit Test Report/Coverage to GitHub Page
+    - name: Deploy Unit Test Report/Coverage/Lint to Github page
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -58,19 +61,20 @@ jobs:
         destination_dir: ./nodeapp
   
     - name: Create Issue (If Test/Coverage Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure') }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: Node App Tests/Coverage Failed
           TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
+          LINT_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/reports/lint-results.html
       with:
         assignees: ${{github.actor}}
         filename: .github/ISSUE_TEMPLATE.md
         
     - name: Send Error messge to  Slack
-      if: always()
+      if: failure()
       uses: slackapi/slack-github-action@v1.18.0
       with:
          payload: |
@@ -94,7 +98,7 @@ jobs:
       if: steps.test.outcome == 'success'
       run: npm run build
   
-    - name: Create Issue (If Test/Coverage Fail)
+    - name: Create Issue (If Build fail)
       if: steps.build.outcome == 'failure'
       uses: JasonEtco/create-an-issue@v2
       env:
@@ -103,6 +107,8 @@ jobs:
       with:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md
+      
+   
 
    # - name: Build error message
    #   if: steps.build.outcome == 'failure'
