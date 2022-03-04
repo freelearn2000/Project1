@@ -46,7 +46,7 @@ describe('/api/v1/projects', () => {
             const response = await request(express).post('/api/v1/projects').send({name2: 'Project1', duration: '6 months'});
             
             expect(response.statusCode).toBe(400);
-            // expect(response.body.message).toBe('Data is not valid!');
+            expect(response.body.message).toBe('property name2 should not exist ; Name should be defined ; Name should be a string');
         });
 
     });
