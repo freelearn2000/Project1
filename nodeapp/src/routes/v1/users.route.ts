@@ -4,7 +4,7 @@ const express = require('express');
 // import valMiddleware from '../../middlewares/validation.middleware'; 
 // import { UserValidator } from '../../models/user.entity'  
 
-let router = express.Router( );
+const router = express.Router( );
 
 // API Endpoint '/users'
 // For node project2....
