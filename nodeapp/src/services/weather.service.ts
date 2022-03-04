@@ -22,11 +22,11 @@ export class WeatherService extends Service {
        
         // 3. Search (Case-Insensitive search on default field)
         // Format: ?q=news
-        let where: string = options.q ?? ``;
+        const where: string = options.q ?? ``;
     
         // 4. Sorting (based on fields; default sort is by 'id'
         // Format: ?order=name
-        let order: string = options.order ? `entity.${options.order}` : `entity.id`; 
+        const order: string = options.order ? `entity.${options.order}` : `entity.id`; 
         // Partial selection
         [ allResource, error ] = await handleAsync(
             getRepository( this.entity )

@@ -16,7 +16,7 @@ export class Service {
 
         const tempObject = getRepository( this.entity ).create( model );
     
-        let [ newResource, error ] = await handleAsync( getRepository(this.entity).save(tempObject) );  
+        const [ newResource, error ] = await handleAsync( getRepository(this.entity).save(tempObject) );  
         if ( error ) throw new ServerError( error.message, `index.route->create` );
     
         return newResource;        
@@ -35,11 +35,11 @@ export class Service {
        
         // 3. Search (Case-Insensitive search on default field)
         // Format: ?q=news
-        let where: string = options.q ?? ``;
+        const where: string = options.q ?? ``;
     
         // 4. Sorting (based on fields; default sort is by 'id'
         // Format: ?order=name
-        let order: string = options.order ? `entity.${options.order}` : `entity.id`; 
+        const order: string = options.order ? `entity.${options.order}` : `entity.id`; 
         // Partial selection
         [ allResource, error ] = await handleAsync(
             getRepository( this.entity )
@@ -61,7 +61,7 @@ export class Service {
 
         const filter = fieldFilter(options);
     
-        let [ resource, error ] = await handleAsync(
+        const [ resource, error ] = await handleAsync(
             getRepository( this.entity )
             .createQueryBuilder( `entity` )
             .select( filter )
@@ -77,10 +77,10 @@ export class Service {
 
     public patch = async( id: number, patchModel: any ) => {
 
-        let [ , error ] = await handleAsync( getRepository(this.entity).update(id, patchModel) );
+        const [ , error ] = await handleAsync( getRepository(this.entity).update(id, patchModel) );
         if ( error ) throw new ServerError( error.message, `index.route->patch` );
     
-        let [ resource, error2 ] = await handleAsync( getRepository(this.entity).findOne(id) );
+        const [ resource, error2 ] = await handleAsync( getRepository(this.entity).findOne(id) );
         if ( error2 ) throw new ServerError( error2.message, `index.route->patch` );
     
         return resource; 
@@ -88,7 +88,7 @@ export class Service {
 
     public delete = async( id: number ) => {
 
-        let [ result, error ] = await handleAsync( getRepository(this.entity).delete(id) );
+        const [ result, error ] = await handleAsync( getRepository(this.entity).delete(id) );
         if ( error ) throw new ServerError( error.message, `index.route->delete` );
     
         return result;
