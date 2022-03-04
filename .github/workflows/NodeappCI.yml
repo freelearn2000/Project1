@@ -38,7 +38,7 @@ jobs:
       
     - name: Lint report
       if: always()
-      run: npm run lint-report
+      run: npm run lint:report
          
     - name: Run Unit Tests
       id: test
