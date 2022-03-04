@@ -20,8 +20,8 @@ export const fieldFilter = ( options: any ) => {
 // Format : offset=0&limit=5
 export const paging = ( options: any ) => {
     
-    let offset: any = options.offset ?? 0;
-    let limit: any = options.limit; 
+    const offset: any = options.offset ?? 0;
+    const limit: any = options.limit; 
     return { offset, limit };
 }   
 
