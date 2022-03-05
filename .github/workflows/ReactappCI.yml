@@ -5,7 +5,7 @@ on:
    branches: [develop, master]
    paths:
       - 'reactapp/**'
-      - '.github/workflows/NodeCI.yml'
+      - '.github/workflows/ReactappCI.yml'
 
 env:
   NODE_VERSION: '16.x'
