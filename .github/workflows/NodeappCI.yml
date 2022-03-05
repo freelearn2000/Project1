@@ -5,7 +5,7 @@ on:
    branches: [develop, master]
    paths:
       - 'nodeapp/**'
-      - '.github/workflows/NodeCI.yml'
+      - '.github/workflows/NodeappCI.yml'
      
 env:
   NODE_VERSION: '16.x'
@@ -46,12 +46,12 @@ jobs:
       env:
         CI: true
     
-    #- name: Run Tests Coverage
-    #  id: coverage
-    #  if: always()
-    #  run: npm run test:coverage
-    #  env:
-    #    CI: true
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run test:coverage
+      env:
+        CI: true
         
     - name: Deploy Unit Test Report/Coverage/Lint to Github page
       if: always()
@@ -62,7 +62,7 @@ jobs:
         publish_branch: gh-pages
         destination_dir: ./nodeapp
   
-    - name: Create Issue (If Test/Coverage Fail)
+    - name: Create Issue (If Test/Coverage/lint Fail)
       if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure') }}
       uses: JasonEtco/create-an-issue@v2
       env:
