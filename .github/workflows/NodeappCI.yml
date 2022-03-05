@@ -1,0 +1,142 @@
+name: Node App CI
+
+on:
+  pull_request:
+   branches: [develop, master]
+   paths:
+      - 'nodeapp/**'
+      - '.github/workflows/NodeappCI.yml'
+     
+env:
+  NODE_VERSION: '16.x'
+
+jobs:
+
+  Job1-NodeApp:
+    name: Node App
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nodeapp
+ 
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+            
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+       
+    - name: Install App dependencies
+      run: npm ci
+
+    - name: Code analysis
+      id: lint
+      run: npm run lint
+      
+    - name: Run Unit Tests
+      id: test
+      run: npm test
+      env:
+        CI: true
+    
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run test:coverage
+      env:
+        CI: true
+        
+    - name: Deploy Unit Test Report/Coverage/Lint to Github page
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
+        publish_dir: ./nodeapp/reports
+        publish_branch: gh-pages
+        destination_dir: ./nodeapp
+  
+    - name: Create Issue (If Test/Coverage/lint Fail)
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure') }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Node App Tests/Coverage Failed
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
+          LINT_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/reports/lint-results.html
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/ISSUE_TEMPLATE.md
+        
+    - name: Send Error messge to  Slack
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure') }}
+      uses: slackapi/slack-github-action@v1.18.0
+      with:
+         payload: |
+           {
+             "blocks": [
+               {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}/nodeapp/index.html>\n>*REPO : *${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
+                  }  
+               }
+             ]
+           }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      
+    - name: Build project Node
+      id: build
+      if: steps.test.outcome == 'success'
+      run: npm run build
+  
+    - name: Create Issue (If Build fail)
+      if: steps.build.outcome == 'failure'
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Build failed   
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/BUILD_TEMPLATE.md
+          
+    - name: Send Error messge to  Slack
+      if: ${{ always() && steps.build.outcome == 'failure' }}
+      uses: slackapi/slack-github-action@v1.18.0
+      with:
+         payload: |
+            {
+             "blocks": [
+               {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": "*Build result: `${{ steps.build.outcome }}`*\n REPO : *${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n*GITHUB ACTOR:* ${{github.actor}}"
+                  }  
+               }
+             ]
+            }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK   
+
+   # - name: Build error message
+   #   if: steps.build.outcome == 'failure'
+   #   uses: ./.github/workflows/NodeCI.yml/Job1-NodeApp.steps.issue@v1
+   #   with: 
+   #    filename: .github/BUILD_TEMPLATE.md
+        
+    - name: Upload React Build folder as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build
+        path: ./nodeapp/build
+       
+       
+    
