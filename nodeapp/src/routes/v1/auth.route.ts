@@ -1,5 +1,4 @@
-// const express = require('express');
-import express from "express";
+const express = require('express');
 import { findResource } from '../../services/auth.service';
 import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
