@@ -6,7 +6,7 @@ import { ServerError, handleAsync, fieldFilter, paging } from '../shared/common'
 export const createResource = async( model: any ) => {
 
     const tempObject = getRepository( User ).create( model );
-    const [ newResource, error ] = await handleAsync( getRepository( User ).save( tempObject ) );
+    let [ newResource, error ] = await handleAsync( getRepository( User ).save( tempObject ) );
 
     if( error ) throw new ServerError( error.message, `users.route -> createResource` );
 
@@ -22,11 +22,11 @@ export const findResource = async( options: any ) => {
     const page = paging( options );
         
         // 3. Search (Case-Insensitive search based on default field 'name')
-        const where: string = options.q ?? ``;
+        let where: string = options.q ?? ``;
 
         // 4. Sorting (based on fields; default sort is by id)
         // format : order=name
-        const order: string = options.order ? `entity.${options.order}`: `entity.id`;
+        let order: string = options.order ? `entity.${options.order}`: `entity.id`;
 
         // Partial selection
         [ allResources, error ] = await handleAsync(
@@ -50,7 +50,7 @@ export const findOneResource = async( id: number, options: any ) => {
 
     const filter = fieldFilter( options );   
     
-        const [ resource, error ] = await handleAsync(
+        let [ resource, error ] = await handleAsync(
             getRepository( User )
            .createQueryBuilder( `entity` )
            .select( filter )
@@ -64,10 +64,10 @@ export const findOneResource = async( id: number, options: any ) => {
 }
 export const patchResource = async( id: number, patchedModel: any ) => {
     
-    const [ , error ] = await handleAsync( getRepository( User ).update( id, patchedModel ) );
+    let [ , error ] = await handleAsync( getRepository( User ).update( id, patchedModel ) );
     if( error ) throw new ServerError( error.message, `users.route -> patchResource`);
 
-    const [ resource, error2 ] = await handleAsync( getRepository( User ).findOne(id) );
+    let [ resource, error2 ] = await handleAsync( getRepository( User ).findOne(id) );
     if( error2 ) throw new ServerError( error2.message, `users.route -> patchResource` );
 
     return resource;
@@ -75,7 +75,7 @@ export const patchResource = async( id: number, patchedModel: any ) => {
 
 export const deleteResource = async ( id: number ) => {
 
-    const [ result, error ] = await handleAsync( getRepository( User ).delete( id ) );
+    let [ result, error ] = await handleAsync( getRepository( User ).delete( id ) );
 
     if( error ) throw new ServerError( error.message, `users.route -> deleteResource` );
     

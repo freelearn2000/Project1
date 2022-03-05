@@ -7,7 +7,7 @@ import validationMiddleware from '../../middlewares/validation.middleware';
 import { AuthUserValidator } from '../../models/user.entity';
 
 
-const router = express.Router( );
+let router = express.Router( );
 
 // API Endpoint '/users'
 

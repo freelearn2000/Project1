@@ -23,11 +23,11 @@ export class NewsService extends Service {
        
         // 3. Search (Case-Insensitive search on default field)
         // Format: ?q=news
-        const where: string = options.q ?? ``;
+        let where: string = options.q ?? ``;
     
         // 4. Sorting (based on fields; default sort is by 'id'
         // Format: ?order=title
-        const order: string = options.order ? `entity.${options.order}` : `entity.id`; 
+        let order: string = options.order ? `entity.${options.order}` : `entity.id`; 
         // Partial selection
         [ allResource, error ] = await handleAsync(
             getRepository( this.entity )

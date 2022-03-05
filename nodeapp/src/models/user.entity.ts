@@ -23,6 +23,7 @@ export class User {
 
 export  class UserValidator {
 
+    @Matches( /^[a-zA-Z\-]+$/, {message: 'Name should contain alphabets only'} )
     @IsString( {message: 'Name should be a string'} )
     @IsNotEmpty( {message: 'Name should be defined'} )
     name?: string;

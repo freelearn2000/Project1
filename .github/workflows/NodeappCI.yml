@@ -34,11 +34,9 @@ jobs:
 
     - name: Code analysis
       id: lint
-      run: npm run lint
-      
-    - name: Lint report
-      if: always()
-      run: npm run lint:report
+      run: |
+         echo npm run lint
+         echo npm run lint-report
          
     - name: Run Unit Tests
       id: test
@@ -46,12 +44,12 @@ jobs:
       env:
         CI: true
     
-    #- name: Run Tests Coverage
-    #  id: coverage
-    #  if: always()
-    #  run: npm run test:coverage
-    #  env:
-    #    CI: true
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run test:coverage
+      env:
+        CI: true
         
     - name: Deploy Unit Test Report/Coverage/Lint to Github page
       if: always()
@@ -76,7 +74,7 @@ jobs:
         filename: .github/ISSUE_TEMPLATE.md
         
     - name: Send Error messge to  Slack
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure') }}
+      if: failure()
       uses: slackapi/slack-github-action@v1.18.0
       with:
          payload: |
