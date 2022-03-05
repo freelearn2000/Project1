@@ -34,7 +34,7 @@ export class Route {
 
     public find = async(request:Request, response:Response, next:NextFunction) => {
 
-        const options: any = request.query;
+        let options: any = request.query;
         
         // Call service
         const [ allResources, error ] = await handleAsync( this.service.find(options) );
@@ -47,7 +47,7 @@ export class Route {
 
         // Retrive data from Route params
         const id = Number( request.params.id );
-        const options: any = request.query;
+        let options: any = request.query;
     
         // Call service
         const [ resource, error ] = await handleAsync( this.service.findOne(id, options) );

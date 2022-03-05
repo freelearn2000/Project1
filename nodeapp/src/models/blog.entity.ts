@@ -17,6 +17,7 @@ export class Blog {
 
 export class BlogValidator {
 
+    @Matches( (/^[a-zA-Z\-]+$/), {message: 'Name should be a String'} )
     @IsString( {message: 'Name should be a string'} )
     @IsNotEmpty( {message: 'Name should be defined'} )
     name?: string;
