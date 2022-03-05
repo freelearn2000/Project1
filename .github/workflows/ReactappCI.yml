@@ -40,7 +40,9 @@ jobs:
     - name: Run Tests Coverage
       id: coverage
       if: always()
-      run: npm run test:coverage
+      run: |
+            npm run coverage
+            npm run report
       env:
         CI: true
 
@@ -49,49 +51,50 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
-        publish_dir: ./nodeapp/reports
+        publish_dir: ./reactapp/reports
         publish_branch: gh-pages
-        destination_dir: ./nodeapp
-    
+        destination_dir: ./reactapp
 
     - name: Create Issue (If Test/Coverage Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      if: ${{ always() && ( steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Node App Tests/Coverage Failed
-          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
-          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html
+          TITLE: React App Tests/Coverage Failed
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/index.html)
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
       with:
         assignees: ${{github.actor}}
+
         
+    # - name: Send Error messge to  Slack
+    #   if: steps.test.outcome != 'success'
+    #   id: slack
+    #   uses: slackapi/slack-github-action@v1.18.0
+    #   with:
+    #     payload: |
+    #       {
+    #         "blocks": [
+    #           {
+    #             "type": "section",
+    #             "text": {
+    #               "type": "mrkdwn",
+    #               "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
+    #             }
+    #           }
+    #         ]
+    #       }
+    #   env:
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+    #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK 
         
-    - name: Send Error messge to  Slack
-      if: always()
-      uses: slackapi/slack-github-action@v1.18.0
-      with:
-         payload: |
-           {
-             "blocks": [
-               {
-                 "type": "section",
-                 "text": {
-                   "type": "mrkdwn",
-                   "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
-                 }
-               }
-             ]
-           }
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-      
-    - name: Build project Node
+    - name: Build project React
       if: steps.test.outcome == 'success'
-      run: npm run build
-        
-    - name: Upload React Build folder as Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: Build
-        path: ./nodeapp/build
+      run:  npm run build 
+
+    #- name: Upload React Build folder as Artifact
+    #  uses: actions/upload-artifact@v2
+    #  with:
+    #    name: Build
+    #     path: ./reactapp/build
+       
