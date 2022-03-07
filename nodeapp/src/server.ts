@@ -1,20 +1,16 @@
 import express from "express";
 import { createConnection } from 'typeorm';
 import config from './typeorm.config';
-
-// import routerProducts from './routes/v1/products.route.ts1';
+import loggingMiddleware from './middlewares/logging.middleware';
+import responseMiddleware from './middlewares/response.middleware';
 import { unhandledApiRequests, sendReactApplication, errorHandlingMiddleware } from './middlewares/error.middleware';
-
 import { Route } from './routes/v1/index.route';
-
 import { Blog, BlogValidator } from './models/blog.entity';
 import { Book, BookValidator } from "./models/book.entity";
 import { Project, ProjectValidator } from "./models/project.entity";
 import { Product, ProductValidator } from "./models/product.entity";
-
 import { News, NewsValidator } from './models/news.entity';
 import { Weather, WeatherValidator } from './models/weather.entity';
-
 import { Service } from './services/index.service';
 import { WeatherService } from "./services/weather.service";
 import { NewsService } from "./services/news.service";
@@ -44,6 +40,8 @@ export class Server {
 
     private registerMiddlewares( ) {
         this.express.use( express.json() );
+        this.express.use( loggingMiddleware() );
+        this.express.use( responseMiddleware() );
     }
 
     private registerRoutes( ) {
