@@ -20,8 +20,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test:report": "react-scripts test --watchAll=false",
-    "report": "set CI=true && react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
+    "test": "react-scripts test --watchAll=false",
+    "test:report": "set CI=true && react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
     "coverage:report": "npm test -- --coverage --coverageDirectory='./reports/coverage' --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint . & eslint . -f html -o ./reports/lint-results.html"
@@ -48,8 +48,8 @@
       "react-app/jest"
     ],
     "rules": {
-      "semi": 1,
-      "no-console": 2
+      "semi": 0,
+      "no-console": 0
      }
   },
   "browserslist": {
