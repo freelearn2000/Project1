@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 const express = require('express');
+=======
+
+import express from "express";
+>>>>>>> 25475d890e23f7c90ccbd839279924553d11a3d3
 // import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/users.service';
 // import { handleAsync, EntityNotFoundError } from '../../shared/common';
 // import valMiddleware from '../../middlewares/validation.middleware'; 
