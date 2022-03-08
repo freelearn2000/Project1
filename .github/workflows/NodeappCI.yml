@@ -42,7 +42,11 @@ jobs:
       env:
         CI: true
     
-    - name: Run Test Coverage
+<<<<<<< HEAD
+    - name: Run Tests Coverage
+=======
+    - name: Run Tests Coverage
+>>>>>>> 25475d890e23f7c90ccbd839279924553d11a3d3
       id: coverage
       if: always()
       run: npm run test:coverage
@@ -137,6 +141,7 @@ jobs:
       with:
         name: Build
         path: ./nodeapp/build
+       
        
        
     
