@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 const express = require('express');
+=======
+
+import express from "express";
+>>>>>>> 5002e381aa2c50a4a93f3183892d4d1a3fe68978
 import { findResource } from '../../services/auth.service';
 import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
