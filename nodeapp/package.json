@@ -7,7 +7,7 @@
     "build": "tsc --composite false",
     "test": "jest",
     "test:coverage": "jest --collectCoverage",
-    "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage --json --outputFile=\"report.json\"",
+    "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage ",
     "start1": "ts-node src/index.ts",
     "start": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start:prod": "node index.js",
