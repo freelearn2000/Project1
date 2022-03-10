@@ -147,6 +147,7 @@ jobs:
         path: ./nodeapp/build
         
     - name: Deploy to Azure WebApp
+      if: ${{ github.event.workflow_run.conclusion == 'success' }}
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
