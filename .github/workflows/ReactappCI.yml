@@ -94,7 +94,8 @@ jobs:
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       
     - name: Build project react
-      if: steps.test.outcome == 'success'
+      id: build
+      if: ${{ always() && (steps.test.outcome == 'success' ) }}
       run: npm run build
         
     - name: Upload React Build folder as Artifact
@@ -102,4 +103,21 @@ jobs:
       with:
         name: Build
         path: ./reactapp/build
+        
+    - name: Azure login
+      if: ${{ always() && (steps.build.outcome == 'success' ) }}
+      uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Upload to Azure blob storage
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.72
+        inlineScript: |
+            az storage blob upload-batch --account-name craazstoragedemo48765 -d '$web' -s ./production-files
+    
+    - name: Azure logout
+      run: |
+            az logout    
 
