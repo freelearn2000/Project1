@@ -97,7 +97,7 @@ jobs:
       
     - name: Build project Node
       id: build
-      if: steps.test.outcome == 'success'
+      if: ${{ always() && (steps.test.outcome == 'success' ) }}
       run: npm run build
   
     - name: Create Issue (If Build fail)
