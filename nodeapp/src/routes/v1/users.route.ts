@@ -1,15 +1,20 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const express = require('express');
 =======
 
 import express from "express";
 >>>>>>> 5002e381aa2c50a4a93f3183892d4d1a3fe68978
+=======
+
+import express from "express";
+>>>>>>> eb9c933a2263b38a250ac8c2d165a20e8adc05ef
 // import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/users.service';
 // import { handleAsync, EntityNotFoundError } from '../../shared/common';
 // import valMiddleware from '../../middlewares/validation.middleware'; 
 // import { UserValidator } from '../../models/user.entity'  
 
-let router = express.Router( );
+const router = express.Router( );
 
 // API Endpoint '/users'
 // For node project2....

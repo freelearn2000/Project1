@@ -42,11 +42,7 @@ jobs:
       env:
         CI: true
     
-<<<<<<< HEAD
     - name: Run Tests Coverage
-=======
-    - name: Run Test Coverage
->>>>>>> 5002e381aa2c50a4a93f3183892d4d1a3fe68978
       id: coverage
       if: always()
       run: npm run test:coverage
