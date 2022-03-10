@@ -1,4 +1,5 @@
-const express = require('express');
+
+import express from "express";
 import { findResource } from '../../services/auth.service';
 import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
@@ -7,7 +8,7 @@ import validationMiddleware from '../../middlewares/validation.middleware';
 import { AuthUserValidator } from '../../models/user.entity';
 
 
-let router = express.Router( );
+const router = express.Router( );
 
 // API Endpoint '/users'
 

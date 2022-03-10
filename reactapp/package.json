@@ -23,7 +23,8 @@
     "test": "react-scripts test --watchAll=false",
     "report": "set CI=true && react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
     "coverage": "npm test -- --coverage --coverageDirectory='./reports/coverage' --watchAll=false",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . & eslint . -f html -o ./reports/lint-results.html"
   },
   "jest": {
     "collectCoverageFrom": [

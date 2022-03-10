@@ -1,10 +1,11 @@
-const express = require('express');
+
+import express from "express";
 // import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/users.service';
 // import { handleAsync, EntityNotFoundError } from '../../shared/common';
 // import valMiddleware from '../../middlewares/validation.middleware'; 
 // import { UserValidator } from '../../models/user.entity'  
 
-let router = express.Router( );
+const router = express.Router( );
 
 // API Endpoint '/users'
 // For node project2....
