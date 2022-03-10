@@ -1,6 +1,10 @@
 name: Node App CI
 
 on:
+  workflow_run:
+    workflows: ["ReactappCI.yml"]
+    types:
+      - completed
   pull_request:
    branches: [develop, master]
    paths:
