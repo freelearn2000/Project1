@@ -21,11 +21,19 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
+<<<<<<< HEAD
+    "test:report": "set CI=true && react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
+    "coverage:report": "npm test -- --coverage --coverageDirectory='./reports/coverage' --watchAll=false",
+    "eject": "react-scripts eject",
+    "lint": "eslint . & eslint . -f html -o ./reports/lint-results.html"
+   },
+=======
     "report": "set CI=true && react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
     "coverage": "npm test -- --coverage --coverageDirectory='./reports/coverage' --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint . & eslint . -f html -o ./reports/lint-results.html"
   },
+>>>>>>> eb9c933a2263b38a250ac8c2d165a20e8adc05ef
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
@@ -46,7 +54,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "semi": 2,
+      "no-console": 1
+     }
   },
   "browserslist": {
     "production": [
