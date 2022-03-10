@@ -1,6 +1,10 @@
 name: Node App CI
 
 on:
+  workflow_run:
+    workflows: ["ReactappCI.yml"]
+    types:
+      - completed
   pull_request:
    branches: [develop, master]
    paths:
@@ -93,7 +97,7 @@ jobs:
       
     - name: Build project Node
       id: build
-      if: steps.test.outcome == 'success'
+      if: ${{ always() && (steps.test.outcome == 'success' ) }}
       run: npm run build
   
     - name: Create Issue (If Build fail)
