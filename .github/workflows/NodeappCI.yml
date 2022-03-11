@@ -22,6 +22,7 @@ jobs:
   Job1-NodeApp:
     name: Node App
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: production
     defaults:
       run:
@@ -50,12 +51,12 @@ jobs:
       env:
         CI: true
     
-    - name: Run Tests Coverage
-      id: coverage
-      if: always()
-      run: npm run test:coverage
-      env:
-        CI: true
+   # - name: Run Tests Coverage
+   #  id: coverage
+   #   if: always()
+   #   run: npm run test:coverage
+   #  env:
+   #     CI: true
         
     - name: Deploy Unit Test Report/Coverage/Lint to Github page
       if: always()
@@ -147,7 +148,6 @@ jobs:
         path: ./nodeapp/build
         
     - name: Deploy to Azure WebApp
-      if: ${{ github.event.workflow_run.conclusion == 'success' }}
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}

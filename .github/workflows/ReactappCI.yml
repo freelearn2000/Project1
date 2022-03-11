@@ -15,6 +15,7 @@ jobs:
   Job1-ReactApp:
     name: React App
     runs-on: ubuntu-latest
+    environment: production
     defaults:
       run:
         working-directory: reactapp
@@ -40,16 +41,16 @@ jobs:
       id: test
       run: | 
            npm test
-           npm run test:report
+           npm run report
       env:
         CI: true
          
-    - name: Run Tests Coverage
-      id: coverage
-      if: always()
-      run: npm run coverage:report
-      env:
-        CI: true
+    #- name: Run Tests Coverage
+    # id: coverage
+    # if: always()
+    #  run: npm run coverage:report
+    # env:
+    #    CI: true
 
     - name: Deploy Unit Test Report/Coverage/Lint to GitHub Page
       if: always()
@@ -108,7 +109,10 @@ jobs:
       if: ${{ always() && (steps.build.outcome == 'success' ) }}
       uses: azure/login@v1
       with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+            enable-AzPSSession: true
     
     - name: Upload to Azure blob storage
       uses: azure/CLI@v1
