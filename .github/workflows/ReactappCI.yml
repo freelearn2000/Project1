@@ -105,6 +105,36 @@ jobs:
         name: Build
         path: ./reactapp/build
         
+    - name: Create Issue (If Build fail)
+      if: ${{ always() && steps.build.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Build failed   
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/BUILD_TEMPLATE.md
+          
+    - name: Send Error messge to  Slack
+      if: ${{ always() && steps.build.outcome == 'failure' }}
+      uses: slackapi/slack-github-action@v1.18.0
+      with:
+         payload: |
+            {
+             "blocks": [
+               {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": "*Build result: `${{ steps.build.outcome }}`*\n REPO : *${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n*GITHUB ACTOR:* ${{github.actor}}"
+                  }  
+               }
+             ]
+            }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK   
+        
     - name: Azure login
       id: deploy
       if: ${{ always() && (steps.build.outcome == 'success' ) }}
@@ -127,7 +157,7 @@ jobs:
             az logout    
 
     - name: Create Issue (If Deploy fail)
-      if: steps.deploy.outcome == 'failure'
+      if: ${{ always() && steps.deploy.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
