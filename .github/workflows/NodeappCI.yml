@@ -164,8 +164,7 @@ jobs:
           TITLE: Deploy failed   
       with:
         assignees: ${{github.actor}}
-        filename: .github/ISSUE_TEMPLATE.md
-          
+        
     - name: Send Error messge to  Slack
       if: ${{ always() && steps.deploy.outcome == 'failure' }}
       uses: slackapi/slack-github-action@v1.18.0
