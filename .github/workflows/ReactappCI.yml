@@ -15,7 +15,7 @@ jobs:
   Job1-ReactApp:
     name: React App
     runs-on: ubuntu-latest
-    environment: production
+   # environment: production
     defaults:
       run:
         working-directory: reactapp
