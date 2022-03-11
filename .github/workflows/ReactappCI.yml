@@ -15,6 +15,7 @@ jobs:
   Job1-ReactApp:
     name: React App
     runs-on: ubuntu-latest
+    environment: production
     defaults:
       run:
         working-directory: reactapp
@@ -44,12 +45,12 @@ jobs:
       env:
         CI: true
          
-    - name: Run Tests Coverage
-      id: coverage
-      if: always()
-      run: npm run coverage:report
-      env:
-        CI: true
+    #- name: Run Tests Coverage
+    # id: coverage
+    # if: always()
+    #  run: npm run coverage:report
+    # env:
+    #    CI: true
 
     - name: Deploy Unit Test Report/Coverage/Lint to GitHub Page
       if: always()
