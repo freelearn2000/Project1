@@ -148,12 +148,43 @@ jobs:
         path: ./nodeapp/build
         
     - name: Deploy to Azure WebApp
+      id: deploy
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
+        
+   
+    - name: Create Issue (If Deploy fail)
+      if: steps.deploy.outcome == 'failure'
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Deploy failed   
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/ISSUE_TEMPLATE.md
+          
+    - name: Send Error messge to  Slack
+      if: ${{ always() && steps.deploy.outcome == 'failure' }}
+      uses: slackapi/slack-github-action@v1.18.0
+      with:
+         payload: |
+            {
+             "blocks": [
+               {
+                 "type": "section",
+                 "text": {
+                   "type": "mrkdwn",
+                   "text": "*Deploy result: `${{ steps.deploy.outcome }}`*\n REPO : *${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n*GITHUB ACTOR:* ${{github.actor}}"
+                  }  
+               }
+             ]
+            }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK   
 
 
        
