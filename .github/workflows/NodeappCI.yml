@@ -156,7 +156,7 @@ jobs:
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         
    
-    - name: Create Issue (If Build fail)
+    - name: Create Issue (If Deploy fail)
       if: steps.deploy.outcome == 'failure'
       uses: JasonEtco/create-an-issue@v2
       env:
