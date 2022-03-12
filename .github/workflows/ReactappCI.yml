@@ -15,7 +15,7 @@ jobs:
   Job1-ReactApp:
     name: React App
     runs-on: ubuntu-latest
-    environment: production
+   # environment: production
     defaults:
       run:
         working-directory: reactapp
@@ -140,10 +140,7 @@ jobs:
       if: ${{ always() && (steps.build.outcome == 'success' ) }}
       uses: azure/login@v1
       with:
-            client-id: ${{ secrets.AZURE_CLIENT_ID }}
-            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
-            enable-AzPSSession: true
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     
     - name: Upload to Azure blob storage
       uses: azure/CLI@v1
