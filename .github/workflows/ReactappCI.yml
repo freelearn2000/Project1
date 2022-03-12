@@ -40,7 +40,7 @@ jobs:
       id: test
       run: | 
            npm test
-           npm run report
+           npm run test:report
       env:
         CI: true
          
