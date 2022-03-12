@@ -6,11 +6,11 @@ on:
       - ReactappCI 
     types:
       - completed
- # pull_request:
-  # branches: [develop, master]
-   #paths:
-    #  - 'nodeapp/**'
-     # - '.github/workflows/NodeappCI.yml'
+  pull_request:
+   branches: [develop, master]
+   paths:
+      - 'nodeapp/**'
+      - '.github/workflows/NodeappCI.yml'
      
 env:
   AZURE_WEBAPP_NAME: nodeprojectapp                                     # set this to your application's name
