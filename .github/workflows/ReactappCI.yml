@@ -147,7 +147,8 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name craazstoragedemo48765 -d '$web' -s ./production-files
+          az account show
+          az storage -h
     
     - name: Azure logout
       run: |
