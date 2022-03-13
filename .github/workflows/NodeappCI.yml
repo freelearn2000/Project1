@@ -151,14 +151,7 @@ jobs:
       with:
         name: Build
         path: ./nodeapp/build
-    
-    
-    - name: Sample Azure action
-      with: # Set Azure credentials secret as an input
-        credentials: ${{ secrets.AZURE_CREDENTIALS }}
-      env: # Or as an environment variable
-       credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        
+   
     - name: Deploy to Azure WebApp
       id: deploy
       uses: azure/webapps-deploy@v1
@@ -166,6 +159,8 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      env: # Or as an environment variable
+       credentials: ${{ secrets.AZURE_CREDENTIALS }}
         
    
     - name: Create Issue (If Deploy fail)
