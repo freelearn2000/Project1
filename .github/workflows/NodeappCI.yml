@@ -17,6 +17,7 @@ env:
   AZURE_WEBAPP_URL: 'https://nodeprojectapp.azurewebsites.net'          # set application url
   AZURE_WEBAPP_PACKAGE_PATH: '.'                                       # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'
+  AZURE_WEBAPP_PUBLISH_PROFILE: '${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}'
 
 jobs:
 
@@ -157,12 +158,9 @@ jobs:
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
+        publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-      env: # Or as an environment variable
-       credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        
-   
+      
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && steps.build.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
