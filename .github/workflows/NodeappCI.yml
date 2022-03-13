@@ -151,14 +151,16 @@ jobs:
       with:
         name: Build
         path: ./nodeapp/build
-        
+   
     - name: Deploy to Azure WebApp
       id: deploy
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      env: # Or as an environment variable
+       credentials: ${{ secrets.AZURE_CREDENTIALS }}
         
    
     - name: Create Issue (If Deploy fail)
