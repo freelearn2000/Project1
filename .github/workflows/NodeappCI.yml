@@ -13,17 +13,17 @@ on:
       - '.github/workflows/NodeappCI.yml'
      
 env:
-  AZURE_WEBAPP_NAME: nodeprojectapp                                     # set this to your application's name
-  AZURE_WEBAPP_URL: 'https://nodeprojectapp.azurewebsites.net'          # set application url
+  AZURE_WEBAPP_NAME: 'nodeappproject1'                                     # set this to your application's name
+  AZURE_WEBAPP_URL: 'https://nodeappproject1.azurewebsites.net'          # set application url
   AZURE_WEBAPP_PACKAGE_PATH: '.'                                       # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'
-
+  
 jobs:
 
   Job1-NodeApp:
     name: Node App
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+   # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: production
     defaults:
       run:
@@ -157,12 +157,9 @@ jobs:
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-      env: # Or as an environment variable
-       credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        
-   
+      
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && steps.build.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
