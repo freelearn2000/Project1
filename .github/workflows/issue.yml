@@ -16,8 +16,10 @@ jobs:
       if: always()
       uses: ravsamhq/notify-slack-action@v1
       with:
-        status: ${{ job.status }} 
-        footer: 'Linked to Repo <{repo_url}|{repo}>'
+       status: ${{ job.status }} 
+       notification_title: '{workflow} has {status_message}'
+       message_format: ' {status_message} in <{repo_url}|{repo}>'
+       footer: 'Linked to Repo <{repo_url}|{repo}>'
         
       env:
        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
