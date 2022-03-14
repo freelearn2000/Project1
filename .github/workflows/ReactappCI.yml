@@ -3,9 +3,7 @@ name: ReactappCI
 on:
   pull_request:
    branches: [develop, master]
-   paths:
-      - 'reactapp/**'
-      - '.github/workflows/ReactappCI.yml'
+   paths: [reactapp/src/**]
 
 env:
   NODE_VERSION: '16.x'
@@ -43,6 +41,17 @@ jobs:
            npm run test:report
       env:
         CI: true
+        
+    - name: Create Issue (If lint Fail)
+      if: ${{ always() &&  steps.lint.outcome == 'failure' ) }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: React App lint Failed
+          LINT_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/reports/lint-results.html
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/LINT_TEMPLATE.md
          
     #- name: Run Tests Coverage
     # id: coverage
@@ -60,37 +69,17 @@ jobs:
         publish_branch: gh-pages
         destination_dir: ./reactapp
     
-    - name: Create Issue (If Test/Coverage/lint Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure') }}
+    - name: Create Issue (If Test/Coverage Fail)
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
           TITLE: React App Tests/Coverage Failed
           TEST_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/index.html)
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
-          LINT_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/reports/lint-results.html
       with:
-        assignees: ${{github.actor}}  
-        
-    - name: Send Error messge to  Slack
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure') }}
-      uses: slackapi/slack-github-action@v1.18.0
-      with:
-         payload: |
-           {
-             "blocks": [
-               {
-                 "type": "section",
-                 "text": {
-                   "type": "mrkdwn",
-                   "text": "*Test result: `${{ steps.test.outcome }}`*\n *Test Report : * <https://freelearn2000.github.io/${{ github.event.repository.name }}>\n>*REPO : * ${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n>*RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
-                 }
-               }
-             ]
-           }
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        assignees: ${{github.actor}} 
+        filename: .github/TESTCOVERAGE_TEMPLATE.md
       
     - name: Build project react
       id: build
@@ -112,26 +101,6 @@ jobs:
       with:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md
-          
-    - name: Send Error messge to  Slack
-      if: ${{ always() && steps.build.outcome == 'failure' }}
-      uses: slackapi/slack-github-action@v1.18.0
-      with:
-         payload: |
-            {
-             "blocks": [
-               {
-                 "type": "section",
-                 "text": {
-                   "type": "mrkdwn",
-                   "text": "*Build result: `${{ steps.build.outcome }}`*\n REPO : *${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n*GITHUB ACTOR:* ${{github.actor}}"
-                  }  
-               }
-             ]
-            }
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK   
         
     - name: Upload to Azure blob storage
       uses: azure/CLI@v1
@@ -149,22 +118,4 @@ jobs:
       with:
         assignees: ${{github.actor}}
           
-    - name: Send Error messge to  Slack
-      if: ${{ always() && steps.deploy.outcome == 'failure' }}
-      uses: slackapi/slack-github-action@v1.18.0
-      with:
-         payload: |
-            {
-             "blocks": [
-               {
-                 "type": "section",
-                 "text": {
-                   "type": "mrkdwn",
-                   "text": "*Deploy result: `${{ steps.deploy.outcome }}`*\n REPO : *${{ github.event.repository.name }} \n>*WORKFLOW : * ${{github.workflow}} \n*GITHUB ACTOR:* ${{github.actor}}"
-                  }  
-               }
-             ]
-            }
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK   
+   

@@ -1,7 +1,8 @@
 name: Notify on issue
 
 on:
-  workflow_dispatch
+  issues:
+    types: [opened]
 
 env:
   GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -17,7 +18,7 @@ jobs:
       with:
         status: ${{ job.status }} 
         notification_title: '{workflow} has {status_message}'
-        message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
+        message_format: ' {status_message} in <{repo_url}|{repo}>'
         footer: 'Linked to Repo <{repo_url}|{repo}>'
         
       env:
