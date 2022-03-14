@@ -3,7 +3,7 @@ name: Node App CI
 on:
   pull_request:
    branches: [develop, master]
-   paths: [.nodeapp/src/**]
+   paths: 'nodeapp/src/**'
             
 env:
   AZURE_WEBAPP_NAME: 'nodeappproject1'                                   # set this to your application's name
