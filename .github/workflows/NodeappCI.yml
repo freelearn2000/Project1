@@ -15,7 +15,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: 'nodeappproject1'                                     # set this to your application's name
   AZURE_WEBAPP_URL: 'https://nodeappproject1.azurewebsites.net'          # set application url
-  AZURE_WEBAPP_PACKAGE_PATH: '.'                                       # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: './nodeapp/build'                                       # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'
   
 jobs:
