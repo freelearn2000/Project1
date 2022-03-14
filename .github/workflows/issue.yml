@@ -1,7 +1,8 @@
 name: Notify on issue
 
 on:
-  workflow_dispatch
+  issues:
+    types: [opened]
 
 env:
   GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
