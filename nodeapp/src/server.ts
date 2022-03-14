@@ -14,6 +14,7 @@ import { Weather, WeatherValidator } from './models/weather.entity';
 import { Service } from './services/index.service';
 import { WeatherService } from "./services/weather.service";
 import { NewsService } from "./services/news.service";
+import azureBlobStorageService from "./services/azure.service";
 
 
 export class Server {
@@ -24,8 +25,10 @@ export class Server {
         console.log(`Initializing application...`);
         this.express = express( );
         this.registerMiddlewares();
+        this.registerAzureServices(); 
         this.registerRoutes();
-        this.registerErrorHandlers();  
+        this.registerErrorHandlers(); 
+      
     }
 
     public async initializeDatabase( ) {
@@ -44,6 +47,10 @@ export class Server {
         this.express.use( responseMiddleware() );
     }
 
+    private registerAzureServices( ) {
+        azureBlobStorageService();
+    }
+
     private registerRoutes( ) {
         this.express.use(`/api/v1/blogs`, new Route(BlogValidator, new Service(Blog)).router)
         this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(Project)).router);
@@ -52,14 +59,14 @@ export class Server {
         this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book)).router);
         this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product)).router);
     }
-  
+    
     private registerErrorHandlers() {
         // Handle all API's (not handled by routes)
         this.express.all( '/api/*', unhandledApiRequests );
-        // Handle all requets not handled by Routes
-        this.express.get( '*', sendReactApplication );
+        // Handle all requests not handled by Routes
+        this.express.use( '*', sendReactApplication );
         // Global Error Handler
-        this.express.use( errorHandlingMiddleware );
+        this.express.use(errorHandlingMiddleware);
     }
 
     public listen( port: number ) {
