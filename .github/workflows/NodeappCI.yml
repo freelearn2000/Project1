@@ -98,7 +98,7 @@ jobs:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md       
        
-    - name: Upload React Build folder as Artifact
+    - name: Upload Node Build folder as Artifact
       uses: actions/upload-artifact@v2
       with:
         name: Build
