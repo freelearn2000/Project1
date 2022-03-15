@@ -70,7 +70,7 @@ jobs:
         destination_dir: ./reactapp
     
     - name: Create Issue (If Test/Coverage Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
