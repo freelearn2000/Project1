@@ -62,7 +62,7 @@ jobs:
    #  env:
    #     CI: true
         
-    - name: Deploy Unit Test Report/Coverage/Lint to Github page
+    - name: Copy Unit Test Report/Coverage/Lint to Github page
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -72,7 +72,7 @@ jobs:
         destination_dir: ./nodeapp
   
     - name: Create Issue (If Test/Coverage fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -113,7 +113,7 @@ jobs:
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
       
     - name: Create Issue (If Deploy fail)
-      if: ${{ always() && steps.build.outcome == 'failure' }}
+      if: ${{ always() && steps.deploy.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
