@@ -3,7 +3,7 @@ name: ReactappCI
 on:
   pull_request:
    branches: [develop, master]
-   paths: [.reactapp/src/**]
+   paths: [reactapp/src/**]
 
 env:
   NODE_VERSION: '16.x'
@@ -43,7 +43,7 @@ jobs:
         CI: true
         
     - name: Create Issue (If lint Fail)
-      if: ${{ always() &&  steps.lint.outcome == 'failure' ) }}
+      if: ${{ always() &&  steps.lint.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
