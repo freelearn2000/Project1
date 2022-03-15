@@ -3,7 +3,7 @@ name: Node App CI
 on:
   pull_request:
    branches: [develop, master]
-   paths: 'nodeapp/**'
+   paths: 'nodeapp/src/**'
             
 env:
   AZURE_WEBAPP_NAME: 'nodeappproject1'                                   # set this to your application's name
@@ -39,7 +39,7 @@ jobs:
       run: npm run lint
        
     - name: Create Issue (If lint Fail)
-      if: ${{ always() &&  steps.lint.outcome == 'failure'  }}
+      if: ${{ always() &&  steps.lint.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -85,7 +85,7 @@ jobs:
       
     - name: Build project Node
       id: build
-      if: ${{ always() && (steps.test.outcome == 'success' ) }}
+      if: ${{ always() && steps.test.outcome == 'success' }}
       run: npm run build
   
     - name: Create Issue (If Build fail)
