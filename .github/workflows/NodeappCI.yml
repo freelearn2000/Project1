@@ -39,7 +39,7 @@ jobs:
       run: npm run lint
        
     - name: Create Issue (If lint Fail)
-      if: ${{ always() &&  steps.lint.outcome == 'failure' ) }}
+      if: ${{ always() &&  steps.lint.outcome == 'failure'  }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
