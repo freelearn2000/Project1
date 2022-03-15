@@ -60,7 +60,7 @@ jobs:
     # env:
     #    CI: true
 
-    - name: Deploy Unit Test Report/Coverage/Lint to GitHub Page
+    - name: Copy Unit Test Report/Coverage/Lint to GitHub Page
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -70,7 +70,7 @@ jobs:
         destination_dir: ./reactapp
     
     - name: Create Issue (If Test/Coverage Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -102,7 +102,7 @@ jobs:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md
         
-    - name: Upload to Azure blob storage
+    - name: Deploy to Azure blob storage
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.72
