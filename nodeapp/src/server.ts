@@ -1,5 +1,6 @@
 import express from "express";
 import { createConnection } from 'typeorm';
+import path from 'path';
 import config from './typeorm.config';
 import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
@@ -14,7 +15,6 @@ import { Weather, WeatherValidator } from './models/weather.entity';
 import { Service } from './services/index.service';
 import { WeatherService } from "./services/weather.service";
 import { NewsService } from "./services/news.service";
-import azureBlobStorageService from "./services/azure.service";
 
 
 export class Server {
@@ -25,7 +25,6 @@ export class Server {
         console.log(`Initializing application...`);
         this.express = express( );
         this.registerMiddlewares();
-        this.registerAzureServices(); 
         this.registerRoutes();
         this.registerErrorHandlers(); 
       
@@ -46,11 +45,7 @@ export class Server {
         this.express.use( loggingMiddleware() );
         this.express.use( responseMiddleware() );
     }
-
-    private registerAzureServices( ) {
-        azureBlobStorageService();
-    }
-
+    
     private registerRoutes( ) {
         this.express.use(`/api/v1/blogs`, new Route(BlogValidator, new Service(Blog)).router)
         this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(Project)).router);
