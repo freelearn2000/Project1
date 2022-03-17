@@ -34,14 +34,6 @@ jobs:
       id: lint
       run: npm run lint
       
-    - name: Run Unit Tests
-      id: test
-      run: | 
-           npm test
-           npm run test:report
-      env:
-        CI: true
-        
     - name: Create Issue (If lint Fail)
       if: ${{ always() &&  steps.lint.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
@@ -52,7 +44,15 @@ jobs:
       with:
         assignees: ${{github.actor}}
         filename: .github/LINT_TEMPLATE.md
-         
+      
+    - name: Run Unit Tests
+      id: test
+      run: | 
+           npm test
+           npm run test:report
+      env:
+        CI: true
+              
     #- name: Run Tests Coverage
     # id: coverage
     # if: always()
@@ -61,7 +61,7 @@ jobs:
     #    CI: true
 
     - name: Copy Unit Test Report/Coverage/Lint to GitHub Page
-      if: always()
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -70,7 +70,7 @@ jobs:
         destination_dir: ./reactapp
     
     - name: Create Issue (If Test/Coverage Fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
