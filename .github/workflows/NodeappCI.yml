@@ -6,8 +6,8 @@ on:
    paths: [nodeapp/src/**]
             
 env:
-  AZURE_WEBAPP_NAME: 'nodeappproject1'                                   # set this to your application's name
-  AZURE_WEBAPP_URL: 'https://nodeappproject1.azurewebsites.net'          # set application url
+  AZURE_WEBAPP_NAME: 'infra-node-sample'                                   # set this to your application's name
+  AZURE_WEBAPP_URL: 'https://infra-node-sample.azurewebsites.net'          # set application url
   AZURE_WEBAPP_PACKAGE_PATH: './nodeapp/build'                           # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'
   
@@ -63,7 +63,7 @@ jobs:
    #     CI: true
         
     - name: Copy Unit Test Report/Coverage/Lint to Github page
-      if: always()
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -72,7 +72,7 @@ jobs:
         destination_dir: ./nodeapp
   
     - name: Create Issue (If Test/Coverage fail)
-      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}

@@ -1,4 +1,3 @@
-
 import express from "express";
 // import { createResource, findResource, findOneResource, patchResource, deleteResource } from '../../services/users.service';
 // import { handleAsync, EntityNotFoundError } from '../../shared/common';

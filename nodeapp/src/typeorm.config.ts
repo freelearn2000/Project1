@@ -11,7 +11,7 @@ const config: ConnectionOptions = {
     entities: [
         __dirname + `/models/*.entity{.ts,.js}`
     ],
-    synchronize: true
+    synchronize: process.env.NODE_ENV == 'production' ? false : true
 }
 
 export default config;
