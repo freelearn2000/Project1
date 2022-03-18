@@ -110,7 +110,7 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         app-settings-json: '${{ secrets.APP_SETTINGS }}' 
-        connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
+        
       id: settings
     - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
    
