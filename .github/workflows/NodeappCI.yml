@@ -102,9 +102,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: ./nodeapp/build
+        path: ./nodeapp/build   
    
     - name: Deploy to Azure WebApp
+      if: ${{ always() && steps.build.outcome == 'success' }}
       id: deploy
       uses: azure/webapps-deploy@v1
       with: 
