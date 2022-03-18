@@ -112,6 +112,16 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
       
+    - name: Connecting WebApp to PostGreSQL
+      uses: azure/appservice-settings@v1
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        app-settings-json: '${{ secrets.APP_SETTINGS }}' 
+        connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
+        general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
+      id: settings
+    - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
+      
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && steps.deploy.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
