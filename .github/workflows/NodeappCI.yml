@@ -102,19 +102,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: ./nodeapp/build
-        
-    - name: Connecting WebApp to PostGreSQL
-      if: ${{ always() && steps.build.outcome == 'success' }}
-      uses: azure/appservice-settings@v1
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        app-settings-json: '${{ secrets.APP_SETTINGS }}' 
-        
-      id: settings
-    - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
+        path: ./nodeapp/build   
    
     - name: Deploy to Azure WebApp
+      if: ${{ always() && steps.build.outcome == 'success' }}
       id: deploy
       uses: azure/webapps-deploy@v1
       with: 
