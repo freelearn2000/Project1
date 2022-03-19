@@ -42,6 +42,7 @@ export class Server {
 
     private registerMiddlewares( ) {
         this.express.use( express.json() );
+        // this.express.use('/', express.static('https://infra-node-sample.azurewebsites.net/reactpath/index.html'))
         this.express.use( loggingMiddleware() );
         this.express.use( responseMiddleware() );
     }
