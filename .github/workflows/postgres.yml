@@ -3,7 +3,6 @@ name: PostgreSQL for GitHub Actions
 on:
   [workflow_dispatch]
 
-
 jobs:
 
   build:
