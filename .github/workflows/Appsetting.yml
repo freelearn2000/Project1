@@ -18,7 +18,7 @@ jobs:
         app-name: 'infra-node-sample'
         # slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
         app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
-        # connection-strings-json: '${{ secrets.AZURE_CONNECTION_STRINGS }}'
+        # connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
         # general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
       id: settings
     - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
