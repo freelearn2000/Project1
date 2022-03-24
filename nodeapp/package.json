@@ -9,8 +9,8 @@
     "test:coverage": "jest --collectCoverage",
     "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage ",
     "start1": "ts-node src/index.ts",
-    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start:prod": "node index.js",
+    "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "node index.js",
     "lint": "eslint . --ext .ts & eslint **/*.ts -f html -o ./reports/lint-results.html "
   },
   "keywords": [],
@@ -29,6 +29,7 @@
     "class-validator": "^0.13.1",
     "dotenv": "^16.0.0",
     "eslint": "^8.10.0",
+    "eslint-plugin-import": "^2.25.4",
     "express": "^4.17.2",
     "express-mung": "^0.5.1",
     "jest": "^27.5.1",

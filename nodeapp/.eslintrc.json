@@ -2,16 +2,19 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",  "eslint-plugin-import"
     ],
     "extends": [
       "eslint:recommended",
       "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
+      "plugin:@typescript-eslint/recommended",
+      "plugin:eslint-plugin-import/typescript"
     ],
     "rules": { 
-        "no-console": 0
+        "no-console": 0,
+        "import/newline-after-import": ["error", { "count": 2 }]
     },
     "ignorePatterns": ["**/*.test.ts"]
     }
   
+
