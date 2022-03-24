@@ -107,11 +107,19 @@ jobs:
     - name: Deploy to Azure WebApp
       if: ${{ always() && steps.build.outcome == 'success' }}
       id: deploy
-      uses: azure/webapps-deploy@v1
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_CREDENTIALS }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        
+ # Azure logout 
+    - name: logout
+      run: |
+        az logout
       
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && steps.deploy.outcome == 'failure' }}
