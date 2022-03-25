@@ -105,12 +105,12 @@ jobs:
         path: ./nodeapp/build  
         
     - name: Add Build Assets for Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      if: ${{ always() && steps.build.outcome == 'success' }}
       run: zip -r build.zip build
 
 
     - name: Create a Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      if: ${{ always() && steps.build.outcome == 'success' }}
       run: npx semantic-release
       env:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
