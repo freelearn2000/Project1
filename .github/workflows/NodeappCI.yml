@@ -102,8 +102,20 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: ./nodeapp/build   
-   
+        path: ./nodeapp/build  
+        
+    - name: Add Build Assets for Release
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: zip -r build.zip build
+
+
+    - name: Create a Release
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: npx semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+        
+      
     - name: Deploy to Azure WebApp
       if: ${{ always() && steps.build.outcome == 'success' }}
       id: deploy
