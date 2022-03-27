@@ -110,7 +110,7 @@ jobs:
 
 
     - name: Create a Release
-      if: ${{ always() && steps.build.outcome == 'success' }}
+      if: ${{ always() && steps.build.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/master'}}
       run: npx semantic-release
       env:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
