@@ -110,28 +110,28 @@ jobs:
 
 
     - name: Create a Release
-      if: ${{ always() && steps.build.outcome == 'success' && github.ref == 'refs/heads/master'}}
+      if: ${{ always() && (steps.build.outcome == 'success' && github.ref == 'refs/heads/master')}}
       run: npx semantic-release
       env:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
         
       
-    - name: Deploy to Azure WebApp
-      if: ${{ always() && steps.build.outcome == 'success' }}
-      id: deploy
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+   # - name: Deploy to Azure WebApp
+   #   if: ${{ always() && steps.build.outcome == 'success' }}
+   #   id: deploy
+   #   uses: azure/login@v1
+   #   with:
+   #     creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-    - uses: azure/webapps-deploy@v2
-      with: 
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+   # - uses: azure/webapps-deploy@v2
+   #   with: 
+   #     app-name: ${{ env.AZURE_WEBAPP_NAME }}
+   #     package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         
  # Azure logout 
-    - name: logout
-      run: |
-        az logout
+   # - name: logout
+   #   run: |
+     #   az logout
       
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && steps.deploy.outcome == 'failure' }}
