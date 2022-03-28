@@ -11,7 +11,7 @@
     "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage ",
     "start1": "ts-node src/index.ts",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start": "node build/src/index.js",
+    "start": "node index.js",
     "lint": "eslint . --ext .ts & eslint **/*.ts -f html -o ./reports/lint-results.html "
   },
   "keywords": [],
