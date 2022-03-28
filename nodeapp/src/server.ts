@@ -1,6 +1,7 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import { createConnection } from 'typeorm';
 import path from 'path';
+import dotenv from 'dotenv';
 import config from './typeorm.config';
 import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
@@ -59,7 +60,7 @@ export class Server {
         // Handle all API's (not handled by routes)
         this.express.all( '/api/*', unhandledApiRequests );
         // Handle all requests not handled by Routes
-        this.express.use( '*', sendReactApplication );
+        this.express.all( '*', express.static( `${process.env.REACT_PATH}`  ) );
         // Global Error Handler
         this.express.use(errorHandlingMiddleware);
     }
