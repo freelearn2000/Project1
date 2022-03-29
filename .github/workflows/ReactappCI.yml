@@ -103,6 +103,7 @@ jobs:
         filename: .github/BUILD_TEMPLATE.md
         
     - name: Deploy to Azure blob storage
+      id: deploy
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.72
