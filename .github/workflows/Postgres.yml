@@ -1,7 +1,9 @@
 name: PostgreSQL for GitHub Actions
 
 on:
-  [workflow_dispatch]
+  pull_request:
+   branches: [develop, master]
+   paths: [database/schemafile.sql/**]
 
 jobs:
 
