@@ -8,7 +8,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: 'infra-node-sample'                                   # set this to your application's name
   AZURE_WEBAPP_URL: 'https://infra-node-sample.azurewebsites.net'          # set application url
-  AZURE_WEBAPP_PACKAGE_PATH: './nodeapp/build'                                   # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: './nodeapp/build'                             # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '16.x'
   
 jobs:
@@ -56,7 +56,7 @@ jobs:
         CI: true
     
    # - name: Run Tests Coverage
-   #  id: coverage
+   #   id: coverage
    #   if: always()
    #   run: npm run test:coverage
    #  env:
@@ -107,29 +107,21 @@ jobs:
     - name: Add Build Assets for Release
       if: ${{ always() && steps.build.outcome == 'success' }}
       run: zip -r build.zip build
-
-
-    - name: Create a Release
+            
+    - name: Azure login
       if: ${{ always() && steps.build.outcome == 'success' }}
-      run: npx semantic-release
-      env:
-        GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-        
-      
-    - name: Deploy to Azure WebApp
-      if: ${{ always() && steps.build.outcome == 'success' }}
-      id: deploy
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-    - uses: azure/webapps-deploy@v2
+    - name: Deploy to Azure App Service
+      id: deploy
+      uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         
- # Azure logout 
-    - name: logout
+    - name: Azure logout
       run: |
         az logout
       
