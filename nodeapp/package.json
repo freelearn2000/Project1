@@ -4,14 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build1": "tsc --composite false",
-    "build": "node build.js",
+    "build": "tsc --composite false & node build.js",
     "test": "jest",
     "test:coverage": "jest --collectCoverage",
     "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage ",
     "start1": "ts-node src/index.ts",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start": "node index.js",
+    "start": "node src/index.js",
     "lint": "eslint . --ext .ts & eslint **/*.ts -f html -o ./reports/lint-results.html "
   },
   "keywords": [],
