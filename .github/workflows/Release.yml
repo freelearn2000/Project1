@@ -1,15 +1,40 @@
-name: Release
+name: Create Release 
 
+# Trigger the create release workflow
 on:
-  workflow_run:
-   workflows: ["NodeappCI","ReactappCI"]
-   types:
-     - completed
-      
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Add Build Assets for Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: zip -r build.zip build
+
       - name: Create a Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: npx semantic-release
         env:
-            #GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+             
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      
+      
       
 
     
