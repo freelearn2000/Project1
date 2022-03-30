@@ -6,23 +6,32 @@ on:
 jobs:
 
   AppSettingsJob:
+  
     name: Azure App Settings
     runs-on: ubuntu-latest
    
     steps:
-    - uses: azure/login@v1
+    
+    - name: Login to Azure
+      uses: azure/login@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
-    - uses: azure/appservice-settings@v1
+    
+    - name: Configure Azure App Service
+      id: settings
+      uses: azure/appservice-settings@v1
       with:
         app-name: 'infra-node-sample'
         # slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
         app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
         # connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
         # general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
-      id: settings
-    - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
-    - run: |
+     
+    - name: Check App Service url
+      run: echo "The App Service-url is ${{ steps.settings.outputs.webapp-url }}"
+      
+    - name: Azure logout
+      run: |
         az logout
     
     

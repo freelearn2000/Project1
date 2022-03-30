@@ -102,13 +102,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: ./nodeapp/build  
-        
-    - name: Add Build Assets for Release
-      if: ${{ always() && steps.build.outcome == 'success' }}
-      run: zip -r build.zip build
+        path: ./nodeapp/build          
             
-    - name: Azure login
+    - name: Login to Azure
       if: ${{ always() && steps.build.outcome == 'success' }}
       uses: azure/login@v1
       with:
