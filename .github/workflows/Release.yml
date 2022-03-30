@@ -13,15 +13,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
       - name: Add Build Assets for Release
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: zip -r build.zip build
 
-      - name: Create a Release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: npx semantic-release
-        env:
-         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+     # - name: Create a Release
+     #   if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+     #   run: npx semantic-release
+     #   env:
+     #    GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
              
       - name: Create Release
         id: create_release
