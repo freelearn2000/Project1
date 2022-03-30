@@ -9,13 +9,19 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v1
-    - uses: azure/login@v1
+  
+    - name: Checkout Repository
+      uses: actions/checkout@v1
+    
+    - name: Login to Azure
+      uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - uses: azure/postgresql@v1
+    - name: Connecting to PostgreSQL
+      uses: azure/postgresql@v1
       with:
         server-name: "infrapostgres.postgres.database.azure.com"
         connection-string: ${{ secrets.AZURE_POSTGRESQL_CONNECTION_STRING }}
