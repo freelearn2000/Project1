@@ -1,14 +1,14 @@
-#name: Release
+name: Release
 
-#on:
-  #workflow_run:
-   # workflows: ["NodeappCI","ReactappCI"]
-    #types:
-     # - completed
+on:
+  workflow_run:
+   workflows: ["NodeappCI","ReactappCI"]
+   types:
+     - completed
       
-      #- name: Create a Release
-        #run: npx semantic-release
-        #env:
+      - name: Create a Release
+        run: npx semantic-release
+        env:
             #GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
       
 
