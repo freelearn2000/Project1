@@ -2,9 +2,10 @@ name: Create Release
 
 # Trigger the create release workflow
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_run:
+   workflows: ["NodeappCI","ReactappCI"]
+   types:
+     - completed
 
 jobs:
   release:
@@ -13,6 +14,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+    
+      - name: Run Build 
+        id: build
+        if: ${{ always() && steps.test.outcome == 'success' }}
+        run: npm run build
         
       - name: Add Build Assets for Release
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
