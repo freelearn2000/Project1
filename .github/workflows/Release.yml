@@ -2,10 +2,10 @@ name: Create Release
 
 # Trigger the create release workflow
 on:
-  workflow_run:
-   workflows: ["NodeappCI","ReactappCI"]
-   types:
-     - completed
+  workflow_dispatch:
+  # workflows: ["NodeappCI","ReactappCI"]
+  # types:
+   #  - completed
 
 jobs:
   release:
