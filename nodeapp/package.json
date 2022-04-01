@@ -72,7 +72,7 @@
       "global": {
         "functions": 50,
         "statements": 50,
-        "branches": 50,
+        "branches": 25,
         "lines": 50
       }
     },
