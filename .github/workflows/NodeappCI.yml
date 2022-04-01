@@ -118,13 +118,9 @@ jobs:
       with: 
         app-name: ${{ env.AZURE_APPSERVICE_NAME_STAGING }}
         package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
-        
-    - name: Azure logout
-      run: |
-        az logout
      
-    - name: Deploy to Production Server
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'  && steps.build.outcome == 'success' 
+    - name: Login to Azure(using Service Principal Identity) for Production server
+      if: ${{ always() && steps.build.outcome == 'success' }} 
       id: login_production
       uses: azure/login@v1
       with:
@@ -132,7 +128,7 @@ jobs:
         
     - name: Deploy to Azure App Service for Production server
       id: deploy_production
-      if: ${{ always() && steps.login_production.outcome == 'success' }}
+      if: ${{ always() && steps.login_production.outcome == 'success' && github.ref == 'refs/heads/master' }}
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_APPSERVICE_NAME_PRODUCTION }}
