@@ -53,12 +53,12 @@ jobs:
       env:
         CI: true
     
-   # - name: Run Tests Coverage
-   #   id: coverage
-   #   if: always()
-   #   run: npm run test:coverage
-   #  env:
-   #     CI: true
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run test:coverage
+      env:
+        CI: true
         
     - name: Copy Unit Test Report/Coverage/Lint to Github page
       if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
