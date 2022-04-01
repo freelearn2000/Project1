@@ -97,12 +97,12 @@ jobs:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md       
        
-    - name: Upload Build folder to Artifact
-      if: github.event_name == 'pull_request' && github.ref == 'refs/heads/master'
-      uses: actions/upload-artifact@v2
-      with:
-        name: Build
-        path: ./nodeapp/build   
+ #   - name: Upload Build folder to Artifact
+ #     if: github.event_name == 'pull_request' && github.ref == 'refs/heads/master'
+#      uses: actions/upload-artifact@v2
+  #    with:
+       # name: Build
+ #       path: ./nodeapp/build   
         
     - name: Login to Azure(using Service Principal Identity) for Staging server
       if: github.ref == 'refs/heads/develop' && steps.build.outcome == 'success' 
