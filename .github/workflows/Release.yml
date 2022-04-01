@@ -32,6 +32,13 @@ jobs:
     - name: Run Build 
       id: build
       run: npm run build
+      
+    - name: Upload Build folder to Artifact
+      if: ${{ always() &&  github.ref == 'refs/heads/master' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build
+        path: ./nodeapp/build  
         
     - name: Add Build Assets for Release
       if: github.event_name == 'push' && github.ref == 'refs/heads/master'
