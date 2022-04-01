@@ -105,7 +105,7 @@ jobs:
         path: ./nodeapp/build   
         
     - name: Login to Azure(using Service Principal Identity) for Staging server
-      if: ${{ always() && github.ref == 'refs/heads/develop' && steps.build.outcome == 'success' }}
+      if: ${{ always() && steps.build.outcome == 'success' }}
       id: login_staging
       uses: azure/login@v1
       with:
@@ -113,7 +113,7 @@ jobs:
         
     - name: Deploy to Azure App Service for Staging server
       id: deploy_staging
-      if: ${{ always() && steps.login_staging.outcome == 'success' }}
+      if: ${{ always() && steps.login_staging.outcome == 'success' && github.ref == 'refs/heads/develop' }}
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_APPSERVICE_NAME_STAGING }}
