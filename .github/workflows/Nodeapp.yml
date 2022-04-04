@@ -115,7 +115,7 @@ jobs:
         
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
-      if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+      #if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -142,7 +142,7 @@ jobs:
         package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
 
     - name: Create Issue (If Deploy fail)
-      if: ${{ always() && steps.deploy.outcome == 'failure' }}
+      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
@@ -161,7 +161,7 @@ jobs:
      
     - name: Login to Azure(using Service Principal Identity) for Production server
       id: login
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      #if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -192,7 +192,7 @@ jobs:
         
      
     - name: Create Issue (If Deploy fail)
-      if: ${{ always() && steps.deploy.outcome == 'failure' }}
+      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
