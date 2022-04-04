@@ -138,7 +138,7 @@ jobs:
       if: ${{ always() && steps.login.outcome == 'success' }}
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ env.AZURE_APPSERVICE_NAME }}
+        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
         package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
 
     - name: Create Issue (If Deploy fail)
@@ -186,7 +186,7 @@ jobs:
       if: ${{ always() && steps.login.outcome == 'success' }}
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: ${{ env.AZURE_APPSERVICE_NAME }}
+        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
         package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
         
     - name: Azure logout
