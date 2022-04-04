@@ -120,13 +120,13 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-    - name: Configure Azure App Service
-      id: settings
-      uses: azure/appservice-settings@v1
-      with:
-        app-name: 'infra-node-sample'
+    #- name: Configure Azure App Service
+    #  id: settings
+    #  uses: azure/appservice-settings@v1
+    #  with:
+    #    app-name: 'infra-node-sample'
         # slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
-        app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
+    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
         # connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
         # general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
      
@@ -166,14 +166,14 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - name: Configure Azure App Service
-      id: settings
-      if: ${{ always() && steps.login.outcome == 'success' }}
-      uses: azure/appservice-settings@v1
-      with:
-        app-name: 'infra-node-sample'
+    #- name: Configure Azure App Service
+    #  id: settings
+    #  if: ${{ always() && steps.login.outcome == 'success' }}
+    #  uses: azure/appservice-settings@v1
+    #  with:
+    #    app-name: 'infra-node-sample'
         # slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
-        app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
+    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
         # connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
         # general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
      
@@ -184,14 +184,12 @@ jobs:
     - name: Deploy to Azure App Service for Production server
       id: deploy
       if: ${{ always() && steps.login.outcome == 'success' }}
-      uses: azure/webapps-deploy@v2
-      with: 
-        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-        package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
+      run: echo "Deploy build to production here..."
+      #uses: azure/webapps-deploy@v2
+      #with: 
+      #  app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
+      #  package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
         
-    - name: Azure logout
-      run: |
-        az logout
      
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && steps.deploy.outcome == 'failure' }}
