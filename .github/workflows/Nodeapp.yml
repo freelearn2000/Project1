@@ -4,16 +4,17 @@ on:
   pull_request:
    branches: [develop, master]
    paths: [nodeapp/src/**]
+   types: [  opened, reopened ]
+  push: 
+   branches: [develop, master ]
             
 env:
-  AZURE_APPSERVICE_NAME_STAGING: 'infra-node-sample'                           # set this to your staging application's name
-  AZURE_APPSERVICE_NAME_PRODUCTION: 'infra-node-sample-production'             # set this to your production application's name
-  AZURE_APPSERVICE_PACKAGE_PATH: './nodeapp/build'                             # set this to the path to your app service project, defaults to the repository root
+  AZURE_APPSERVICE_PACKAGE_PATH: './nodeapp/build'                            # set this to the path to your app service project, defaults to the repository root
   NODE_VERSION: '16.x'
   
 jobs:
 
-  Job1-NodeApp:
+  build:
     name: Node App
     runs-on: ubuntu-latest
     defaults:
@@ -82,7 +83,7 @@ jobs:
         assignees: ${{github.actor}}
         filename: .github/TESTCOVERAGE_TEMPLATE.md
       
-    - name: Run Build 
+    - name: Run Build
       id: build
       if: ${{ always() && steps.test.outcome == 'success' }}
       run: npm run build
@@ -92,7 +93,7 @@ jobs:
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Build failed   
+          TITLE: Build failed
       with:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md       
@@ -102,36 +103,90 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Build
-        path: ./nodeapp/build   
+        path: ./nodeapp/build
+
+  deploy-staging:
+    needs: [build]
+    if: ${{ steps.build.outcome == 'success' && github.ref == 'refs/heads/develop' }}
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      
+    steps:
         
-    - name: Login to Azure(using Service Principal Identity) for Staging server
-      if: ${{ always() && steps.build.outcome == 'success' }}
-      id: login_staging
+    - name: Login to Azure(using Service Principal Identity) for Staging server 
+      id: login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
+    - name: Configure Azure App Service
+      id: settings
+      uses: azure/appservice-settings@v1
+      with:
+        app-name: 'infra-node-sample'
+        # slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
+        app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
+        # connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
+        # general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
+     
+    - name: Check App Service url
+      run: echo "The App Service-url is ${{ steps.settings.outputs.webapp-url }}"
+      
     - name: Deploy to Azure App Service for Staging server
-      id: deploy_staging
-      if: ${{ always() && steps.login_staging.outcome == 'success' && github.ref == 'refs/heads/develop' }}
+      id: deploy
+      if: ${{ always() && steps.login.outcome == 'success' }}
       uses: azure/webapps-deploy@v2
-      with: 
-        app-name: ${{ env.AZURE_APPSERVICE_NAME_STAGING }}
+      with:
+        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
         package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
+
+    - name: Create Issue (If Deploy fail)
+      if: ${{ always() && steps.deploy.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Deploy failed   
+      with:
+        assignees: ${{github.actor}}
+            
+
+  deploy-production:
+    needs: [build]
+    if: ${{ steps.build.outcome == 'success' && github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    
+    steps:
      
     - name: Login to Azure(using Service Principal Identity) for Production server
-      if: ${{ always() && steps.build.outcome == 'success' }} 
-      id: login_production
+      id: login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Configure Azure App Service
+      id: settings
+      if: ${{ always() && steps.login.outcome == 'success' }}
+      uses: azure/appservice-settings@v1
+      with:
+        app-name: 'infra-node-sample'
+        # slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
+        app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
+        # connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
+        # general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
+     
+    - name: Check App Service url
+      run: echo "The App Service-url is ${{ steps.settings.outputs.webapp-url }}"
+      
         
     - name: Deploy to Azure App Service for Production server
-      id: deploy_production
-      if: ${{ always() && steps.login_production.outcome == 'success' && github.ref == 'refs/heads/master' }}
+      id: deploy
+      if: ${{ always() && steps.login.outcome == 'success' }}
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: ${{ env.AZURE_APPSERVICE_NAME_PRODUCTION }}
+        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
         package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
         
     - name: Azure logout
@@ -139,7 +194,7 @@ jobs:
         az logout
      
     - name: Create Issue (If Deploy fail)
-      if: ${{ always() && (steps.deploy_staging.outcome == 'failure' || steps.deploy_production.outcome == 'failure') }}
+      if: ${{ always() && steps.deploy.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
