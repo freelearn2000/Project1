@@ -107,7 +107,6 @@ jobs:
 
   deploy-staging:
     needs: [build]
-    if: ${{ steps.build.outcome == 'success' && github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     environment: 
       name: staging
@@ -116,6 +115,7 @@ jobs:
         
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
+      if: ${{ always() && github.ref == 'refs/heads/develop' }}
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -153,7 +153,6 @@ jobs:
 
   deploy-production:
     needs: [build]
-    if: ${{ steps.build.outcome == 'success' && github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     environment:
       name: production
@@ -162,6 +161,7 @@ jobs:
      
     - name: Login to Azure(using Service Principal Identity) for Production server
       id: login
+      if: ${{ always() && github.ref == 'refs/heads/master' }}
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
