@@ -3,7 +3,7 @@ name: Create Release
 # Trigger the create release workflow
 on:
   workflow_run:
-     workflows: ["NodeappCI","ReactappCI"]
+     workflows: ["Nodeapp","Reactapp"]
      types:
         - completed
 
@@ -28,8 +28,7 @@ jobs:
     - name: Install App dependencies
       run: npm ci
      
-    
-    - name: Run Build 
+    - name: Run Build
       id: build
       run: npm run build
       
@@ -41,11 +40,11 @@ jobs:
         path: ./nodeapp/build  
         
     - name: Add Build Assets for Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
       run: zip -r build.zip build
       
     - name: Create a Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
       run: npx semantic-release
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
