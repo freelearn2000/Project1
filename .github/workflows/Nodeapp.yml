@@ -115,7 +115,7 @@ jobs:
         
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
-      #if: ${{ always() && github.ref == 'refs/heads/develop' }}
+      if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -161,7 +161,7 @@ jobs:
      
     - name: Login to Azure(using Service Principal Identity) for Production server
       id: login
-      #if: ${{ always() && github.ref == 'refs/heads/master' }}
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
