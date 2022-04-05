@@ -20,6 +20,11 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '16'
+
+    - name: Add Build Assets for Release
+      if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
+      run: zip -r build.zip build
+
        
     - name: Create a Release
       run: npx semantic-release
