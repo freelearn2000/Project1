@@ -102,8 +102,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Node Build
-        path: ./nodeapp/build
-        
+        path: ./nodeapp/build    
    
   deploy-staging:
     needs: [build]
