@@ -102,14 +102,8 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Node Build
-        path: ./nodeapp/build
-        
-    - name: Download from artifact
-      uses: actions/download-artifact@v3
-      with:
-         name: Node Build
-         path: ./nodeapp/build
-
+        path: ./nodeapp/build    
+   
   deploy-staging:
     needs: [build]
     runs-on: ubuntu-latest
