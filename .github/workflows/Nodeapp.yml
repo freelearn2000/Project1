@@ -2,11 +2,11 @@ name: Nodeapp
 
 on:
   pull_request:
-   branches: [develop, master]
+   branches: [develop,master]
    paths: [nodeapp/src/**]
-   types: [  opened, reopened ]
+   types: [opened,reopened]
   push: 
-   branches: [develop, master ]
+   branches: [develop,master]
             
 env:
   NODE_VERSION: '16.x'
@@ -103,6 +103,12 @@ jobs:
       with:
         name: Node Build
         path: ./nodeapp/build
+        
+    - name: Download from artifact
+      uses: actions/download-artifact@v3
+      with:
+         name: Node Build
+         path: ./nodeapp/build
 
   deploy-staging:
     needs: [build]
