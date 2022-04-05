@@ -101,7 +101,7 @@ jobs:
       if: ${{ always() && github.ref == 'refs/heads/master' }} 
       uses: actions/upload-artifact@v2
       with:
-        name: Build
+        name: Node Build
         path: ./nodeapp/build
 
   deploy-staging:
@@ -109,8 +109,19 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     if: ${{ needs.common.outputs.branch == 'develop'}}
+    defaults:
+      run:
+        working-directory: nodeapp
       
     steps:
+    - name: Checkout repository  
+      uses: actions/checkout@v2
+      
+    - name: Download from artifact
+      uses: actions/download-artifact@v3
+      with:
+         name: Node Build
+         path: ./nodeapp/build
         
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
@@ -123,13 +134,7 @@ jobs:
     #  uses: azure/appservice-settings@v1
     #  with:
     #    app-name: 'infra-node-sample'
-        # slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
     #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
-        # connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
-        # general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
-     
-    - name: Check App Service url
-      run: echo "The App Service-url is ${{ steps.settings.outputs.webapp-url }}"
       
     - name: Deploy to Azure App Service for Staging server
       id: deploy
@@ -137,7 +142,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-        package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
+        package: Node Build
 
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
@@ -147,15 +152,26 @@ jobs:
           TITLE: Deploy failed   
       with:
         assignees: ${{github.actor}}
-            
+        filename: .github/DEPLOY_TEMPLATE.md       
 
   deploy-production:
     needs: [build]
     runs-on: ubuntu-latest
     environment: production
     if: ${{ needs.common.outputs.branch == 'master'}}
-    
+    defaults:
+      run:
+        working-directory: nodeapp
+      
     steps:
+    - name: Checkout repository  
+      uses: actions/checkout@v2
+      
+    - name: Download from artifact
+      uses: actions/download-artifact@v3
+      with:
+         name: Node Build
+         path: ./nodeapp/build
      
     - name: Login to Azure(using Service Principal Identity) for Production server
       id: login
@@ -169,14 +185,7 @@ jobs:
     #  uses: azure/appservice-settings@v1
     #  with:
     #    app-name: 'infra-node-sample'
-        # slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
     #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
-        # connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
-        # general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
-     
-    - name: Check App Service url
-      run: echo "The App Service-url is ${{ steps.settings.outputs.webapp-url }}"
-      
         
     - name: Deploy to Azure App Service for Production server
       id: deploy
@@ -186,8 +195,7 @@ jobs:
       #with: 
       #  app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
       #  package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
-        
-     
+         
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
@@ -196,11 +204,5 @@ jobs:
           TITLE: Deploy failed   
       with:
         assignees: ${{github.actor}}
-        
+        filename: .github/DEPLOY_TEMPLATE.md       
      
-
-
-       
-       
-       
-    
