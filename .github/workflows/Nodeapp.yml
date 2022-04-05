@@ -2,11 +2,11 @@ name: Nodeapp
 
 on:
   pull_request:
-   branches: [develop, master]
+   branches: [develop,master]
    paths: [nodeapp/src/**]
-   types: [  opened, reopened ]
+   types: [opened,reopened]
   push: 
-   branches: [develop, master ]
+   branches: [develop,master]
             
 env:
   NODE_VERSION: '16.x'
