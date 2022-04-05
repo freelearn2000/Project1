@@ -1,4 +1,4 @@
-name: Node App CI
+name: Nodeapp
 
 on:
   pull_request:
