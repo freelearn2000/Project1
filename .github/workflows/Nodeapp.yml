@@ -9,7 +9,6 @@ on:
    branches: [develop, master ]
             
 env:
-  AZURE_APPSERVICE_PACKAGE_PATH: './nodeapp/build'                            # set this to the path to your app service project, defaults to the repository root
   NODE_VERSION: '16.x'
   
 jobs:
@@ -108,14 +107,13 @@ jobs:
   deploy-staging:
     needs: [build]
     runs-on: ubuntu-latest
-    environment: 
-      name: staging
+    environment: staging
+    if: ${{ needs.common.outputs.branch == 'develop'}}
       
     steps:
         
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
-      #if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -154,14 +152,13 @@ jobs:
   deploy-production:
     needs: [build]
     runs-on: ubuntu-latest
-    environment:
-      name: production
+    environment: production
+    if: ${{ needs.common.outputs.branch == 'master'}}
     
     steps:
      
     - name: Login to Azure(using Service Principal Identity) for Production server
       id: login
-      #if: github.event_name == 'push' && github.ref == 'refs/heads/master'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
