@@ -4,63 +4,29 @@ name: Create Release
 on:
   workflow_run:
      workflows: ["Nodeapp","Reactapp"]
-     types:
-        - completed
-
+     types: [completed]
+     branches: [master]
 jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: nodeapp
- 
+    if: ${{ github.event.workflow_run.conclusion== 'success' }}
     steps:
 
     - name: Checkout repository
       uses: actions/checkout@v2
             
-    - name: Setup Node.js ${{ env.NODE_VERSION }}
+    - name: Setup Node.js 
       uses: actions/setup-node@v2
       with:
-        node-version: ${{ env.NODE_VERSION }}
+        node-version: '16'
        
-    - name: Install App dependencies
-      run: npm ci
-     
-    - name: Run Build
-      id: build
-      run: npm run build
-      
-    - name: Upload Build folder to Artifact
-      if: ${{ always() &&  github.ref == 'refs/heads/master' }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: Build
-        path: ./nodeapp/build  
-        
-    - name: Add Build Assets for Release
-      if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
-      run: zip -r build.zip build
-      
     - name: Create a Release
-      if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
       run: npx semantic-release
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
              
-      #- name: Create Release
-       # id: create_release
-       # uses: actions/create-release@v1
-       # env:
-        #  GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-        #with:
-         # tag_name: ${{ github.ref }}
-         # release_name: Release ${{ github.ref }}
-          #draft: false
-          #prerelease: false
-      
-      
+  
       
 
     
