@@ -103,6 +103,12 @@ jobs:
       with:
         name: Node Build
         path: ./nodeapp/build
+        
+    - name: Download from artifact
+      uses: actions/download-artifact@v3
+      with:
+         name: Node Build
+         path: ./nodeapp/build
 
   deploy-staging:
     needs: [build]
