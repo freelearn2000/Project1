@@ -4,9 +4,8 @@ name: Create Release
 on:
   workflow_run:
      workflows: ["Nodeapp","Reactapp"]
-     types:
-        - completed
-
+     types: [completed]
+     branches: [master]
 jobs:
   release:
     name: Create Release
