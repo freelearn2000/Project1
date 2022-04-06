@@ -150,11 +150,11 @@ jobs:
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Deploy failed   
+          TITLE: Node App Deploy failed
       with:
         assignees: ${{github.actor}}
-        filename: .github/DEPLOY_TEMPLATE.md       
-
+        filename: .github/LINT_TEMPLATE.md
+     
   deploy-production:
     needs: [build]
     if: ${{ github.ref == 'refs/heads/master' }}
@@ -203,8 +203,8 @@ jobs:
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Deploy failed   
+          TITLE: Node App Deploy failed
       with:
         assignees: ${{github.actor}}
-        filename: .github/DEPLOY_TEMPLATE.md       
+        filename: .github/LINT_TEMPLATE.md
      
