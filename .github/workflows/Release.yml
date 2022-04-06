@@ -19,20 +19,8 @@ jobs:
     - name: Setup Node.js 
       uses: actions/setup-node@v2
       with:
-        node-version: '16'
-        
-    #- name: Download from Node artifact
-    #  uses: actions/download-artifact@v3
-    #  with:
-    #    name: Node_build
-    #     path: ./nodeapp/build
-         
-    - name: Download from React artifact
-      uses: actions/download-artifact@v3
-      with:
-         name: React Build
-         path: ./reactapp/build
-
+        node-version: '16'        
+    
     - name: Add Build Assets for Release
       if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
       run: |
