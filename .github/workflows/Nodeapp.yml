@@ -98,7 +98,6 @@ jobs:
         filename: .github/BUILD_TEMPLATE.md       
        
     - name: Upload Build folder to Artifact
-      if: ${{ always() && github.ref == 'refs/heads/master' }} 
       uses: actions/upload-artifact@v2
       with:
         name: Node_build
@@ -122,7 +121,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
          name: Node_build
-         path: ./nodeapp/build
+         path: ./nodeapp/Node_Build
         
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
@@ -172,8 +171,8 @@ jobs:
     - name: Download from artifact
       uses: actions/download-artifact@v3
       with:
-         name: Node Build
-         path: ./nodeapp/build
+         name: Node_Build
+         path: ./nodeapp/Node_Build
      
     - name: Login to Azure(using Service Principal Identity) for Production server
       id: login
