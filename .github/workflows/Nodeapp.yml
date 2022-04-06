@@ -101,7 +101,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Node_build
-        path: ./nodeapp/build    
+        path: ./nodeapp/Node_build  
    
   deploy-staging:
     needs: [build]
@@ -142,7 +142,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-        package: ./nodeapp/build
+        package: ./nodeapp/Node_build
 
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
