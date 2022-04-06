@@ -143,7 +143,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-        package: Node Build
+        package: ./nodeapp/build
 
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
