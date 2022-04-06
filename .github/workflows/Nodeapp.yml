@@ -118,11 +118,11 @@ jobs:
     - name: Checkout repository  
       uses: actions/checkout@v2
       
-    #- name: Download from artifact
-    #  uses: actions/download-artifact@v3
-    #  with:
-    #     name: Node Build
-    #     path: ./nodeapp/build
+    - name: Download from artifact
+      uses: actions/download-artifact@v3
+      with:
+         name: Node Build
+         path: ./nodeapp/build
         
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
