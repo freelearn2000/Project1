@@ -107,9 +107,10 @@ jobs:
         
   deploy-staging:
     needs: [build]
+    if: ${{ github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     environment: staging
-    if: ${{ needs.common.outputs.branch == 'develop'}}
+    #if: ${{ needs.common.outputs.branch == 'develop'}}
     defaults:
       run:
         working-directory: reactapp
@@ -144,9 +145,10 @@ jobs:
         
   deploy-production:
     needs: [build]
+    if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     environment: production
-    if: ${{ needs.common.outputs.branch == 'master'}}
+    #if: ${{ needs.common.outputs.branch == 'master'}}
     defaults:
       run:
         working-directory: reactapp
