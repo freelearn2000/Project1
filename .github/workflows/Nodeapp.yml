@@ -101,7 +101,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Node_build
-        path: ./nodeapp/Node_build  
+        path: ./nodeapp/build  
    
   deploy-staging:
     needs: [build]
@@ -121,7 +121,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
          name: Node_build
-         path: ./nodeapp/Node_Build
+         path: ./nodeapp/build
         
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
@@ -142,7 +142,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-        package: ./nodeapp/Node_build
+        package: ./nodeapp/build
 
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
@@ -171,8 +171,8 @@ jobs:
     - name: Download from artifact
       uses: actions/download-artifact@v3
       with:
-         name: Node_Build
-         path: ./nodeapp/Node_Build
+         name: Node_build
+         path: ./nodeapp/build
      
     - name: Login to Azure(using Service Principal Identity) for Production server
       id: login
