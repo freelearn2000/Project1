@@ -21,11 +21,11 @@ jobs:
       with:
         node-version: '16'
         
-    - name: Download from Node artifact
-      uses: actions/download-artifact@v3
-      with:
-         name: Node_build
-         path: ./nodeapp/build
+    #- name: Download from Node artifact
+    #  uses: actions/download-artifact@v3
+    #  with:
+    #    name: Node_build
+    #     path: ./nodeapp/build
          
     - name: Download from React artifact
       uses: actions/download-artifact@v3
@@ -36,8 +36,8 @@ jobs:
     - name: Add Build Assets for Release
       if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
       run: |
-         zip -r Node_build.zip Node Build
-         zip -r React_build.zip React Build
+         zip -r Node_build.zip build
+         zip -r React_build.zip build
       
     - name: Create a Release
       run: npx semantic-release
