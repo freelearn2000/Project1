@@ -23,9 +23,10 @@ jobs:
 
     - name: Add Build Assets for Release
       if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
-      run: zip -r build.zip build
-
-       
+      run: |
+         zip -r Node_build.zip Node Build
+         zip -r React_build.zip React Build
+      
     - name: Create a Release
       run: npx semantic-release
       env:
