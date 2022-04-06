@@ -205,5 +205,5 @@ jobs:
           TITLE: Node App Deploy failed
       with:
         assignees: ${{github.actor}}
-        filename: .github/LINT_TEMPLATE.md
+        filename: .github/DEPLOY_TEMPLATE.md
      
