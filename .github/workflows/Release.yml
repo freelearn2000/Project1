@@ -25,7 +25,7 @@ jobs:
       if: github.event_name == 'workflow_run' && github.ref == 'refs/heads/master'
       run: |
          zip -r Node_build.zip . -i Node_Build
-         zip -r React_build.zip React_Build
+         zip -r React_build.zip . -i React_Build
       
     - name: Create a Release
       run: npx semantic-release
