@@ -32,7 +32,5 @@ jobs:
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
              
-  
-      
 
     
