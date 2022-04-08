@@ -6,7 +6,8 @@ module.exports = {
         '@semantic-release/release-notes-generator',
         ['@semantic-release/github', {
             assets: [
-                {path: "build.zip", label: "Build"}
+                {path: "Node_build.zip", label: "Node Build"},
+                {path: "React_build.zip", label: "React Build"}
             ]
         }]
     ]

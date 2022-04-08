@@ -1,0 +1,211 @@
+name: Nodeapp
+
+on:
+  pull_request:
+   branches: [develop, master]
+   paths: [nodeapp/src/**]
+   types: [opened, reopened]
+  push: 
+   branches: [develop, master]
+   
+env:
+  NODE_VERSION: '16.x'
+  
+jobs:
+
+  build:
+    name: Node App
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nodeapp
+        
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        
+    - name: Install App dependencies
+      run: npm ci
+
+    - name: Run Code analysis
+      id: lint
+      run: npm run lint
+      
+    - name: Create Issue (If lint Fail)
+      if: ${{ always() &&  steps.lint.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Node App lint Failed
+          LINT_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/reports/lint-results.html
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/LINT_TEMPLATE.md
+          
+    - name: Run Unit Tests
+      id: test
+      run: npm test
+      env:
+        CI: true
+    
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run test:coverage
+      env:
+        CI: true
+        
+    - name: Copy Unit Test Report/Coverage/Lint to Github page
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.SEMANTIC_TOKEN1 }}
+        publish_dir: ./nodeapp/reports
+        publish_branch: gh-pages
+        destination_dir: ./nodeapp
+  
+    - name: Create Issue (If Test/Coverage fail)
+      if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' ) }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Node App Tests/Coverage Failed
+          TEST_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/index.html
+          COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/nodeapp/coverage/lcov-report/index.html    
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/TESTCOVERAGE_TEMPLATE.md
+      
+    - name: Run Build
+      id: build
+      if: ${{ always() && steps.test.outcome == 'success' }}
+      run: npm run build
+  
+    - name: Create Issue (If Build fail)
+      if: ${{ always() && steps.build.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Build failed
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/BUILD_TEMPLATE.md       
+       
+    - name: Upload Build folder to Artifact
+      run: echo "Build folder to Artict"
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: Node_build
+#        path: ./nodeapp/build
+   
+  deploy-staging:
+    needs: [build]
+    if: ${{ github.ref == 'refs/heads/develop' }}
+    runs-on: ubuntu-latest
+    environment: staging
+   # if: ${{ needs.common.outputs.branch == 'develop'}}
+    defaults:
+      run:
+        working-directory: nodeapp
+      
+    steps:
+    - name: Checkout repository  
+      uses: actions/checkout@v2
+      
+    - name: Download from artifact
+      run: echo "Download from Artifact"
+#      uses: actions/download-artifact@v3
+#      with:
+#         name: Node_build
+#         path: ./nodeapp/build
+        
+    - name: Login to Azure(using Service Principal Identity) for Staging server 
+      id: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    #- name: Configure Azure App Service
+    #  id: settings
+    #  uses: azure/appservice-settings@v1
+    #  with:
+    #    app-name: 'infra-node-sample'
+    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
+      
+    - name: Deploy to Azure App Service for Staging server
+      id: deploy
+      if: ${{ always() && steps.login.outcome == 'success' }}
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
+#       package: ./nodeapp/build
+
+    - name: Create Issue (If Deploy fail)
+      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Node App Deploy failed
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/DEPLOY_TEMPLATE.md
+        
+  deploy-production:
+    needs: [build]
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    environment: production
+    #if: ${{ needs.common.outputs.branch == 'master'}}
+    defaults:
+      run:
+        working-directory: nodeapp
+        
+    steps:
+    - name: Checkout repository  
+      uses: actions/checkout@v2
+      
+    - name: Download from artifact
+      run: echo "Download from artifact"
+#      uses: actions/download-artifact@v3
+#      with:
+#         name: Node_build
+#         path: ./nodeapp/build
+     
+    - name: Login to Azure(using Service Principal Identity) for Production server
+      id: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    #- name: Configure Azure App Service
+    #  id: settings
+    #  if: ${{ always() && steps.login.outcome == 'success' }}
+    #  uses: azure/appservice-settings@v1
+    #  with:
+    #    app-name: 'infra-node-sample'
+    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
+        
+    - name: Deploy to Azure App Service for Production server
+      id: deploy
+      if: ${{ always() && steps.login.outcome == 'success' }}
+      run: echo "Deploy build to production here..."
+      #uses: azure/webapps-deploy@v2
+      #with: 
+      #  app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
+      #  package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
+         
+    - name: Create Issue (If Deploy fail)
+      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Node App Deploy failed
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/DEPLOY_TEMPLATE.md
+   

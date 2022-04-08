@@ -1,16 +1,19 @@
-name: ReactappCI
+name: Reactapp
 
 on:
   pull_request:
    branches: [develop, master]
    paths: [reactapp/src/**]
+   types: [opened, reopened]
+  push: 
+   branches: [develop, master]
 
 env:
   NODE_VERSION: '16.x'
 
 jobs:
 
-  Job1-ReactApp:
+  build:
     name: React App
     runs-on: ubuntu-latest
     defaults:
@@ -18,10 +21,9 @@ jobs:
         working-directory: reactapp
  
     steps:
-
     - name: Checkout repository
       uses: actions/checkout@v2
-            
+      
     - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v2
       with:
@@ -52,7 +54,7 @@ jobs:
            npm run test:report
       env:
         CI: true
-              
+        
     #- name: Run Tests Coverage
     # id: coverage
     # if: always()
@@ -78,10 +80,10 @@ jobs:
           TEST_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/index.html)
           COVERAGE_REPORT_URL: https://freelearn2000.github.io/Project1/reactapp/coverage/lcov-report/index.html
       with:
-        assignees: ${{github.actor}} 
+        assignees: ${{github.actor}}
         filename: .github/TESTCOVERAGE_TEMPLATE.md
-      
-    - name: Build project react
+        
+    - name: Build project
       id: build
       if: ${{ always() && (steps.test.outcome == 'success' ) }}
       run: npm run build
@@ -89,7 +91,7 @@ jobs:
     - name: Upload React Build folder as Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: Build
+        name: React Build
         path: ./reactapp/build
         
     - name: Create Issue (If Build fail)
@@ -97,10 +99,30 @@ jobs:
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Build failed   
+          TITLE: Build failed
       with:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md
+        
+  deploy-staging:
+    needs: [build]
+    if: ${{ github.ref == 'refs/heads/develop' }}
+    runs-on: ubuntu-latest
+    environment: staging
+    #if: ${{ needs.common.outputs.branch == 'develop'}}
+    defaults:
+      run:
+        working-directory: reactapp
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Download from artifact
+      uses: actions/download-artifact@v3
+      with:
+         name: React Build
+         path: ./reactapp/build
         
     - name: Deploy to Azure blob storage
       id: deploy
@@ -115,8 +137,47 @@ jobs:
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Deploy failed   
+          TITLE: Deploy failed
       with:
         assignees: ${{github.actor}}
-          
+        filename: .github/DEPLOY_TEMPLATE.md  
+        
+  deploy-production:
+    needs: [build]
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    environment: production
+    #if: ${{ needs.common.outputs.branch == 'master'}}
+    defaults:
+      run:
+        working-directory: reactapp
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Download from artifact
+      uses: actions/download-artifact@v3
+      with:
+         name: React Build
+         path: ./reactapp/build
+         
+    - name: Deploy to Azure blob storage
+      id: deploy
+      run: echo "Deploy to azure blob storage" 
+ #     uses: azure/CLI@v1
+ #     with:
+ #     azcliversion: 2.0.72
+ #      inlineScript: |
+ #        az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
+
+    - name: Create Issue (If Deploy fail)
+      if: ${{ always() && steps.deploy.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Deploy failed
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/DEPLOY_TEMPLATE.md  
    
