@@ -8,5 +8,3 @@ try {
   } catch (err) {
     console.error(err);
   }
-
-// testing : fix1
