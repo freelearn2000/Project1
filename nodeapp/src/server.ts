@@ -2,7 +2,7 @@ import express, {Request, Response} from "express";
 import { createConnection } from 'typeorm';
 import path from 'path';
 import dotenv from 'dotenv';
-import config from './typeorm.config';
+import config from '../typeorm.config';
 import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
 import { unhandledApiRequests, sendReactApplication, errorHandlingMiddleware } from './middlewares/error.middleware';
