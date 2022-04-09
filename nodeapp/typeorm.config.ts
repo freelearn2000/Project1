@@ -1,3 +1,4 @@
+
 import { ConnectionOptions } from 'typeorm';
 
 
@@ -9,7 +10,7 @@ const config: ConnectionOptions = {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE,
     entities: [
-        __dirname + `/models/*.entity{.ts,.js}`
+        __dirname + `/src/models/*.entity{.ts,.js}`
     ],
     synchronize: process.env.NODE_ENV == 'production' ? false : true
 }
