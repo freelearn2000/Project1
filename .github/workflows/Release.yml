@@ -25,6 +25,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
          name: React_Build
+         working-directory: reactapp
          path: ./reactapp/build
          
     - name: Download from Node artifact
@@ -32,6 +33,7 @@ jobs:
 #      uses: actions/download-artifact@v3
 #      with:
 #         name: Node_build
+#         working-directory: nodeapp
 #         path: ./nodeapp/build
         
     - name: Add Build Assets for Release
@@ -42,7 +44,4 @@ jobs:
     - name: Create a Release
       run: npx semantic-release
       env:
-         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-             
-
-    
+         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}   
