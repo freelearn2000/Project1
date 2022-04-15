@@ -15,7 +15,7 @@ export class AuthRoute {
 
     constructor( validator: any, service: any ) {
         this.service = service;
-        this.router.post(`/`, validationMiddleware(AuthUserValidator), this.create);
+        this.router.post(`/`, validationMiddleware(validator), this.create);
         }
 
     // API Endpoint '/users'
