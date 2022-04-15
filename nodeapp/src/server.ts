@@ -16,6 +16,7 @@ import { Weather, WeatherValidator } from './models/weather.entity';
 import { Service } from './services/index.service';
 import { WeatherService } from "./services/weather.service";
 import { NewsService } from "./services/news.service";
+import { User, UserValidator } from './models/user.entity';
 
 
 export class Server {
@@ -54,6 +55,7 @@ export class Server {
         this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(News)).router);
         this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book)).router);
         this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product)).router);
+        this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User)).router);
     }
     
     private registerErrorHandlers() {
