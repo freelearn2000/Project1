@@ -8,16 +8,18 @@ import { ServerError, handleAsync, fieldFilter, paging } from '../shared/common'
 export class Service {
 
     public entity: any;
+    public getRepository: any;
 
     constructor( entity: any ) {
         this.entity = entity;
+        this.getRepository = getRepository
     }
 
     public create = async( model: any ) => {
 
-        const tempObject = getRepository( this.entity ).create( model );
+        const tempObject = this.getRepository( this.entity ).create( model );
     
-        const [ newResource, error ] = await handleAsync( getRepository(this.entity).save(tempObject) );  
+        const [ newResource, error ] = await handleAsync( this.getRepository(this.entity).save(tempObject) );  
         if ( error ) throw new ServerError( error.message, `index.route->create` );
     
         return newResource;        
@@ -43,7 +45,7 @@ export class Service {
         const order: string = options.order ? `entity.${options.order}` : `entity.id`; 
         // Partial selection
         [ allResource, error ] = await handleAsync(
-            getRepository( this.entity )
+            this.getRepository( this.entity )
             .createQueryBuilder( `entity` )
             .select( filter )
             .where( `LOWER(entity.name) like LOWER(:name)`, { name: `%${where.toLowerCase()}%`} )
@@ -63,7 +65,7 @@ export class Service {
         const filter = fieldFilter(options);
     
         const [ resource, error ] = await handleAsync(
-            getRepository( this.entity )
+            this.getRepository( this.entity )
             .createQueryBuilder( `entity` )
             .select( filter )
             .where( {id} )
@@ -78,10 +80,10 @@ export class Service {
 
     public patch = async( id: number, patchModel: any ) => {
 
-        const [ , error ] = await handleAsync( getRepository(this.entity).update(id, patchModel) );
+        const [ , error ] = await handleAsync( this.getRepository(this.entity).update(id, patchModel) );
         if ( error ) throw new ServerError( error.message, `index.route->patch` );
     
-        const [ resource, error2 ] = await handleAsync( getRepository(this.entity).findOne(id) );
+        const [ resource, error2 ] = await handleAsync( this.getRepository(this.entity).findOne(id) );
         if ( error2 ) throw new ServerError( error2.message, `index.route->patch` );
     
         return resource; 
@@ -89,7 +91,7 @@ export class Service {
 
     public delete = async( id: number ) => {
 
-        const [ result, error ] = await handleAsync( getRepository(this.entity).delete(id) );
+        const [ result, error ] = await handleAsync( this.getRepository(this.entity).delete(id) );
         if ( error ) throw new ServerError( error.message, `index.route->delete` );
     
         return result;
