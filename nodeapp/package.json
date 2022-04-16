@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --composite false & node build.js",
+    "build2": "webpack --config webpack.config.js",
     "test": "jest",
     "test:coverage": "jest --collectCoverage",
     "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage ",
@@ -44,10 +45,13 @@
     "semantic-release-monorepo": "^7.0.5",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.3",
+    "ts-loader": "^9.2.8",
     "ts-node": "^10.5.0",
     "ts-node-dev": "^1.1.8",
     "typeorm": "^0.2.29",
     "typescript": "^4.4.2",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
     "winston": "^3.3.3",
     "xml2js": "^0.4.23"
   },
