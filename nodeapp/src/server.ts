@@ -21,6 +21,7 @@ import { User, UserValidator, AuthUserValidator } from './models/user.entity';
 import { getRepository } from 'typeorm';
 
 
+
 export class Server {
 
     public express: any = null;
