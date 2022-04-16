@@ -1,4 +1,5 @@
 module.exports = {
+    extends: "semantic-release-monorepo",
     branches: "master",
     repositoryUrl: "https://github.com/freelearn2000/Project1",
     plugins: [

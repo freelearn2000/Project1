@@ -7,6 +7,7 @@ import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
 import { unhandledApiRequests, sendReactApplication, errorHandlingMiddleware } from './middlewares/error.middleware';
 import { Route } from './routes/v1/index.route';
+import { AuthRoute } from "./routes/v1/auth.route";
 import { Blog, BlogValidator } from './models/blog.entity';
 import { Book, BookValidator } from "./models/book.entity";
 import { Project, ProjectValidator } from "./models/project.entity";
@@ -16,6 +17,7 @@ import { Weather, WeatherValidator } from './models/weather.entity';
 import { Service } from './services/index.service';
 import { WeatherService } from "./services/weather.service";
 import { NewsService } from "./services/news.service";
+import { User, UserValidator, AuthUserValidator } from './models/user.entity';
 
 
 export class Server {
@@ -54,6 +56,8 @@ export class Server {
         this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(News)).router);
         this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book)).router);
         this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product)).router);
+        this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User)).router);
+        this.express.use( `/api/v1/auth`, new AuthRoute(AuthUserValidator, new Service(User)).router);
     }
     
     private registerErrorHandlers() {

@@ -1,41 +1,47 @@
-import express from "express";
-import { findResource } from '../../services/auth.service';
+import express, { Request, Response, NextFunction } from "express";
 import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
 import nconf from '../../shared/config';
 import validationMiddleware from '../../middlewares/validation.middleware';
 import { AuthUserValidator } from '../../models/user.entity';
+import { AuthService } from '../../services/auth.service';
 
 
-const router = express.Router( );
+export class AuthRoute {
 
-// API Endpoint '/users'
+    public router = express.Router( );
+    public service: AuthService;
+    
 
-router.post(`/`, validationMiddleware(AuthUserValidator), async (req: any, res: any, next: any) => {
+    constructor( validator: any, service: any ) {
+        this.service = service;
+        this.router.post(`/`, validationMiddleware(validator), this.create);
+        }
 
-    const model = req.body;
+    // API Endpoint '/users'
+    public create = async(request:Request, response:Response, next:NextFunction) => {
 
-    // Call service
-    const [ users, error ] = await handleAsync( findResource(model) );
-    if ( error ) return next( error );
+        const model = request.body;
 
-    if ( users.length ) {
-        
-        // User is authenticated (login is successful!)
-        // Create a jwt token & add it to headers
-        // Expiry in 2 minutes = 2x60x1000 = 120000
-        const payload = users[0].id;
-        const claims = {iss: nconf.get('jwt:issuer'), sub: payload};
-        const token = Jwt.create(claims, nconf.get('jwt:secret'), nconf.get('jwt:algorithm'));
-        token.setExpiration( new Date().getTime() + nconf.get('jwt:expiresIn') );
+        // Call service
+        const [ users, error ] = await handleAsync( this.service.find(model) );
+        if ( error ) return next( error );
 
-        users.push( {token: token.compact()} );
+        if ( users.length ) {
+            
+            // User is authenticated (login is successful!)
+            // Create a jwt token & add it to headers
+            // Expiry in 2 minutes = 2x60x1000 = 120000
+            const payload = users[0].id;
+            const claims = {iss: nconf.get('jwt:issuer'), sub: payload};
+            const token = Jwt.create(claims, nconf.get('jwt:secret'), nconf.get('jwt:algorithm'));
+            token.setExpiration( new Date().getTime() + nconf.get('jwt:expiresIn') );
 
-        res.json( users );
-    } else {
-        next( new AuthenticationError(null, `auth.route->post`) );
+            users.push( {token: token.compact()} );
+
+            response.json( users );
+        } else {
+            next( new AuthenticationError(null, `auth.route->post`) );
+        }
     }
-});
-
-
-export default router;
+}

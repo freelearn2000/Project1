@@ -21,18 +21,20 @@ jobs:
       with:
         node-version: '16'  
         
-    - name: Download from React Artifact
-      uses: actions/download-artifact@v3
-      with:
-         name: React_Build
-         path: ./reactapp/build
-         
-    - name: Download from Node artifact
-      run: echo "Download from Artifact"
-#      uses: actions/download-artifact@v3
-#      with:
-#         name: Node_build
-#         path: ./nodeapp/build
+  #  - name: Download from React Artifact
+  #   uses: actions/download-artifact@v3
+  #    with:
+  #      name: React_Build
+  #       working-directory: reactapp
+  #      path: ./reactapp/build
+  #       
+  #  - name: Download from Node artifact
+  #   run: echo "Download from Artifact"
+  #  uses: actions/download-artifact@v3
+  #      with:
+  #       name: Node_build
+  #       working-directory: nodeapp
+  #      path: ./nodeapp/build
         
     - name: Add Build Assets for Release
       run: |
@@ -42,7 +44,4 @@ jobs:
     - name: Create a Release
       run: npx semantic-release
       env:
-         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-             
-
-    
+         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}   
