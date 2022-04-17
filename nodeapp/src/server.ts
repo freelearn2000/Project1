@@ -18,6 +18,8 @@ import { Service } from './services/index.service';
 import { WeatherService } from "./services/weather.service";
 import { NewsService } from "./services/news.service";
 import { User, UserValidator, AuthUserValidator } from './models/user.entity';
+import { getRepository } from 'typeorm';
+
 
 
 export class Server {
@@ -50,14 +52,14 @@ export class Server {
     }
     
     private registerRoutes( ) {
-        this.express.use(`/api/v1/blogs`, new Route(BlogValidator, new Service(Blog)).router)
-        this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(Project)).router);
-        this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(Weather)).router); 
-        this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(News)).router);
-        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book)).router);
-        this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product)).router);
-        this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User)).router);
-        this.express.use( `/api/v1/auth`, new AuthRoute(AuthUserValidator, new Service(User)).router);
+        this.express.use(`/api/v1/blogs`, new Route(BlogValidator, new Service(Blog || getRepository)).router)
+        this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(Project || getRepository)).router);
+        this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(Weather || getRepository)).router); 
+        this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(News || getRepository)).router);
+        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book || getRepository)).router);
+        this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product || getRepository)).router);
+        this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User || getRepository)).router);
+        this.express.use( `/api/v1/auth`, new AuthRoute(AuthUserValidator, new Service(User || getRepository)).router);
     }
     
     private registerErrorHandlers() {
