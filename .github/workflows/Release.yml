@@ -42,6 +42,6 @@ jobs:
          zip -r React_build.zip . -i React_Build
       
     - name: Create a Release
-      run: npx semantic-release
+      run: npx semantic-release-monorepo
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}   
