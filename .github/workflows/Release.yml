@@ -39,7 +39,7 @@ jobs:
     - name: Add Build Assets for Release
       run: |
          zip -r Node_build.zip . -i Node_Build
-         zip -r React_build.zip . -i React_Build
+         #zip -r React_build.zip . -i React_Build
       
     - name: Create a Release
       run: npx semantic
