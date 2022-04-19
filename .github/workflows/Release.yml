@@ -15,6 +15,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+
+    - uses: ahmadnassri/action-workflow-run-wait@v1
+
+      # only runs additional steps if [ test-client, test-server ] were successful
+
             
     - name: Setup Node.js 
       uses: actions/setup-node@v2
