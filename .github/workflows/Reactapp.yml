@@ -91,7 +91,7 @@ jobs:
     - name: Upload React Build folder as Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: React_Build
+        name: React_build
         path: ./reactapp/build
         
     - name: Create Issue (If Build fail)
@@ -121,7 +121,7 @@ jobs:
     - name: Download from artifact
       uses: actions/download-artifact@v3
       with:
-         name: React_Build
+         name: React_build
          path: ./reactapp/build
         
     - name: Deploy to Azure blob storage
@@ -159,7 +159,7 @@ jobs:
     - name: Download from artifact
       uses: actions/download-artifact@v3
       with:
-         name: React_Build
+         name: React_build
          path: ./reactapp/build
          
     - name: Deploy to Azure blob storage
