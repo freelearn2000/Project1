@@ -24,7 +24,7 @@ jobs:
   #  - name: Download from React Artifact
   #   uses: actions/download-artifact@v3
   #    with:
-  #      name: React_Build
+  #      name: React_build
   #       working-directory: reactapp
   #      path: ./reactapp/build
   #       
@@ -38,8 +38,8 @@ jobs:
         
     - name: Add Build Assets for Release
       run: |
-         zip -r Node_build.zip . -i Node_Build
-         #zip -r React_build.zip . -i React_Build
+         zip -r Node_build.zip . -i Node_build
+         zip -r React_build.zip . -i React_build
       
     - name: Create a Release
       run: npx semantic
