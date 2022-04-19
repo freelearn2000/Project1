@@ -2,7 +2,7 @@ name: Create Release
 
 on:
   workflow_run:
-     workflows: ["Nodeapp","Reactapp"]
+     workflows: ["Nodeapp", "Reactapp"]
      types: [completed]
      branches: [master]
      
@@ -10,7 +10,7 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion== 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     
     steps:
     - name: Checkout repository
@@ -19,7 +19,7 @@ jobs:
 
     - uses: ahmadnassri/action-workflow-run-wait@v1
 
-      # only runs additional steps if [ test-client, test-server ] were successful
+      # only runs additional steps if [ Nodeapp, Reactapp ] were successful
 
             
     - name: Setup Node.js 
