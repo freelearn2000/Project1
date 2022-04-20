@@ -28,15 +28,15 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
         workflow: Reactapp.yml
-        path: ./reactapp/build
+        name: React_build
      
     - name: Download from Node artifact
       uses: dawidd6/action-download-artifact@v2
       with:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
         workflow: Nodeapp.yml
-        path: ./nodeapp/build
-      
+        name: Node_build
+            
     - name: Add Build Assets for Release
       run: |
          zip -r Node_build.zip . -i Node_build
