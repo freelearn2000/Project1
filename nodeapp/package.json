@@ -58,13 +58,15 @@
     "preset": "ts-jest",
     "testMatch": [
       "**/?(*.)+(test).ts",
-      "!**/config/**"
+      "!**/config/**",
+      "!**/index.ts",
+      "!**/server.ts"
     ],
     "resetMocks": true,
     "clearMocks": true,
     "verbose": true,
     "collectCoverageFrom": [
-      "**/*.{ts,tsx}",
+      "**/*.ts",
       "!**/index.ts",
       "!**/server.ts",
       "!**/typeorm.config.ts",
