@@ -31,7 +31,7 @@ jobs:
         workflow: Reactapp.yml
         workflow_conclusion: success
         name: React_build
-        path: ./reactapp/build
+    #   path: ./reactapp/build
         repo: ${{github.repository}}
         check_artifacts:  false
         search_artifacts: false
