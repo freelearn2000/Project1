@@ -13,10 +13,11 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - uses: ahmadnassri/action-workflow-run-wait@v1       # only runs additional steps if [ Nodeapp, Reactapp ] were successful
+    - name: Conditions for Release
+      uses: ahmadnassri/action-workflow-run-wait@v1       # only runs additional steps if [ Nodeapp, Reactapp ] were successful
       
     - name: Setup Node.js
       uses: actions/setup-node@v2
@@ -28,9 +29,15 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
         workflow: Reactapp.yml
+        workflow_conclusion: success
         name: React_build
+        path: ./reactapp/build
+        repo: ${{github.repository}}
+        check_artifacts:  false
+        search_artifacts: false
+        skip_unpack: false
      
-    - name: Download from Node artifact
+    - name: Download from Node Artifact
       uses: dawidd6/action-download-artifact@v2
       with:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
