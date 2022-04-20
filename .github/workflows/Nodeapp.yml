@@ -5,7 +5,7 @@ on:
    branches: [develop, master]
    paths: [nodeapp/src/**]
    types: [opened, reopened]
-  push: 
+  push:
    branches: [develop, master]
    
 env:
@@ -94,7 +94,7 @@ jobs:
           TITLE: Build failed
       with:
         assignees: ${{github.actor}}
-        filename: .github/BUILD_TEMPLATE.md       
+        filename: .github/BUILD_TEMPLATE.md     
        
     - name: Upload Build folder to Artifact
       run: echo "Build folder to Artict"
@@ -114,7 +114,7 @@ jobs:
         working-directory: nodeapp
       
     steps:
-    - name: Checkout repository  
+    - name: Checkout repository
       uses: actions/checkout@v2
       
     - name: Download from artifact
@@ -135,7 +135,7 @@ jobs:
     #  uses: azure/appservice-settings@v1
     #  with:
     #    app-name: 'infra-node-sample'
-    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}' 
+    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
       
     - name: Deploy to Azure App Service for Staging server
       id: deploy
@@ -166,7 +166,7 @@ jobs:
         working-directory: nodeapp
         
     steps:
-    - name: Checkout repository  
+    - name: Checkout repository
       uses: actions/checkout@v2
       
     - name: Download from artifact
@@ -195,7 +195,7 @@ jobs:
       if: ${{ always() && steps.login.outcome == 'success' }}
       run: echo "Deploy build to production here..."
       #uses: azure/webapps-deploy@v2
-      #with: 
+      #with:
       #  app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
       #  package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
          

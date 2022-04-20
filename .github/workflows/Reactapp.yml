@@ -5,7 +5,7 @@ on:
    branches: [develop, master]
    paths: [reactapp/src/**]
    types: [opened, reopened]
-  push: 
+  push:
    branches: [develop, master]
 
 env:
@@ -49,18 +49,18 @@ jobs:
       
     - name: Run Unit Tests
       id: test
-      run: | 
+      run: |
            npm test
            npm run test:report
       env:
         CI: true
         
-    #- name: Run Tests Coverage
-    # id: coverage
-    # if: always()
-    #  run: npm run coverage:report
-    # env:
-    #    CI: true
+    - name: Run Tests Coverage
+      id: coverage
+      if: always()
+      run: npm run coverage:report
+      env:
+        CI: true
 
     - name: Copy Unit Test Report/Coverage/Lint to GitHub Page
       if: ${{ always() && (steps.test.outcome == 'failure' || steps.coverage.outcome == 'failure' || steps.lint.outcome == 'failure' ) }}
@@ -88,12 +88,6 @@ jobs:
       if: ${{ always() && (steps.test.outcome == 'success' ) }}
       run: npm run build
         
-    - name: Upload React Build folder as Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: React_build
-        path: ./reactapp/build
-        
     - name: Create Issue (If Build fail)
       if: ${{ always() && steps.build.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
@@ -103,6 +97,12 @@ jobs:
       with:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md
+        
+    - name: Upload React Build folder as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: React_build
+        path: ./reactapp/build
         
   deploy-staging:
     needs: [build]
@@ -140,7 +140,7 @@ jobs:
           TITLE: Deploy failed
       with:
         assignees: ${{github.actor}}
-        filename: .github/DEPLOY_TEMPLATE.md  
+        filename: .github/DEPLOY_TEMPLATE.md
         
   deploy-production:
     needs: [build]
@@ -164,7 +164,7 @@ jobs:
          
     - name: Deploy to Azure blob storage
       id: deploy
-      run: echo "Deploy to azure blob storage" 
+      run: echo "Deploy to azure blob storage"
  #     uses: azure/CLI@v1
  #     with:
  #     azcliversion: 2.0.72
@@ -179,5 +179,5 @@ jobs:
           TITLE: Deploy failed
       with:
         assignees: ${{github.actor}}
-        filename: .github/DEPLOY_TEMPLATE.md  
+        filename: .github/DEPLOY_TEMPLATE.md
    
