@@ -5,10 +5,6 @@ import { Service } from './index.service';
 
 export class WeatherService extends Service {
 
-    constructor( entity: any ) {
-        super( entity );
-    }
-
     public find = async( options: any ) => {
      
         let allResource = null;
@@ -29,7 +25,7 @@ export class WeatherService extends Service {
         const order: string = options.order ? `entity.${options.order}` : `entity.id`; 
         // Partial selection
         [ allResource, error ] = await handleAsync(
-            getRepository( this.entity )
+            this.repository( this.entity )
             .createQueryBuilder( `entity` )
             .select( filter )
             .where( `LOWER(entity.info) like LOWER(:info)`, { info: `%${where.toLowerCase()}%`} )

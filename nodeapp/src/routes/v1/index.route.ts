@@ -4,12 +4,10 @@ import { Service } from '../../services/index.service';
 import { handleAsync, EntityNotFoundError } from '../../shared/common';
 import validationMiddleware  from '../../middlewares/validation.middleware';
 
-
 export class Route {
 
     public router = express.Router( );
     public service: Service;
-
 
     constructor( validator: any, service: any ) {
         this.service = service;
