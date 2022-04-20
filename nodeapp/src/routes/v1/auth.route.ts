@@ -18,7 +18,7 @@ export class AuthV1Route {
         }
 
     // API Endpoint '/users'
-    public create = async(request:Request, response:Response, next:NextFunction) => {
+    public create = async(request: Request, response: Response, next: NextFunction) => {
 
         const model = request.body;
 
