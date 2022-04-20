@@ -15,9 +15,10 @@
         "import/newline-after-import": ["error", { "count": 2 }],
         "@typescript-eslint/type-annotation-spacing": ["warn", {
           "before": false,
-          "after": true }]
+          "after": true 
+        }]
     },
     "ignorePatterns": ["**/*.test.ts"]
-    }
+  }
   
 
