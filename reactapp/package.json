@@ -15,7 +15,6 @@
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
     "semantic-release": "^19.0.2",
-    "semantic-release-monorepo": "^7.0.5",
     "typescript": "^4.5.5",
     "web-vitals": "^2.1.4"
   },
@@ -26,8 +25,7 @@
     "test:report": "set CI=true && react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
     "coverage:report": "npm test -- --coverage --coverageDirectory='./reports/coverage' --watchAll=false",
     "eject": "react-scripts eject",
-    "lint": "eslint . & eslint . -f html -o ./reports/lint-results.html",
-    "semantic": "npx run semantic-release"
+    "lint": "eslint . & eslint . -f html -o ./reports/lint-results.html"
   },
   "jest": {
     "collectCoverageFrom": [
