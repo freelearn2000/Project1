@@ -68,6 +68,7 @@
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
       "!**/index.ts",
+      "!**/server.ts",
       "!**/typeorm.config.ts",
       "!**/src/models/**",
       "!**/src/middlewares/**",
