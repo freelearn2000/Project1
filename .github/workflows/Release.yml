@@ -1,4 +1,4 @@
-name: Create Release 
+name: Create Release
 
 on:
   workflow_run:
@@ -16,32 +16,29 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-
-    - uses: ahmadnassri/action-workflow-run-wait@v1
-
-      # only runs additional steps if [ Nodeapp, Reactapp ] were successful
-
-            
-    - name: Setup Node.js 
+    - uses: ahmadnassri/action-workflow-run-wait@v1       # only runs additional steps if [ Nodeapp, Reactapp ] were successful
+      
+    - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'  
+        node-version: '16'
         
-  #  - name: Download from React Artifact
-  #   uses: actions/download-artifact@v3
-  #    with:
-  #      name: React_build
+    - name: Download from React Artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+        workflow: Reactapp.yml
   #       working-directory: reactapp
   #      path: ./reactapp/build
   #       
-  #  - name: Download from Node artifact
-  #   run: echo "Download from Artifact"
-  #  uses: actions/download-artifact@v3
-  #      with:
-  #       name: Node_build
-  #       working-directory: nodeapp
+    - name: Download from Node artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+        workflow: Nodeapp.yml
+  #      working-directory: nodeapp
   #      path: ./nodeapp/build
-        
+      
     - name: Add Build Assets for Release
       run: |
          zip -r Node_build.zip . -i Node_build
