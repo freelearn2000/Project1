@@ -1,8 +1,8 @@
-name: Create Release 
+name: Create Release
 
 on:
   workflow_run:
-     workflows: ["Nodeapp","Reactapp"]
+     workflows: ["Nodeapp", "Reactapp"]
      types: [completed]
      branches: [master]
      
@@ -10,38 +10,43 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion== 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-            
-    - name: Setup Node.js 
+
+    - uses: ahmadnassri/action-workflow-run-wait@v1       # only runs additional steps if [ Nodeapp, Reactapp ] were successful
+      
+    - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'  
+        node-version: '16'
         
-  #  - name: Download from React Artifact
-  #   uses: actions/download-artifact@v3
-  #    with:
-  #      name: React_Build
+    - name: Download from React Artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+        workflow: Reactapp.yml
   #       working-directory: reactapp
   #      path: ./reactapp/build
   #       
-  #  - name: Download from Node artifact
-  #   run: echo "Download from Artifact"
-  #  uses: actions/download-artifact@v3
-  #      with:
-  #       name: Node_build
-  #       working-directory: nodeapp
+    - name: Download from Node artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+        workflow: Nodeapp.yml
+  #      working-directory: nodeapp
   #      path: ./nodeapp/build
-        
+      
     - name: Add Build Assets for Release
       run: |
-         zip -r Node_build.zip . -i Node_Build
-         zip -r React_build.zip . -i React_Build
+         zip -r Node_build.zip . -i Node_build
+         zip -r React_build.zip . -i React_build
       
     - name: Create a Release
-      run: npx semantic-release-monorepo
+      run: npx semantic
       env:
-         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}   
+         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+         
+    

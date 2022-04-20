@@ -7,7 +7,8 @@ import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
 import { unhandledApiRequests, sendReactApplication, errorHandlingMiddleware } from './middlewares/error.middleware';
 import { Route } from './routes/v1/index.route';
-import { AuthRoute } from "./routes/v1/auth.route";
+import { AuthV1Route } from "./routes/v1/auth.route";
+import { AuthV2Route } from "./routes/v2/auth.route";
 import { Blog, BlogValidator } from './models/blog.entity';
 import { Book, BookValidator } from "./models/book.entity";
 import { Project, ProjectValidator } from "./models/project.entity";
@@ -52,14 +53,16 @@ export class Server {
     }
     
     private registerRoutes( ) {
-        this.express.use(`/api/v1/blogs`, new Route(BlogValidator, new Service(Blog || getRepository)).router)
-        this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(Project || getRepository)).router);
-        this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(Weather || getRepository)).router); 
-        this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(News || getRepository)).router);
-        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book || getRepository)).router);
-        this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product || getRepository)).router);
-        this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User || getRepository)).router);
-        this.express.use( `/api/v1/auth`, new AuthRoute(AuthUserValidator, new Service(User || getRepository)).router);
+        this.express.use( `/api/v1/blogs`, new Route(BlogValidator, new Service(Blog, getRepository)).router);
+        this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(Project, getRepository)).router);
+        this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(Weather, getRepository)).router); 
+        this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(News, getRepository)).router);
+        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book, getRepository)).router);
+        this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product, getRepository)).router);
+        this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User, getRepository)).router);
+        this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(User, getRepository)).router);
+        this.express.use( `/api/v2/auth`, new AuthV2Route(AuthUserValidator, new Service(User, getRepository)).router);
+
     }
     
     private registerErrorHandlers() {

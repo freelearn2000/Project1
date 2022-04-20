@@ -3,11 +3,10 @@ import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
 import nconf from '../../shared/config';
 import validationMiddleware from '../../middlewares/validation.middleware';
-import { AuthUserValidator } from '../../models/user.entity';
 import { AuthService } from '../../services/auth.service';
 
 
-export class AuthRoute {
+export class AuthV1Route {
 
     public router = express.Router( );
     public service: AuthService;
@@ -19,7 +18,7 @@ export class AuthRoute {
         }
 
     // API Endpoint '/users'
-    public create = async(request:Request, response:Response, next:NextFunction) => {
+    public create = async(request: Request, response: Response, next: NextFunction) => {
 
         const model = request.body;
 
