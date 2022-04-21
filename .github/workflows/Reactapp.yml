@@ -124,7 +124,7 @@ jobs:
          name: React_build
          path: ./reactapp/build
         
-    - name: Deploy to Azure blob storage
+    - name: Deploy to Azure blob storage for Staging Server
       id: deploy
       uses: azure/CLI@v1
       with:
@@ -162,7 +162,7 @@ jobs:
          name: React_build
          path: ./reactapp/build
          
-    - name: Deploy to Azure blob storage
+    - name: Deploy to Azure blob storage for Production Server
       id: deploy
       run: echo "Deploy to azure blob storage"
  #     uses: azure/CLI@v1
