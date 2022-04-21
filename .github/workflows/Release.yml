@@ -27,30 +27,19 @@ jobs:
     - name: Download from React Artifact
       uses: dawidd6/action-download-artifact@v2
       with:
-        GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
         workflow: Reactapp.yml
-        workflow_conclusion: success
         name: React_build
-        path: ./reactapp/build
-        repo: ${{github.repository}}
-        check_artifacts:  false
-        search_artifacts: false
-        skip_unpack: false
+        skip_unpack: true
      
     - name: Download from Node Artifact
       uses: dawidd6/action-download-artifact@v2
       with:
-        GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
         workflow: Nodeapp.yml
         name: Node_build
-            
-    - name: Add Build Assets for Release
-      run: |
-         zip -r Node_build.zip . -i Node_build
-         zip -r React_build.zip . -i React_build
-      
+        skip_unpack: true
+     
     - name: Create a Release
-      run: npx semantic
+      run: npx semantic-release
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
          
