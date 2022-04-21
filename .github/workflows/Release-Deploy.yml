@@ -59,7 +59,7 @@ jobs:
     #  uses: azure/CLI@v1
     #  with:
     #      azcliversion: 2.0.72
-    #     inlineScript: |
+    #      inlineScript: |
     #       az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
           
         
