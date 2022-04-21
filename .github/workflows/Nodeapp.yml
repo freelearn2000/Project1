@@ -97,11 +97,11 @@ jobs:
         filename: .github/BUILD_TEMPLATE.md     
        
     - name: Upload Build folder to Artifact
-      run: echo "Build folder to Artict"
-#      uses: actions/upload-artifact@v2
-#      with:
-#        name: Node_build
-#        path: ./nodeapp/build
+     # run: echo "Build folder to Artict"
+      uses: actions/upload-artifact@v2
+      with:
+        name: Node_build
+        path: ./nodeapp/build
    
   deploy-staging:
     needs: [build]
