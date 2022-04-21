@@ -72,7 +72,7 @@ jobs:
           az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
           
     - name: Create Issue (If Deploy fail)
-      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy-node.outcome == 'failure' || steps.deploy-react.outcome == 'failure' }}
+      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy-node.outcome == 'failure' || steps.deploy-react.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
       env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
