@@ -63,11 +63,12 @@ jobs:
 
     - name: Deploy to Azure blob storage for Staging Server
       id: deploy-react
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.72
-        inlineScript: |
-          az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
+      run: echo "deploy"
+    #  uses: azure/CLI@v1
+    #  with:
+  #      azcliversion: 2.0.72
+   #     inlineScript: |
+   #       az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
           
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy-node.outcome == 'failure' || steps.deploy-react.outcome == 'failure' ) }}
