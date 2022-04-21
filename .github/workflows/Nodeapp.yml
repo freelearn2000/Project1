@@ -103,109 +103,109 @@ jobs:
         name: Node_build
         path: ./nodeapp/build
    
-  deploy-staging:
-    needs: [build]
-    if: ${{ github.ref == 'refs/heads/develop' }}
-    runs-on: ubuntu-latest
-    environment: staging
-   # if: ${{ needs.common.outputs.branch == 'develop'}}
-    defaults:
-      run:
-        working-directory: nodeapp
+#   deploy-staging:
+#     needs: [build]
+#     if: ${{ github.ref == 'refs/heads/develop' }}
+#     runs-on: ubuntu-latest
+#     environment: staging
+#    # if: ${{ needs.common.outputs.branch == 'develop'}}
+#     defaults:
+#       run:
+#         working-directory: nodeapp
       
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
       
-    - name: Download from artifact
-      run: echo "Download from Artifact"
-#      uses: actions/download-artifact@v3
-#      with:
-#         name: Node_build
-#         path: ./nodeapp/build
+#     - name: Download from artifact
+#       run: echo "Download from Artifact"
+# #      uses: actions/download-artifact@v3
+# #      with:
+# #         name: Node_build
+# #         path: ./nodeapp/build
         
-    - name: Login to Azure(using Service Principal Identity) for Staging server 
-      id: login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+#     - name: Login to Azure(using Service Principal Identity) for Staging server 
+#       id: login
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-    #- name: Configure Azure App Service
-    #  id: settings
-    #  uses: azure/appservice-settings@v1
-    #  with:
-    #    app-name: 'infra-node-sample'
-    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
+#     #- name: Configure Azure App Service
+#     #  id: settings
+#     #  uses: azure/appservice-settings@v1
+#     #  with:
+#     #    app-name: 'infra-node-sample'
+#     #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
       
-    - name: Deploy to Azure App Service for Staging server
-      id: deploy
-      if: ${{ always() && steps.login.outcome == 'success' }}
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-#       package: ./nodeapp/build
+#     - name: Deploy to Azure App Service for Staging server
+#       id: deploy
+#       if: ${{ always() && steps.login.outcome == 'success' }}
+#       uses: azure/webapps-deploy@v2
+#       with:
+#         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
+# #       package: ./nodeapp/build
 
-    - name: Create Issue (If Deploy fail)
-      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
-      uses: JasonEtco/create-an-issue@v2
-      env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Node App Deploy failed
-      with:
-        assignees: ${{github.actor}}
-        filename: .github/DEPLOY_TEMPLATE.md
+#     - name: Create Issue (If Deploy fail)
+#       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
+#       uses: JasonEtco/create-an-issue@v2
+#       env:
+#           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+#           TITLE: Node App Deploy failed
+#       with:
+#         assignees: ${{github.actor}}
+#         filename: .github/DEPLOY_TEMPLATE.md
         
-  deploy-production:
-    needs: [build]
-    if: ${{ github.ref == 'refs/heads/master' }}
-    runs-on: ubuntu-latest
-    environment: production
-    #if: ${{ needs.common.outputs.branch == 'master'}}
-    defaults:
-      run:
-        working-directory: nodeapp
+#   deploy-production:
+#     needs: [build]
+#     if: ${{ github.ref == 'refs/heads/master' }}
+#     runs-on: ubuntu-latest
+#     environment: production
+#     #if: ${{ needs.common.outputs.branch == 'master'}}
+#     defaults:
+#       run:
+#         working-directory: nodeapp
         
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
       
-    - name: Download from artifact
-      run: echo "Download from artifact"
-#      uses: actions/download-artifact@v3
-#      with:
-#         name: Node_build
-#         path: ./nodeapp/build
+#     - name: Download from artifact
+#       run: echo "Download from artifact"
+# #      uses: actions/download-artifact@v3
+# #      with:
+# #         name: Node_build
+# #         path: ./nodeapp/build
      
-    - name: Login to Azure(using Service Principal Identity) for Production server
-      id: login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+#     - name: Login to Azure(using Service Principal Identity) for Production server
+#       id: login
+#       uses: azure/login@v1
+#       with:
+#         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    #- name: Configure Azure App Service
-    #  id: settings
-    #  if: ${{ always() && steps.login.outcome == 'success' }}
-    #  uses: azure/appservice-settings@v1
-    #  with:
-    #    app-name: 'infra-node-sample'
-    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
+#     #- name: Configure Azure App Service
+#     #  id: settings
+#     #  if: ${{ always() && steps.login.outcome == 'success' }}
+#     #  uses: azure/appservice-settings@v1
+#     #  with:
+#     #    app-name: 'infra-node-sample'
+#     #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
         
-    - name: Deploy to Azure App Service for Production server
-      id: deploy
-      if: ${{ always() && steps.login.outcome == 'success' }}
-      run: echo "Deploy build to production here..."
-      #uses: azure/webapps-deploy@v2
-      #with:
-      #  app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-      #  package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
+#     - name: Deploy to Azure App Service for Production server
+#       id: deploy
+#       if: ${{ always() && steps.login.outcome == 'success' }}
+#       run: echo "Deploy build to production here..."
+#       #uses: azure/webapps-deploy@v2
+#       #with:
+#       #  app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
+#       #  package: ${{ env.AZURE_APPSERVICE_PACKAGE_PATH }}
          
-    - name: Create Issue (If Deploy fail)
-      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
-      uses: JasonEtco/create-an-issue@v2
-      env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Node App Deploy failed
-      with:
-        assignees: ${{github.actor}}
-        filename: .github/DEPLOY_TEMPLATE.md
+#     - name: Create Issue (If Deploy fail)
+#       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
+#       uses: JasonEtco/create-an-issue@v2
+#       env:
+#           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+#           TITLE: Node App Deploy failed
+#       with:
+#         assignees: ${{github.actor}}
+#         filename: .github/DEPLOY_TEMPLATE.md
    
