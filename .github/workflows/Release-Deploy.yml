@@ -1,0 +1,86 @@
+name: Release-Deploy
+
+on:
+  workflow_dispatch:
+  #workflow_run:
+  #   workflows: ["Nodeapp", "Reactapp"]
+  #   types: [completed]
+  #   branches: [master]
+     
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    environment: staging
+    
+    steps:
+    - name: Conditions for Release
+      uses: ahmadnassri/action-workflow-run-wait@v1       # only runs additional steps if [ Nodeapp, Reactapp ] were successful
+
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+   
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+        
+    - name: Download from React Artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: Reactapp.yml
+        name: React_build
+        path: ./reactapp/build
+        skip_unpack: true
+     
+    - name: Download from Node Artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: Nodeapp.yml
+        name: Node_build
+        path: ./nodeapp/build
+        skip_unpack: true
+     
+    - name: Create a Release
+      run: npx semantic-release
+      env:
+         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+         
+    - name: Login to Azure(using Service Principal Identity) for Staging server 
+      id: login
+      uses: azure/login@v1
+      with:
+        working-directory: nodeapp
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - name: Deploy to Azure App Service for Staging server
+      id: deploy-node
+      if: ${{ always() && steps.login.outcome == 'success' }}
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
+#       package: ./nodeapp/build
+
+    - name: Deploy to Azure blob storage for Staging Server
+      id: deploy-react
+      uses: azure/CLI@v1
+      with:
+        working-directory: reactapp
+        azcliversion: 2.0.72
+        inlineScript: |
+          az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
+          
+    - name: Create Issue (If Deploy fail)
+      if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy-node.outcome == 'failure' || steps.deploy-react.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Deploy failed
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/DEPLOY_TEMPLATE.md       
+
+    
+         
+         
