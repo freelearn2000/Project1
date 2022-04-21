@@ -53,6 +53,16 @@ jobs:
         working-directory: nodeapp
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
+    - name: Deploy to Azure blob storage for Staging Server
+      id: deploy-react
+      run: echo "deploy"
+    #  uses: azure/CLI@v1
+    #  with:
+    #      azcliversion: 2.0.72
+    #      inlineScript: |
+    #       az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
+          
+        
     - name: Deploy to Azure App Service for Staging server
       id: deploy-node
       if: ${{ always() && steps.login.outcome == 'success' }}
@@ -61,15 +71,6 @@ jobs:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
         #package: ./nodeapp/build
 
-    - name: Deploy to Azure blob storage for Staging Server
-      id: deploy-react
-      run: echo "deploy"
-    #  uses: azure/CLI@v1
-    #  with:
-  #      azcliversion: 2.0.72
-   #     inlineScript: |
-   #       az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
-          
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy-node.outcome == 'failure' || steps.deploy-react.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
