@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --composite false & node build.js",
-    "build2": "webpack --config webpack.config.js",
+    "build2": "webpack",
     "test": "jest",
     "test:coverage": "jest --collectCoverage",
     "test:coverage1": "jest --silent --testLocationInResults --ci --all --coverage ",
