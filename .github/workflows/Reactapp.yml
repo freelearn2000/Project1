@@ -104,80 +104,80 @@ jobs:
         name: React_build
         path: ./reactapp/build
         
-  deploy-staging:
-    needs: [build]
-    if: ${{ github.ref == 'refs/heads/develop' }}
-    runs-on: ubuntu-latest
-    environment: staging
-    #if: ${{ needs.common.outputs.branch == 'develop'}}
-    defaults:
-      run:
-        working-directory: reactapp
+#   deploy-staging:
+#     needs: [build]
+#     if: ${{ github.ref == 'refs/heads/develop' }}
+#     runs-on: ubuntu-latest
+#     environment: staging
+#     #if: ${{ needs.common.outputs.branch == 'develop'}}
+#     defaults:
+#       run:
+#         working-directory: reactapp
       
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
       
-    - name: Download from artifact
-      uses: actions/download-artifact@v3
-      with:
-         name: React_build
-         path: ./reactapp/build
+#     - name: Download from artifact
+#       uses: actions/download-artifact@v3
+#       with:
+#          name: React_build
+#          path: ./reactapp/build
         
-    - name: Deploy to Azure blob storage for Staging Server
-      id: deploy
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.72
-        inlineScript: |
-          az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
+#     - name: Deploy to Azure blob storage for Staging Server
+#       id: deploy
+#       uses: azure/CLI@v1
+#       with:
+#         azcliversion: 2.0.72
+#         inlineScript: |
+#           az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
 
-    - name: Create Issue (If Deploy fail)
-      if: ${{ always() && steps.deploy.outcome == 'failure' }}
-      uses: JasonEtco/create-an-issue@v2
-      env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Deploy failed
-      with:
-        assignees: ${{github.actor}}
-        filename: .github/DEPLOY_TEMPLATE.md
+#     - name: Create Issue (If Deploy fail)
+#       if: ${{ always() && steps.deploy.outcome == 'failure' }}
+#       uses: JasonEtco/create-an-issue@v2
+#       env:
+#           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+#           TITLE: Deploy failed
+#       with:
+#         assignees: ${{github.actor}}
+#         filename: .github/DEPLOY_TEMPLATE.md
         
-  deploy-production:
-    needs: [build]
-    if: ${{ github.ref == 'refs/heads/master' }}
-    runs-on: ubuntu-latest
-    environment: production
-    #if: ${{ needs.common.outputs.branch == 'master'}}
-    defaults:
-      run:
-        working-directory: reactapp
+#   deploy-production:
+#     needs: [build]
+#     if: ${{ github.ref == 'refs/heads/master' }}
+#     runs-on: ubuntu-latest
+#     environment: production
+#     #if: ${{ needs.common.outputs.branch == 'master'}}
+#     defaults:
+#       run:
+#         working-directory: reactapp
       
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
       
-    - name: Download from artifact
-      uses: actions/download-artifact@v3
-      with:
-         name: React_build
-         path: ./reactapp/build
+#     - name: Download from artifact
+#       uses: actions/download-artifact@v3
+#       with:
+#          name: React_build
+#          path: ./reactapp/build
          
-    - name: Deploy to Azure blob storage for Production Server
-      id: deploy
-      run: echo "Deploy to azure blob storage"
- #     uses: azure/CLI@v1
- #     with:
- #     azcliversion: 2.0.72
- #      inlineScript: |
- #        az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
+#     - name: Deploy to Azure blob storage for Production Server
+#       id: deploy
+#       run: echo "Deploy to azure blob storage"
+#       uses: azure/CLI@v1
+#       with:
+#       azcliversion: 2.0.72
+#        inlineScript: |
+#          az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
 
-    - name: Create Issue (If Deploy fail)
-      if: ${{ always() && steps.deploy.outcome == 'failure' }}
-      uses: JasonEtco/create-an-issue@v2
-      env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Deploy failed
-      with:
-        assignees: ${{github.actor}}
-        filename: .github/DEPLOY_TEMPLATE.md
+#     - name: Create Issue (If Deploy fail)
+#       if: ${{ always() && steps.deploy.outcome == 'failure' }}
+#       uses: JasonEtco/create-an-issue@v2
+#       env:
+#           GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+#           TITLE: Deploy failed
+#       with:
+#         assignees: ${{github.actor}}
+#         filename: .github/DEPLOY_TEMPLATE.md
    
