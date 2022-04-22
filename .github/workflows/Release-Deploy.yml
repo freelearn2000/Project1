@@ -31,7 +31,7 @@ jobs:
         workflow: Reactapp.yml
         name: React_build
         path: ./reactapp/build
-        skip_unpack: true
+      # skip_unpack: true
      
     - name: Download from Node Artifact
       uses: dawidd6/action-download-artifact@v2
@@ -46,23 +46,22 @@ jobs:
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
          
+    - name: Deploy to Azure blob storage for Staging Server
+      id: deploy-react
+    # run: echo "deploy"
+      uses: azure/CLI@v1
+      with:
+          azcliversion: 2.0.72
+          inlineScript: |
+           az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
+   
     - name: Login to Azure(using Service Principal Identity) for Staging server 
       id: login
       uses: azure/login@v1
       with:
         working-directory: nodeapp
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-    - name: Deploy to Azure blob storage for Staging Server
-      id: deploy-react
-      run: echo "deploy"
-    #  uses: azure/CLI@v1
-    #  with:
-    #      azcliversion: 2.0.72
-    #      inlineScript: |
-    #       az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
-          
-        
+           
     - name: Deploy to Azure App Service for Staging server
       id: deploy-node
       if: ${{ always() && steps.login.outcome == 'success' }}
