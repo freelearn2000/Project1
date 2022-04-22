@@ -1,8 +1,8 @@
-
 import express, { Request, Response, NextFunction} from "express";
 import { Service } from '../../services/index.service';
 import { handleAsync, EntityNotFoundError } from '../../shared/common';
 import validationMiddleware  from '../../middlewares/validation.middleware';
+
 
 export class Route {
 
@@ -18,7 +18,7 @@ export class Route {
         this.router.delete(`/:id`, this.delete);
     }
  
-    public create = async(request:Request, response:Response, next:NextFunction) => {
+    public create = async(request: Request, response: Response, next: NextFunction) => {
 
         const model = request.body;
         
@@ -30,7 +30,7 @@ export class Route {
                  
     }
 
-    public find = async(request:Request, response:Response, next:NextFunction) => {
+    public find = async(request: Request, response: Response, next: NextFunction) => {
 
         const options: any = request.query;
         
@@ -41,7 +41,7 @@ export class Route {
         response.send( allResources);
     }
 
-    public get = async(request:Request, response:Response, next:NextFunction) => {
+    public get = async(request: Request, response: Response, next: NextFunction) => {
 
         // Retrive data from Route params
         const id = Number( request.params.id );
@@ -58,7 +58,7 @@ export class Route {
         }
     }
 
-    public patch = async(request:Request, response:Response, next:NextFunction) => {
+    public patch = async(request: Request, response: Response, next: NextFunction) => {
 
         const id = Number( request.params.id );
         const patchedModel = request.body;
@@ -74,7 +74,7 @@ export class Route {
         }
     }
 
-    public delete = async(request:Request, response:Response, next:NextFunction) => {
+    public delete = async(request: Request, response: Response, next: NextFunction) => {
 
         const id = Number( request.params.id );
     
