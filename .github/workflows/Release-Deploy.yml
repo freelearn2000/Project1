@@ -47,6 +47,7 @@ jobs:
       id: build_node
       if: ${{ always() &&  steps.download_node.outcome == 'failure' }}
       run: npm run build
+      working-directory: nodeapp
   
     - name: Create Issue (If Build fail)
       if: ${{ always() && steps.build_node.outcome == 'failure' }}
@@ -79,6 +80,7 @@ jobs:
       id: build_react
       if: ${{ always() &&  steps.download_react.outcome == 'failure' }}
       run: npm run build
+      working-directory: reactapp
         
     - name: Create Issue (If Build fail)
       if: ${{ always() && steps.build_react.outcome == 'failure' }}
