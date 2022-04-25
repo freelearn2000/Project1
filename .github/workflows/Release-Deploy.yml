@@ -11,11 +11,11 @@ jobs:
     name: Release-Deploy
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    environment: staging
+    environment: production
     
     steps:
-    - name: Conditions for Release
-      uses: ahmadnassri/action-workflow-run-wait@v1      # only runs additional steps if both Nodeapp and Reactapp were successful
+    # - name: Conditions for Release
+    #   uses: ahmadnassri/action-workflow-run-wait@v1      # only runs additional steps if both Nodeapp and Reactapp were successful
 
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -26,6 +26,7 @@ jobs:
         node-version: '16'
         
     - name: Download from React Artifact
+      id: download_react
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: Reactapp.yml
@@ -34,42 +35,109 @@ jobs:
       # skip_unpack: true
      
     - name: Download from Node Artifact
+      id: download_node
       uses: dawidd6/action-download-artifact@v2
       with:
         workflow: Nodeapp.yml
         name: Node_build
         path: ./nodeapp/build
         skip_unpack: true
-     
+
+    - name: Conditions for Node Artifact Download failure
+      id: build_node
+      if: ${{ always() &&  steps.download_node.outcome == 'failure' }}
+      run: npm run build
+      working-directory: nodeapp
+  
+    - name: Create Issue (If Build fail)
+      if: ${{ always() && steps.build_node.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Build failed
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/BUILD_TEMPLATE.md     
+       
+    - name: Upload Node Build folder to Artifact
+      id: upload_node
+      if: ${{ steps.build_node.outcome == 'success' }}
+      run: echo "Build folder to Artict"
+      # uses: actions/upload-artifact@v2
+      # with:
+      #   name: Node_build
+      #   path: ./nodeapp/build
+
+    - name: Download from Node Artifact
+      if: ${{ steps.upload_node.outcome == 'success' }}
+      run: echo "Download from Artifact"
+#      uses: actions/download-artifact@v3
+#      with:
+#         name: Node_build
+#         path: ./nodeapp/build
+
+    - name: Conditions for React Artifact Download failure
+      id: build_react
+      if: ${{ always() &&  steps.download_react.outcome == 'failure' }}
+      run: npm run build
+      working-directory: reactapp
+        
+    - name: Create Issue (If Build fail)
+      if: ${{ always() && steps.build_react.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Build failed
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/BUILD_TEMPLATE.md
+        
+    - name: Upload React Build folder as Artifact
+      id: upload_react
+      if: ${{ steps.build_react.outcome == 'success' }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: React_build
+        path: ./reactapp/build
+
+    - name: Download from React Artifact
+      if: ${{ steps.upload_react.outcome == 'success' }}
+      run: echo "Download from Artifact"
+#      uses: actions/download-artifact@v3
+#      with:
+#         name: React_build
+#         path: ./reactapp/build
+
     - name: Create a Release
       run: npx semantic-release
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
          
-    - name: Login to Azure(using Service Principal Identity) for Staging server 
+    - name: Login to Azure(using Service Principal Identity) for Production server 
       id: login
-      uses: azure/login@v1
-      with:
-        working-directory: nodeapp
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-               
+      run: echo "login"
+      # uses: azure/login@v1
+      # with:
+      #   working-directory: nodeapp
+      #   creds: ${{ secrets.AZURE_CREDENTIALS }}          
          
-    - name: Deploy to Azure blob storage for Staging Server
+    - name: Deploy to Azure blob storage for Production Server
       id: deploy-react
-    # run: echo "deploy"
-      uses: azure/CLI@v1
-      with:
-          azcliversion: 2.0.72
-          inlineScript: |
-           az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
+      run: echo "deploy"
+      # uses: azure/CLI@v1
+      # with:
+      #     azcliversion: 2.0.72
+      #     inlineScript: |
+      #      az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
    
-    - name: Deploy to Azure App Service for Staging server
+    - name: Deploy to Azure App Service for Production server
       id: deploy-node
       if: ${{ always() && steps.login.outcome == 'success' }}
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-        #package: ./nodeapp/build
+      run: echo "deploy"
+      # uses: azure/webapps-deploy@v2
+      # with:
+      #   app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
+      #   package: ./nodeapp/build
 
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy-node.outcome == 'failure' || steps.deploy-react.outcome == 'failure' ) }}
