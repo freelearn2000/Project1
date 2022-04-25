@@ -4,20 +4,15 @@ import Jwt from 'njwt';
 import nconf from '../../shared/config';
 import validationMiddleware from '../../middlewares/validation.middleware';
 import { AuthService } from '../../services/auth.service';
+import { Route } from '../v1/index.route';
 
 
-export class AuthV2Route {
+export class AuthV2Route extends Route {
 
     public router = express.Router( );
     public service: AuthService;
     
-
-    constructor( validator: any, service: any ) {
-        this.service = service;
-        this.router.post(`/`, validationMiddleware(validator), this.create);
-        }
-
-    // API Endpoint '/users'
+    // API Endpoint '/auth'
     public create = async(request: Request, response: Response, next: NextFunction) => {
 
         const model = request.body;
