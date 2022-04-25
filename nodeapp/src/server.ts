@@ -1,6 +1,6 @@
 import express from "express";
-import { createConnection } from 'typeorm';
-import config from '../typeorm.config';
+// import { DataSource } from 'typeorm';
+import { AppDataSource } from './data-source';
 import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
 import { unhandledApiRequests, errorHandlingMiddleware } from './middlewares/error.middleware';
@@ -17,7 +17,7 @@ import { Service } from './services/index.service';
 import { WeatherService } from "./services/weather.service";
 import { NewsService } from "./services/news.service";
 import { User, UserValidator, AuthUserValidator } from './models/user.entity';
-import { getRepository } from 'typeorm';
+
 
 
 export class Server {
@@ -27,40 +27,40 @@ export class Server {
     constructor( ) {
         console.log(`Initializing application...`);
         this.express = express( );
-        this.registerMiddlewares( );
-        this.registerRoutes( );
-        this.registerErrorHandlers( );   
+        // this.registerMiddlewares( );
+        // this.registerRoutes( );
+        // this.registerErrorHandlers( );
     }
 
-    public async initializeDatabase( ) {
-        try {
-            await createConnection(config);
-            console.log(`Database connected!`);
-        } catch( error ) {
-            console.log(`Database connection failed : `, error);
-            throw error;
-        }
-    }
+    // public async initializeDatabase( ) {
+    //     try {
+    //         await new DataSource(config);
+    //         console.log(`Database connected!`);
+    //     } catch( error ) {
+    //         console.log(`Database connection failed : `, error);
+    //         throw error;
+    //     }
+    // }
 
-    private registerMiddlewares( ) {
+    public registerMiddlewares( ) {
         this.express.use( express.json( ) );
         this.express.use( loggingMiddleware( ) );
         this.express.use( responseMiddleware( ) );
     }
     
-    private registerRoutes( ) {
-        this.express.use( `/api/v1/blogs`, new Route(BlogValidator, new Service(Blog, getRepository)).router);
-        this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(Project, getRepository)).router);
-        this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(Weather, getRepository)).router); 
-        this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(News, getRepository)).router);
-        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book, getRepository)).router);
-        this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product, getRepository)).router);
-        this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User, getRepository)).router);
-        this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(User, getRepository)).router);
-        this.express.use( `/api/v2/auth`, new AuthV2Route(AuthUserValidator, new Service(User, getRepository)).router);
+    public registerRoutes( ) {
+        this.express.use( `/api/v1/blogs`, new Route(BlogValidator, new Service(AppDataSource.getRepository(Blog))).router);
+        this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(AppDataSource.getRepository(Project))).router);
+        this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(AppDataSource.getRepository(Weather))).router); 
+        this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(AppDataSource.getRepository(News))).router);
+        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(AppDataSource.getRepository(Product))).router);
+        this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(AppDataSource.getRepository(Product))).router);
+        this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(AppDataSource.getRepository(User))).router);
+        this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(AppDataSource.getRepository(User))).router);
+        this.express.use( `/api/v2/auth`, new AuthV2Route(AuthUserValidator, new Service(AppDataSource.getRepository(User))).router);
     }
     
-    private registerErrorHandlers( ) {
+    public registerErrorHandlers( ) {
         // Handle all API's (not handled by routes)
         this.express.all( '/api/*', unhandledApiRequests );
         // Handle all requests not handled by Routes
@@ -71,7 +71,7 @@ export class Server {
 
     public listen( port: number ) {
         this.express.listen(port, ( ) => {
-            console.log( `Server running at ${port}....` )
+            console.log( `Server successfully running at ${port}....` )
         })
     }
 }
