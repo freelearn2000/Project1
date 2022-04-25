@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
     "module": "CommonJS",
-    "outDir": "./build",
-    "strict": true,
-    "noImplicitAny": true,
     "esModuleInterop": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "removeComments": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": true
+    "outDir": "./build",
+    "rootDir": "."
   },
-  "exclude": [
-      "**/*.test.ts"
-  ]
+  "include": ["src"],
+  "exclude": [ "**/*.test.ts", "node_modules" ]
 }
