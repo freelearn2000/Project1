@@ -14,12 +14,12 @@ export class Bootstrap {
     public async launchServer( ) {
         try {
 
-            await AppDataSource.initialize();
+            await AppDataSource.initialize( );
             console.log(`Database connected.`);
 
-            this.server.registerMiddlewares();
-            this.server.registerRoutes();
-            this.server.registerErrorHandlers();
+            this.server.registerMiddlewares( );
+            this.server.registerRoutes( );
+            this.server.registerErrorHandlers( );
             console.log(`Registering Routes, Middlewares & Error handlers...`);
 
             this.server.listen(3000);
@@ -32,4 +32,4 @@ export class Bootstrap {
     }
 }
 
-new Bootstrap().launchServer();
+new Bootstrap( ).launchServer( );

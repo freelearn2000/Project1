@@ -6,8 +6,8 @@ export const AppDataSource = new DataSource({
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: 'admin',
-    database: 'cicd_test_db',
+    password: '1993',
+    database: 'project1db',
     entities: [
         __dirname + `/models/*.entity{.ts,.js}`
     ],
