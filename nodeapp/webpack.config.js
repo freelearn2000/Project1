@@ -1,4 +1,5 @@
 const path = require('path');
+const { transpile } = require('typescript');
 
 module.exports = {
   target: 'node',
@@ -16,4 +17,5 @@ module.exports = {
       { test: /\.ts$/, use: 'ts-loader', exclude: /node_modules/ },
     ],
   },
+
 };
