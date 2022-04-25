@@ -25,7 +25,7 @@ export class NewsService extends Service {
         const order: string = options.order ? `entity.${options.order}` : `entity.id`; 
         // Partial selection
         [ allResource, error ] = await handleAsync(
-            this.repository( this.entity )
+            this.repository
             .createQueryBuilder( `entity` )
             .select( filter )
             .where( `LOWER(entity.title) like LOWER(:title)`, { title: `%${where.toLowerCase()}%`} )

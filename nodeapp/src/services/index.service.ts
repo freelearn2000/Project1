@@ -1,25 +1,22 @@
-import { getRepository } from 'typeorm';
-
-
+// import { Repository } from 'typeorm';
 import { ServerError, handleAsync, fieldFilter, paging } from '../shared/common';
-
 
 
 export class Service {
 
-    public entity: any;
+    // public entity: any;
     public repository: any;
 
-    constructor( entity: any, repository: any ) {
-        this.entity = entity;
+    constructor( repository: any ) {
+        // this.entity = entity;
         this.repository = repository;
     }
 
     public create = async( model: any ) => {
 
-        const tempObject = this.repository( this.entity ).create( model );
+        const tempObject = this.repository.create( model );
     
-        const [ newResource, error ] = await handleAsync( this.repository(this.entity).save(tempObject) );  
+        const [ newResource, error ] = await handleAsync( this.repository.save(tempObject) );  
         if ( error ) throw new ServerError( error.message, `index.route->create` );
     
         return newResource;        
@@ -45,7 +42,7 @@ export class Service {
         const order: string = options.order ? `entity.${options.order}` : `entity.id`; 
         // Partial selection
         [ allResource, error ] = await handleAsync(
-            this.repository( this.entity )
+            this.repository
             .createQueryBuilder( `entity` )
             .select( filter )
             .where( `LOWER(entity.name) like LOWER(:name)`, { name: `%${where.toLowerCase()}%`} )
@@ -65,7 +62,7 @@ export class Service {
         const filter = fieldFilter(options);
     
         const [ resource, error ] = await handleAsync(
-            this.repository( this.entity )
+            this.repository
             .createQueryBuilder( `entity` )
             .select( filter )
             .where( {id} )
@@ -80,10 +77,10 @@ export class Service {
 
     public patch = async( id: number, patchModel: any ) => {
 
-        const [ , error ] = await handleAsync( this.repository(this.entity).update(id, patchModel) );
+        const [ , error ] = await handleAsync( this.repository.update(id, patchModel) );
         if ( error ) throw new ServerError( error.message, `index.route->patch` );
     
-        const [ resource, error2 ] = await handleAsync( this.repository(this.entity).findOne(id) );
+        const [ resource, error2 ] = await handleAsync( this.repository.findOne(id) );
         if ( error2 ) throw new ServerError( error2.message, `index.route->patch` );
     
         return resource; 
@@ -91,7 +88,7 @@ export class Service {
 
     public delete = async( id: number ) => {
 
-        const [ result, error ] = await handleAsync( this.repository(this.entity).delete(id) );
+        const [ result, error ] = await handleAsync( this.repository.delete(id) );
         if ( error ) throw new ServerError( error.message, `index.route->delete` );
     
         return result;

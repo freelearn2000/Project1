@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { Server } from './server';
+import { AppDataSource } from './data-source';
 
 
 export class Bootstrap {
@@ -12,8 +13,19 @@ export class Bootstrap {
 
     public async launchServer( ) {
         try {
-            await this.server.initializeDatabase( );
-            this.server.listen(Number(process.env.PORT));
+
+            await AppDataSource.initialize();
+            console.log(`Database connected.`);
+
+            this.server.registerMiddlewares();
+            this.server.registerRoutes();
+            this.server.registerErrorHandlers();
+            console.log(`Registering Routes, Middlewares & Error handlers...`);
+
+            this.server.listen(3000);
+
+            // await this.server.initializeDatabase( );
+            // this.server.listen(Number(process.env.PORT));
         } catch(error) {
             console.log('Cannot launch application! :', error)
         }
