@@ -12,7 +12,7 @@ export class Bootstrap {
 
     public async launchServer( ) {
         try {
-            await this.server.initializeDatabase();
+            await this.server.initializeDatabase( );
             this.server.listen(Number(process.env.PORT));
         } catch(error) {
             console.log('Cannot launch application! :', error)
@@ -21,7 +21,3 @@ export class Bootstrap {
 }
 
 new Bootstrap().launchServer();
-
-// testing realese creation for nodeapp
-// testing realese creation for nodeapp
-// testing realese creation for nodeapp
