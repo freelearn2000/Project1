@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express from "express";
 import { createConnection } from 'typeorm';
 import config from '../typeorm.config';
 import loggingMiddleware from './middlewares/logging.middleware';
@@ -20,7 +20,6 @@ import { User, UserValidator, AuthUserValidator } from './models/user.entity';
 import { getRepository } from 'typeorm';
 
 
-
 export class Server {
 
     public express: any = null;
@@ -30,8 +29,7 @@ export class Server {
         this.express = express( );
         this.registerMiddlewares( );
         this.registerRoutes( );
-        this.registerErrorHandlers( ); 
-      
+        this.registerErrorHandlers( );   
     }
 
     public async initializeDatabase( ) {
@@ -45,9 +43,9 @@ export class Server {
     }
 
     private registerMiddlewares( ) {
-        this.express.use( express.json() );
-        this.express.use( loggingMiddleware() );
-        this.express.use( responseMiddleware() );
+        this.express.use( express.json( ) );
+        this.express.use( loggingMiddleware( ) );
+        this.express.use( responseMiddleware( ) );
     }
     
     private registerRoutes( ) {
@@ -60,10 +58,9 @@ export class Server {
         this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User, getRepository)).router);
         this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(User, getRepository)).router);
         this.express.use( `/api/v2/auth`, new AuthV2Route(AuthUserValidator, new Service(User, getRepository)).router);
-
     }
     
-    private registerErrorHandlers() {
+    private registerErrorHandlers( ) {
         // Handle all API's (not handled by routes)
         this.express.all( '/api/*', unhandledApiRequests );
         // Handle all requests not handled by Routes
