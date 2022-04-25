@@ -1,18 +1,8 @@
-import { any } from 'nconf';
-// import { getRepository } from 'typeorm';
-import { User } from '../models/user.entity';
+import { Service } from './index.service';
 import { ServerError, handleAsync } from '../shared/common';
 
 
-export class AuthService {
-
-    // public entity: any;
-    public repository: any; 
-
-    constructor(repository: any ) {
-        // this.entity = entity;
-        this.repository = repository;
-    }
+export class AuthService extends Service {
 
     public find = async( options: any ) => {
         
