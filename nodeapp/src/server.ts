@@ -1,5 +1,4 @@
 import express from "express";
-// import { DataSource } from 'typeorm';
 import { AppDataSource } from './data-source';
 import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
@@ -53,7 +52,7 @@ export class Server {
         this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(AppDataSource.getRepository(Project))).router);
         this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(AppDataSource.getRepository(Weather))).router); 
         this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(AppDataSource.getRepository(News))).router);
-        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(AppDataSource.getRepository(Product))).router);
+        this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(AppDataSource.getRepository(Book))).router);
         this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(AppDataSource.getRepository(Product))).router);
         this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(AppDataSource.getRepository(User))).router);
         this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(AppDataSource.getRepository(User))).router);
