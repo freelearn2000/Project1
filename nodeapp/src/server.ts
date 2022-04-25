@@ -1,11 +1,9 @@
-import express, {Request, Response} from "express";
+import express from "express";
 import { createConnection } from 'typeorm';
-import path from 'path';
-import dotenv from 'dotenv';
 import config from '../typeorm.config';
 import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
-import { unhandledApiRequests, sendReactApplication, errorHandlingMiddleware } from './middlewares/error.middleware';
+import { unhandledApiRequests, errorHandlingMiddleware } from './middlewares/error.middleware';
 import { Route } from './routes/v1/index.route';
 import { AuthV1Route } from "./routes/v1/auth.route";
 import { AuthV2Route } from "./routes/v2/auth.route";
@@ -22,7 +20,6 @@ import { User, UserValidator, AuthUserValidator } from './models/user.entity';
 import { getRepository } from 'typeorm';
 
 
-
 export class Server {
 
     public express: any = null;
@@ -30,10 +27,9 @@ export class Server {
     constructor( ) {
         console.log(`Initializing application...`);
         this.express = express( );
-        this.registerMiddlewares();
-        this.registerRoutes();
-        this.registerErrorHandlers(); 
-      
+        this.registerMiddlewares( );
+        this.registerRoutes( );
+        this.registerErrorHandlers( );   
     }
 
     public async initializeDatabase( ) {
@@ -47,9 +43,9 @@ export class Server {
     }
 
     private registerMiddlewares( ) {
-        this.express.use( express.json() );
-        this.express.use( loggingMiddleware() );
-        this.express.use( responseMiddleware() );
+        this.express.use( express.json( ) );
+        this.express.use( loggingMiddleware( ) );
+        this.express.use( responseMiddleware( ) );
     }
     
     private registerRoutes( ) {
@@ -62,21 +58,20 @@ export class Server {
         this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User, getRepository)).router);
         this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(User, getRepository)).router);
         this.express.use( `/api/v2/auth`, new AuthV2Route(AuthUserValidator, new Service(User, getRepository)).router);
-
     }
     
-    private registerErrorHandlers() {
+    private registerErrorHandlers( ) {
         // Handle all API's (not handled by routes)
         this.express.all( '/api/*', unhandledApiRequests );
         // Handle all requests not handled by Routes
-        this.express.all( '*', express.static( `${process.env.REACT_PATH}`  ) );
+        this.express.all( '*', express.static(`${process.env.REACT_PATH}`) );
         // Global Error Handler
-        this.express.use(errorHandlingMiddleware);
+        this.express.use( errorHandlingMiddleware );
     }
 
     public listen( port: number ) {
-        this.express.listen(port, () => {
-            console.log(`Server running at ${port}....`)
+        this.express.listen(port, ( ) => {
+            console.log( `Server running at ${port}....` )
         })
     }
 }
