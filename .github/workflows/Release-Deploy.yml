@@ -35,9 +35,9 @@ jobs:
       # skip_unpack: true
      
     - name: Conditions for React Artifact Download failure
+      run: echo "npm run build"
       id: build_react
       if: ${{ always() &&  steps.download_react.outcome == 'failure' }}
-      run: echo "npm run build"
       working-directory: reactapp
         
     - name: Create Issue (If Build fail)

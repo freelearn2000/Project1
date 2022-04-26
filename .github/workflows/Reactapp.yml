@@ -133,14 +133,18 @@ jobs:
         inlineScript: |
           az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
   
-    - name: Send Slack Message
-      if: ${{ always() && (steps.login.outcome == 'success' || steps.deploy.outcome == 'success' ) }}
-      run: |
-        curl -X POST \
-        -H 'Content-type: application/json' \
-        --data '{"text":"Successfully deployed to Staging Server(Azure BlobStorage)|check it now  <{repo_url}|{repo}>"}' \
-        --url ${{secrets.SLACK_WEBHOOK}}
-
+    - name: Slack Message
+      if: always()
+      uses: ravsamhq/notify-slack-action@v1
+      with:
+       status: ${{ job.status }} 
+       notification_title: " Successfully deployed to Staging Server(Azure AppService) "
+       message_format: ' {status_message} in <{repo_url}|{repo}>'
+       footer: 'Linked to Repo <{repo_url}|{repo}>'
+    
+      env:
+       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}   
+        
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && steps.deploy.outcome == 'failure' }}
       uses: JasonEtco/create-an-issue@v2
