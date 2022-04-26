@@ -1,5 +1,7 @@
 const path = require('path');
-const { transpile } = require('typescript');
+// const { transpile } = require('typescript');
+const webpack = require('webpack');
+
 
 module.exports = {
   mode: 'none',
@@ -18,5 +20,11 @@ module.exports = {
       { test: /\.ts$/, use: 'ts-loader', exclude: /node_modules/ },
     ],
   },
-
+  plugins: [
+    new webpack.ContextReplacementPlugin(/app-root-path/),
+    new webpack.ContextReplacementPlugin(/express/),
+    new webpack.ContextReplacementPlugin(/typeorm/),
+    new webpack.ContextReplacementPlugin(/yargs-parser/),
+    new webpack.ContextReplacementPlugin(/yargs/)
+  ]
 };

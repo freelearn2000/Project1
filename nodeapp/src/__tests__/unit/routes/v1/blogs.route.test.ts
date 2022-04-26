@@ -9,6 +9,7 @@ import { Server } from '../../../../server';
 import { Blog } from '../../../../models/blog.entity';
 
 
+
 let express: Application = new Server().express;
 let connection: DataSource;
 
@@ -21,9 +22,9 @@ beforeAll(async() => {
     })
 });
 
-// afterAll(() => {
-//     connection.close();
-// });
+afterAll(() => {
+    connection.close();
+});
 
 
 describe('/api/v1/blogs', () => {
@@ -138,5 +139,3 @@ describe('/api/v1/blogs', () => {
         });
     });
 });
-
-
