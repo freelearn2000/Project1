@@ -34,48 +34,6 @@ jobs:
         path: ./reactapp/build
       # skip_unpack: true
      
-    - name: Download from Node Artifact
-      id: download_node
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        workflow: Nodeapp.yml
-        name: Node_build
-        path: ./nodeapp/build
-        skip_unpack: true
-
-    - name: Conditions for Node Artifact Download failure
-      id: build_node
-      if: ${{ always() &&  steps.download_node.outcome == 'failure' }}
-      run: npm run build
-      working-directory: nodeapp
-  
-    - name: Create Issue (If Build fail)
-      if: ${{ always() && steps.build_node.outcome == 'failure' }}
-      uses: JasonEtco/create-an-issue@v2
-      env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
-          TITLE: Build failed
-      with:
-        assignees: ${{github.actor}}
-        filename: .github/BUILD_TEMPLATE.md     
-       
-    - name: Upload Node Build folder to Artifact
-      id: upload_node
-      if: ${{ steps.build_node.outcome == 'success' }}
-      run: echo "Build folder to Artict"
-      # uses: actions/upload-artifact@v2
-      # with:
-      #   name: Node_build
-      #   path: ./nodeapp/build
-
-    - name: Download from Node Artifact
-      if: ${{ steps.upload_node.outcome == 'success' }}
-      run: echo "Download from Artifact"
-#      uses: actions/download-artifact@v3
-#      with:
-#         name: Node_build
-#         path: ./nodeapp/build
-
     - name: Conditions for React Artifact Download failure
       id: build_react
       if: ${{ always() &&  steps.download_react.outcome == 'failure' }}
@@ -92,26 +50,31 @@ jobs:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md
         
-    - name: Upload React Build folder as Artifact
-      id: upload_react
-      if: ${{ steps.build_react.outcome == 'success' }}
-      uses: actions/upload-artifact@v2
+    - name: Download from Node Artifact
+      if: ${{ always() }}
+      id: download_node
+      uses: dawidd6/action-download-artifact@v2
       with:
-        name: React_build
-        path: ./reactapp/build
+        workflow: Nodeapp.yml
+        name: Node_build
+        path: ./nodeapp/build
+        skip_unpack: true
 
-    - name: Download from React Artifact
-      if: ${{ steps.upload_react.outcome == 'success' }}
-      run: echo "Download from Artifact"
-#      uses: actions/download-artifact@v3
-#      with:
-#         name: React_build
-#         path: ./reactapp/build
-
-    - name: Create a Release
-      run: npx semantic-release
+    - name: Conditions for Node Artifact Download failure
+      id: build_node
+      if: ${{ always() && steps.download_node.outcome == 'failure' }}
+      run: npm run build
+      working-directory: nodeapp
+  
+    - name: Create Issue (If Build fail)
+      if: ${{ always() && steps.build_node.outcome == 'failure' }}
+      uses: JasonEtco/create-an-issue@v2
       env:
-         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+          TITLE: Build failed
+      with:
+        assignees: ${{github.actor}}
+        filename: .github/BUILD_TEMPLATE.md     
          
     - name: Login to Azure(using Service Principal Identity) for Production server 
       id: login
@@ -148,3 +111,8 @@ jobs:
       with:
         assignees: ${{github.actor}}
         filename: .github/DEPLOY_TEMPLATE.md       
+
+    - name: Create a Release
+      run: npx semantic-release
+      env:
+         GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}

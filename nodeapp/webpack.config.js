@@ -2,6 +2,7 @@ const path = require('path');
 const { transpile } = require('typescript');
 
 module.exports = {
+  mode: 'none',
   target: 'node',
   entry: './src/index.ts',
   output: {

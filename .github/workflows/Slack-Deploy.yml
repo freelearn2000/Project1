@@ -1,0 +1,7 @@
+name: Release-Deploy
+
+on:
+  workflow_run:
+     workflows: ["Nodeapp", "Reactapp"]
+     types: [completed]
+     branches: [master]
