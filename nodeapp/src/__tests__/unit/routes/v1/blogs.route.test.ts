@@ -1,14 +1,16 @@
 import { Application } from 'express';
 import request from "supertest";
 import { newDb } from 'pg-mem';
-import { Connection } from 'typeorm';
+//import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
+//import { AppDataSource } from '../../../../data-source';
 import { Server } from '../../../../server';
 // import routerBlogs from '../../../../routes/v1/blogs.route';
 import { Blog } from '../../../../models/blog.entity';
 
 
 let express: Application = new Server().express;
-let connection: Connection;
+let connection: DataSource;
 
 
 beforeAll(async() => {
@@ -19,9 +21,9 @@ beforeAll(async() => {
     })
 });
 
-afterAll(() => {
-    connection.close();
-});
+// afterAll(() => {
+//     connection.close();
+// });
 
 
 describe('/api/v1/blogs', () => {
