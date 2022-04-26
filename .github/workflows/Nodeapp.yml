@@ -154,6 +154,9 @@ jobs:
        notification_title: '{" Successfully deployed to Staging Server(Azure AppService)"}'
        message_format: ' {status_message} in <{repo_url}|{repo}>'
        footer: 'Linked to Repo <{repo_url}|{repo}>'
+       
+      env:
+       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         
 
     - name: Create Issue (If Deploy fail)
