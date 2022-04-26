@@ -146,13 +146,15 @@ jobs:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
 #       package: ./nodeapp/build
 
-    - name: Send Slack Message
-      if: ${{ always() && (steps.login.outcome == 'success' || steps.deploy.outcome == 'success' ) }}
-      run: |
-        curl -X POST \
-        -H 'Content-type: application/json' \
-        --data '{"text":"Successfully deployed to Staging Server(Azure Appservice)|check it now <{repo_url}|{repo}>"}' \
-        --url ${{secrets.SLACK_WEBHOOK}}
+    - name: Slack Message
+      if: always()
+      uses: ravsamhq/notify-slack-action@v1
+      with:
+       status: ${{ job.status }} 
+       notification_title: '{" Successfully deployed to Staging Server(Azure AppService)"}'
+       message_format: ' {status_message} in <{repo_url}|{repo}>'
+       footer: 'Linked to Repo <{repo_url}|{repo}>'
+        
 
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
