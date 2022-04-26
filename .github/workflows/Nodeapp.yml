@@ -146,6 +146,14 @@ jobs:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
 #       package: ./nodeapp/build
 
+    - name: Send Slack Message
+      if: ${{ always() && (steps.login.outcome == 'success' || steps.deploy.outcome == 'success' ) }}
+      run: |
+        curl -X POST \
+        -H 'Content-type: application/json' \
+        --data '{"text":"Successfully deployed to Staging Server(Azure Appservice)|check it now.>"}' \
+        --url ${{secrets.SLACK_WEBHOOK}}
+
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
