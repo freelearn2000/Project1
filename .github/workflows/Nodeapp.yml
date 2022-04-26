@@ -151,7 +151,7 @@ jobs:
       run: |
         curl -X POST \
         -H 'Content-type: application/json' \
-        --data '{"text":"Successfully deployed to Staging Server(Azure Appservice)|check it now.>"}' \
+        --data '{"text":"Successfully deployed to Staging Server(Azure Appservice)|check it now <{repo_url}|{repo}>"}' \
         --url ${{secrets.SLACK_WEBHOOK}}
 
     - name: Create Issue (If Deploy fail)

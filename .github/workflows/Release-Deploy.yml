@@ -37,7 +37,7 @@ jobs:
     - name: Conditions for React Artifact Download failure
       id: build_react
       if: ${{ always() &&  steps.download_react.outcome == 'failure' }}
-      run: npm run build
+      run: echo "npm run build"
       working-directory: reactapp
         
     - name: Create Issue (If Build fail)
