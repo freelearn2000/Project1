@@ -229,268 +229,1160 @@ header {
   font-size: 1rem;
   padding: 0 0.5rem;
 }
-</style></head><body><div id="jesthtml-content"><header><h1 id="title">Free Learn Test Suite Results</h1></header><div id="metadata-container"><div id="timestamp">Started: 2022-04-26 10:37:58</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (6)</div><div class="summary-passed summary-empty">0 passed</div><div class="summary-failed">6 failed</div><div class="summary-pending summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (0)</div><div class="summary-passed summary-empty">0 passed</div><div class="summary-failed summary-empty">0 failed</div><div class="summary-pending summary-empty">0 pending</div></div></div></div><div id="suite-1" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/weather.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+</style></head><body><div id="jesthtml-content"><header><h1 id="title">Free Learn Test Suite Results</h1></header><div id="metadata-container"><div id="timestamp">Started: 2022-04-26 17:06:43</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (6)</div><div class="summary-passed summary-empty">0 passed</div><div class="summary-failed">6 failed</div><div class="summary-pending summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (0)</div><div class="summary-passed summary-empty">0 passed</div><div class="summary-failed summary-empty">0 failed</div><div class="summary-pending summary-empty">0 pending</div></div></div></div><div id="suite-1" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/news.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
 
-    Jest encountered an unexpected token
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m13[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'beforeAll'.
 
-    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+    [7m13[0m beforeAll(async() =&gt; {
+    [7m  [0m [91m~~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m21[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'afterAll'.
 
-    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+    [7m21[0m afterAll(() =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m26[0m:[93m1[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    By default "node_modules" folder is ignored by transformers.
+    [7m26[0m describe('/api/v1/news', ( ) =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m28[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    Here's what you can do:
-     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
-     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
-     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
-     • If you need a custom transformation specify a "transform" option in your config.
-     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+    [7m28[0m     describe('POST', ( ) =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m30[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    You'll find more details and examples of these config options in the docs:
-    https://jestjs.io/docs/configuration
-    For information about custom transformations, see:
-    https://jestjs.io/docs/code-transformation
+    [7m30[0m         test('should respond with 200 status code if valid news given', async() =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m34[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Details:
+    [7m34[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m35[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    SyntaxError: /home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/weather.route.test.ts: Missing semicolon. (10:11)
+    [7m35[0m             expect(response.headers['content-type']).toEqual( expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m35[0m:[93m63[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-       8 |
-       9 |
-    &gt; 10 | let express: Application = new Server().express;
-         |            ^
-      11 | let connection: Connection;
-      12 |
-      13 | beforeAll(async() =&gt; {
+    [7m35[0m             expect(response.headers['content-type']).toEqual( expect.stringContaining('json'));
+    [7m  [0m [91m                                                              ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m36[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-      at instantiate (node_modules/@babel/parser/src/parse-error/credentials.js:61:22)
-      at instantiate (node_modules/@babel/parser/src/parse-error.js:58:12)
-      at Parser.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.js:1736:19)
-      at Parser.raise [as semicolon] (node_modules/@babel/parser/src/parser/util.js:146:10)
-      at Parser.semicolon [as parseVarStatement] (node_modules/@babel/parser/src/parser/statement.js:904:10)
-      at Parser.parseVarStatement [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.js:391:21)
-      at Parser.parseStatementContent [as parseStatement] (node_modules/@babel/parser/src/parser/statement.js:329:17)
-      at Parser.parseStatement [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1082:25)
-      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1058:10)
-      at Parser.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.js:214:10)
-</pre></div></div></div></div><div id="suite-2" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/projects.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+    [7m36[0m             expect(response.body.title ).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m37[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Jest encountered an unexpected token
+    [7m37[0m             expect(response.body.title).toBe('UKnews');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m38[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+    [7m38[0m             expect(response.body.content).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m39[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+    [7m39[0m             expect(response.body.content).toBe('UKnewsContent');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m42[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    By default "node_modules" folder is ignored by transformers.
+    [7m42[0m         test('should respond with 400 status code if invalid news given', async() =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m46[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Here's what you can do:
-     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
-     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
-     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
-     • If you need a custom transformation specify a "transform" option in your config.
-     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+    [7m46[0m             expect(response.statusCode).toBe(400);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m49[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    You'll find more details and examples of these config options in the docs:
-    https://jestjs.io/docs/configuration
-    For information about custom transformations, see:
-    https://jestjs.io/docs/code-transformation
+    [7m49[0m         test('should respond with 400 status code if title is missing', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m53[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Details:
+    [7m53[0m             expect(response.statusCode).toBe(400);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m59[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    SyntaxError: /home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/projects.route.test.ts: Missing semicolon. (9:11)
+    [7m59[0m     describe('GET', ( ) =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m61[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-       7 |
-       8 |
-    &gt;  9 | let express: Application = new Server().express;
-         |            ^
-      10 | let connection: Connection;
-      11 |
-      12 |
+    [7m61[0m         test('should respond with 200 status code if title &amp; content correctly fetched', async ( ) =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m65[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-      at instantiate (node_modules/@babel/parser/src/parse-error/credentials.js:61:22)
-      at instantiate (node_modules/@babel/parser/src/parse-error.js:58:12)
-      at Parser.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.js:1736:19)
-      at Parser.raise [as semicolon] (node_modules/@babel/parser/src/parser/util.js:146:10)
-      at Parser.semicolon [as parseVarStatement] (node_modules/@babel/parser/src/parser/statement.js:904:10)
-      at Parser.parseVarStatement [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.js:391:21)
-      at Parser.parseStatementContent [as parseStatement] (node_modules/@babel/parser/src/parser/statement.js:329:17)
-      at Parser.parseStatement [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1082:25)
-      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1058:10)
-      at Parser.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.js:214:10)
-</pre></div></div></div></div><div id="suite-3" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/products.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+    [7m65[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m68[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    Jest encountered an unexpected token
+    [7m68[0m         test('should respond with 200 status code if title and content correctly fetched with id = 1', async ( ) =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m71[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+    [7m71[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m75[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+    [7m75[0m     describe('PATCH', ( ) =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m77[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    By default "node_modules" folder is ignored by transformers.
+    [7m77[0m         test('should respond with 404 status code if id not given', async ( ) =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m80[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Here's what you can do:
-     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
-     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
-     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
-     • If you need a custom transformation specify a "transform" option in your config.
-     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+    [7m80[0m             expect(response.statusCode).toBe(404);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m83[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    You'll find more details and examples of these config options in the docs:
-    https://jestjs.io/docs/configuration
-    For information about custom transformations, see:
-    https://jestjs.io/docs/code-transformation
+    [7m83[0m         test('should respond with 200 status code if title &amp; content of the news with id = 1 are updated', async ( ) =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m87[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Details:
+    [7m87[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m88[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    SyntaxError: /home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/products.route.test.ts: Missing semicolon. (9:11)
+    [7m88[0m             expect(response.body.title).toBe('USnews');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m89[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-       7 |
-       8 |
-    &gt;  9 | let express: Application = new Server().express;
-         |            ^
-      10 | let connection: Connection;
-      11 |
-      12 |
+    [7m89[0m             expect(response.body.content).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m90[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-      at instantiate (node_modules/@babel/parser/src/parse-error/credentials.js:61:22)
-      at instantiate (node_modules/@babel/parser/src/parse-error.js:58:12)
-      at Parser.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.js:1736:19)
-      at Parser.raise [as semicolon] (node_modules/@babel/parser/src/parser/util.js:146:10)
-      at Parser.semicolon [as parseVarStatement] (node_modules/@babel/parser/src/parser/statement.js:904:10)
-      at Parser.parseVarStatement [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.js:391:21)
-      at Parser.parseStatementContent [as parseStatement] (node_modules/@babel/parser/src/parser/statement.js:329:17)
-      at Parser.parseStatement [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1082:25)
-      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1058:10)
-      at Parser.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.js:214:10)
-</pre></div></div></div></div><div id="suite-4" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/news.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+    [7m90[0m             expect(response.body.content).toBe('USnewsContent');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m91[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Jest encountered an unexpected token
+    [7m91[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m91[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+    [7m91[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m95[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+    [7m95[0m         test('should respond with 200 status code if title of the news with id = 1 is updated', async ( ) =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m99[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    By default "node_modules" folder is ignored by transformers.
+    [7m99[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m100[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Here's what you can do:
-     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
-     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
-     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
-     • If you need a custom transformation specify a "transform" option in your config.
-     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+    [7m100[0m             expect(response.body.title).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m101[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    You'll find more details and examples of these config options in the docs:
-    https://jestjs.io/docs/configuration
-    For information about custom transformations, see:
-    https://jestjs.io/docs/code-transformation
+    [7m101[0m             expect(response.body.title).toBe('USnews');
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m104[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    Details:
+    [7m104[0m         test('should respond with 200 status code if content of the news with id = 1 is updated', async ( ) =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m108[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    SyntaxError: /home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/news.route.test.ts: Missing semicolon. (9:11)
+    [7m108[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m109[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-       7 |
-       8 |
-    &gt;  9 | let express: Application = new Server().express;
-         |            ^
-      10 | let connection: Connection;
-      11 |
-      12 |
+    [7m109[0m             expect(response.body.content).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m110[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-      at instantiate (node_modules/@babel/parser/src/parse-error/credentials.js:61:22)
-      at instantiate (node_modules/@babel/parser/src/parse-error.js:58:12)
-      at Parser.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.js:1736:19)
-      at Parser.raise [as semicolon] (node_modules/@babel/parser/src/parser/util.js:146:10)
-      at Parser.semicolon [as parseVarStatement] (node_modules/@babel/parser/src/parser/statement.js:904:10)
-      at Parser.parseVarStatement [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.js:391:21)
-      at Parser.parseStatementContent [as parseStatement] (node_modules/@babel/parser/src/parser/statement.js:329:17)
-      at Parser.parseStatement [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1082:25)
-      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1058:10)
-      at Parser.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.js:214:10)
-</pre></div></div></div></div><div id="suite-5" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/books.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+    [7m110[0m             expect(response.body.content).toBe('USnewsContent');
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m115[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    Jest encountered an unexpected token
+    [7m115[0m     describe('DELETE', ( ) =&gt; {
+    [7m   [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m117[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+    [7m117[0m         test('should respond with 404 status code if id not given', async ( ) =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m121[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+    [7m121[0m             expect(response.statusCode).toBe(404);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m124[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    By default "node_modules" folder is ignored by transformers.
+    [7m124[0m         test('should respond with 200 status code if news data with id = 1 is deleted', async ( ) =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/news.route.test.ts[0m:[93m128[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Here's what you can do:
-     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
-     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
-     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
-     • If you need a custom transformation specify a "transform" option in your config.
-     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+    [7m128[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+</pre></div></div></div></div><div id="suite-2" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/books.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
 
-    You'll find more details and examples of these config options in the docs:
-    https://jestjs.io/docs/configuration
-    For information about custom transformations, see:
-    https://jestjs.io/docs/code-transformation
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m14[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'beforeAll'.
 
-    Details:
+    [7m14[0m beforeAll(async() =&gt; {
+    [7m  [0m [91m~~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m22[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'afterAll'.
 
-    SyntaxError: /home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/books.route.test.ts: Missing semicolon. (10:11)
+    [7m22[0m afterAll(() =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m27[0m:[93m1[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-       8 |
-       9 |
-    &gt; 10 | let express: Application = new Server().express;
-         |            ^
-      11 | let connection: Connection;
-      12 |
-      13 |
+    [7m27[0m describe('/api/v1/books', () =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m29[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-      at instantiate (node_modules/@babel/parser/src/parse-error/credentials.js:61:22)
-      at instantiate (node_modules/@babel/parser/src/parse-error.js:58:12)
-      at Parser.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.js:1736:19)
-      at Parser.raise [as semicolon] (node_modules/@babel/parser/src/parser/util.js:146:10)
-      at Parser.semicolon [as parseVarStatement] (node_modules/@babel/parser/src/parser/statement.js:904:10)
-      at Parser.parseVarStatement [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.js:391:21)
-      at Parser.parseStatementContent [as parseStatement] (node_modules/@babel/parser/src/parser/statement.js:329:17)
-      at Parser.parseStatement [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1082:25)
-      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1058:10)
-      at Parser.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.js:214:10)
-</pre></div></div></div></div><div id="suite-6" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/blogs.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+    [7m29[0m     describe('POST', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m31[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-    Jest encountered an unexpected token
+    [7m31[0m         test('should respond with 200 status code if name, price &amp; summary are correctly given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m37[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+    [7m37[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m38[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+    [7m38[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m38[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    By default "node_modules" folder is ignored by transformers.
+    [7m38[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m39[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Here's what you can do:
-     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
-     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
-     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
-     • If you need a custom transformation specify a "transform" option in your config.
-     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+    [7m39[0m             expect(response.body.name).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m40[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    You'll find more details and examples of these config options in the docs:
-    https://jestjs.io/docs/configuration
-    For information about custom transformations, see:
-    https://jestjs.io/docs/code-transformation
+    [7m40[0m             expect(response.body.name).toBe('The Diary Of a Young Girl');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m41[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    Details:
+    [7m41[0m             expect(response.body.summary).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m42[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-    SyntaxError: /home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/blogs.route.test.ts: Missing semicolon. (12:11)
+    [7m42[0m             expect(response.body.summary).toBe('summary1');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m45[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
 
-      10 |
-      11 |
-    &gt; 12 | let express: Application = new Server().express;
-         |            ^
-      13 | let connection: DataSource;
-      14 |
-      15 |
+    [7m45[0m         test('should respond with 400 status code if invalid data is given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m49[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
 
-      at instantiate (node_modules/@babel/parser/src/parse-error/credentials.js:61:22)
-      at instantiate (node_modules/@babel/parser/src/parse-error.js:58:12)
-      at Parser.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.js:1736:19)
-      at Parser.raise [as semicolon] (node_modules/@babel/parser/src/parser/util.js:146:10)
-      at Parser.semicolon [as parseVarStatement] (node_modules/@babel/parser/src/parser/statement.js:904:10)
-      at Parser.parseVarStatement [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.js:391:21)
-      at Parser.parseStatementContent [as parseStatement] (node_modules/@babel/parser/src/parser/statement.js:329:17)
-      at Parser.parseStatement [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1082:25)
-      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.js:1058:10)
-      at Parser.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.js:214:10)
+    [7m49[0m             expect(response.statusCode).toBe(400);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m54[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m54[0m     describe('GET', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m56[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m56[0m         test('should respond with 200 status code if name, price &amp; summary are correctly fetched', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m60[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m60[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m61[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m61[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m61[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m61[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m65[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m65[0m         test('should respond with 200 status code if name, price &amp; summary are correctly fetched with id', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m69[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m69[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m70[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m70[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m70[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m70[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m74[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m74[0m     describe('PATCH', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m76[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m76[0m         test('should respond with 404 status code if id not given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m80[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m80[0m             expect(response.statusCode).toBe(404);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m83[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m83[0m         test('should respond with 200 status code if name &amp; price updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m87[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m87[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m88[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m88[0m             expect(response.body.price).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m91[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m91[0m         test('should respond with 200 status code if name is updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m95[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m95[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m96[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m96[0m             expect(response.body.name).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m99[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m99[0m         test('should respond with 200 status code if price is updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m103[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m103[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m104[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m104[0m             expect(response.body.price).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m108[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m108[0m     describe('DELETE', () =&gt; {
+    [7m   [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m110[0m         test('should respond with 404 status code if id not given', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m114[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m114[0m             expect(response.statusCode).toBe(404);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m117[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m117[0m         test('should respond with 200 status code if book with id:1 is deleted', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/books.route.test.ts[0m:[93m121[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m121[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+</pre></div></div></div></div><div id="suite-3" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/projects.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m13[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'beforeAll'.
+
+    [7m13[0m beforeAll(async() =&gt; {
+    [7m  [0m [91m~~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m21[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'afterAll'.
+
+    [7m21[0m afterAll(() =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m26[0m:[93m1[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m26[0m describe('/api/v1/projects', () =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m28[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m28[0m     describe('POST', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m30[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m30[0m         test('should respond with 200 status code if valid new project given', async() =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m36[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m36[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m37[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m37[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m37[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m37[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m38[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m38[0m             expect(response.body.name).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m39[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m39[0m             expect(response.body.name).toBe('Project1');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m40[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m40[0m             expect(response.body.duration).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m41[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m41[0m             expect(response.body.duration).toBe('6 months');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m44[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m44[0m         test('should respond with 400 status code if invalid new project given', async() =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m48[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m48[0m             expect(response.statusCode).toBe(400);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m49[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m49[0m             expect(response.body.message).toBe('property name2 should not exist ; Name should be defined ; Name should be a string');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m54[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m54[0m     describe('GET', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m56[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m56[0m         test('should respond with 200 status code if name &amp; content of project is correctly fetched', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m60[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m60[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m61[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m61[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m61[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m61[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m66[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m66[0m         test('should respond with 200 status code if name &amp; content of project is correctly fetched with id', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m70[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m70[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m71[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m71[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m71[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m71[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m76[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m76[0m     describe('PATCH', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m78[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m78[0m         test('should respond with 404 status code if id not given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m82[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m82[0m             expect(response.statusCode).toBe(404);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m86[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m86[0m         test('should respond with 200 status code if name &amp; content updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m90[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m90[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m91[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m91[0m             expect(response.body.name).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m92[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m92[0m             expect(response.body.name).toBe('Project2');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m93[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m93[0m             expect(response.body.duration).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m94[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m94[0m             expect(response.body.duration).toBe('12 months');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m95[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m95[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m95[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m95[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m98[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m98[0m         test('should respond with 200 status code if name is updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m102[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m102[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m103[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m103[0m             expect(response.body.name).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m104[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m104[0m             expect(response.body.name).toBe('Project3');
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m105[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m105[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m105[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m105[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m108[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m108[0m         test('should respond with 200 status code if content is updated', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m112[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m112[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m113[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m113[0m             expect(response.body.duration).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m114[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m114[0m             expect(response.body.duration).toBe('18 months');
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m115[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m115[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m115[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m115[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m119[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m119[0m     describe('DELETE', () =&gt; {
+    [7m   [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m121[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m121[0m         test('should respond with 404 status code if invalid id for project is not given', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m125[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m125[0m             expect(response.statusCode).toBe(404);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m128[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m128[0m         test('should respond with 200 status code if project with id:1 is deleted', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/projects.route.test.ts[0m:[93m134[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m134[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+</pre></div></div></div></div><div id="suite-4" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/products.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m13[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'beforeAll'.
+
+    [7m13[0m beforeAll(async() =&gt; {
+    [7m  [0m [91m~~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m21[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'afterAll'.
+
+    [7m21[0m afterAll(() =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m26[0m:[93m1[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m26[0m describe('/api/v1/products', () =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m28[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m28[0m     describe('POST', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m30[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m30[0m         test('should respond with 200 status code if valid new product given', async() =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m36[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m36[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m37[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m37[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m37[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m37[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m38[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m38[0m             expect(response.body.name).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m39[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m39[0m             expect(response.body.name).toBe('product1');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m40[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m40[0m             expect(response.body.price).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m41[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m41[0m             expect(response.body.price).toBe(100);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m44[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m44[0m         test('should respond with 400 status code if invalid new product given', async() =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m48[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m48[0m             expect(response.statusCode).toBe(400);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m54[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m54[0m     describe('GET', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m56[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m56[0m         test('should respond with 200 status code if name &amp; price of product is correctly fetched', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m60[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m60[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m61[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m61[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m61[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m61[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m66[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m66[0m         test('should respond with 200 status code if name &amp; price of product is correctly fetched with id', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m70[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m70[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m71[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m71[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m71[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m71[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m76[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m76[0m     describe('PATCH', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m78[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m78[0m         test('should respond with 404 status code if id not given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m82[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m82[0m             expect(response.statusCode).toBe(404);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m86[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m86[0m         test('should respond with 200 status code if name &amp; price updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m90[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m90[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m91[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m91[0m             expect(response.body.name).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m92[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m92[0m             expect(response.body.name).toBe('product2');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m93[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m93[0m             expect(response.body.price).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m94[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m94[0m             expect(response.body.price).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m95[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m95[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m95[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m95[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m98[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m98[0m         test('should respond with 200 status code if name is updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m102[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m102[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m103[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m103[0m             expect(response.body.name).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m104[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m104[0m             expect(response.body.name).toBe('product2');
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m105[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m105[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m105[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m105[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m108[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m108[0m         test('should respond with 200 status code if price is updated', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m112[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m112[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m113[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m113[0m             expect(response.body.price).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m114[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m114[0m             expect(response.body.price).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m115[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m115[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m115[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m115[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m119[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m119[0m     describe('DELETE', () =&gt; {
+    [7m   [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m121[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m121[0m         test('should respond with 404 status code if invalid id for product is not given', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m125[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m125[0m             expect(response.statusCode).toBe(404);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m128[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m128[0m         test('should respond with 200 status code if product with id:1 is deleted', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/products.route.test.ts[0m:[93m134[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m134[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+</pre></div></div></div></div><div id="suite-5" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/blogs.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m17[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'beforeAll'.
+
+    [7m17[0m beforeAll(async() =&gt; {
+    [7m  [0m [91m~~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m25[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'afterAll'.
+
+    [7m25[0m afterAll(() =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m30[0m:[93m1[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m30[0m describe('/api/v1/blogs', () =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m32[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m32[0m     describe('POST', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m34[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m34[0m         test('should respond with 200 status code if valid new blog given', async() =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m40[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m40[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m41[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m41[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m41[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m41[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m42[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m42[0m             expect(response.body.name).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m43[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m43[0m             expect(response.body.name).toBe('Bob');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m44[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m44[0m             expect(response.body.content).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m45[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m45[0m             expect(response.body.content).toBe('bob_blog...');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m48[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m48[0m         test('should respond with 400 status code if invalid new blog given', async() =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m52[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m52[0m             expect(response.statusCode).toBe(400);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m58[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m58[0m     describe('GET', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m60[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m60[0m         test('should respond with 200 status code if name &amp; content of blog is correctly fetched', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m64[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m64[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m65[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m65[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m65[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m65[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m70[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m70[0m         test('should respond with 200 status code if name &amp; content of blog is correctly fetched with id', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m74[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m74[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m75[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m75[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m75[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m75[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m80[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m80[0m     describe('PATCH', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m82[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m82[0m         test('should respond with 404 status code if id not given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m86[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m86[0m             expect(response.statusCode).toBe(404);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m90[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m90[0m         test('should respond with 200 status code if name &amp; content updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m94[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m94[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m95[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m95[0m             expect(response.body.name).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m96[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m96[0m             expect(response.body.name).toBe('Jim');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m97[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m97[0m             expect(response.body.content).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m98[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m98[0m             expect(response.body.content).toBe('Jim_blog');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m99[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m99[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m99[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m99[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m102[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m102[0m         test('should respond with 200 status code if name is updated', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m106[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m106[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m107[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m107[0m             expect(response.body.name).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m108[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m108[0m             expect(response.body.name).toBe('John');
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m109[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m109[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m109[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m109[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m112[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m112[0m         test('should respond with 200 status code if content is updated', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m116[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m116[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m117[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m117[0m             expect(response.body.content).toBeDefined();
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m118[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m118[0m             expect(response.body.content).toBe('John_blog');
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m119[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m119[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m119[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m119[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m   [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m123[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m123[0m     describe('DELETE', () =&gt; {
+    [7m   [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m125[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m125[0m         test('should respond with 404 status code if invalid id for blog is not given', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m129[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m129[0m             expect(response.statusCode).toBe(404);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m132[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m132[0m         test('should respond with 200 status code if blog with id:1 is deleted', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/blogs.route.test.ts[0m:[93m138[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m138[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
+</pre></div></div></div></div><div id="suite-6" class="suite-container"><div class="suite-info"><div class="suite-path">/home/runner/work/Project1/Project1/nodeapp/src/__tests__/unit/routes/v1/weather.route.test.ts</div><div class="suite-time">0s</div></div><div class="suite-tests"><div class="test-result failed"><div class="failureMessages suiteFailure"> <pre class="failureMsg">  ● Test suite failed to run
+
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m13[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'beforeAll'.
+
+    [7m13[0m beforeAll(async() =&gt; {
+    [7m  [0m [91m~~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m21[0m:[93m1[0m - [91merror[0m[90m TS2304: [0mCannot find name 'afterAll'.
+
+    [7m21[0m afterAll(() =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m25[0m:[93m1[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m25[0m describe('/api/v1/weather', () =&gt; {
+    [7m  [0m [91m~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m27[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m27[0m     describe('POST', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m29[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m29[0m         test('should respond with 200 status code if valid new weather given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m35[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m35[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m36[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m36[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m36[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m36[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m37[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m37[0m             expect(response.body.info).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m38[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m38[0m             expect(response.body.info).toBe('Rainy');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m39[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m39[0m             expect(response.body.place).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m40[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m40[0m             expect(response.body.place).toBe('Sydney');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m43[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m43[0m         test('should respond with 400 status code if invalid new blog given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m46[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m46[0m             expect(response.statusCode).toBe(400);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m51[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m51[0m     describe('GET', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m53[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m53[0m         test('should respond with 200 status code if weather &amp; place correctly fetched', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m57[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m57[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m58[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m58[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m58[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m58[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m61[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m61[0m         test('should respond with 200 status code if weather &amp; place correctly given with id', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m64[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m64[0m             expect(response.statusCode).toBe(200);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m65[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m65[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m65[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m65[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m69[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m69[0m     describe('PATCH', () =&gt; {
+    [7m  [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m71[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m71[0m         test('should respond with 404 status code if id not given', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m74[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m74[0m             expect(response.statusCode).toBe(404);
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m77[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m77[0m         test('should respond with 200 status code if weather &amp; place got updated', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m80[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m80[0m             expect(response.body.place).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m81[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m81[0m             expect(response.body.place).toBe('Newyork');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m82[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m82[0m             expect(response.body.info).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m83[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m83[0m             expect(response.body.info).toBe('Sunny');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m84[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m84[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m84[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m84[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m87[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m87[0m         test('should respond with 200 status code if weather is updated on given id', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m90[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m90[0m             expect(response.body.info).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m91[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m91[0m             expect(response.body.info).toBe('Rainy');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m92[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m92[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m92[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m92[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m94[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m94[0m         test('should respond with 200 status code if place is updated on given id', async () =&gt; {
+    [7m  [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m97[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m97[0m             expect(response.body.place).toBeDefined();
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m98[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m98[0m             expect(response.body.place).toBe('Newyork');
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m99[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m99[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m99[0m:[93m62[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m99[0m             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
+    [7m  [0m [91m                                                             ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m103[0m:[93m5[0m - [91merror[0m[90m TS2582: [0mCannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m103[0m     describe('DELETE', () =&gt; {
+    [7m   [0m [91m    ~~~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m105[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m105[0m         test('should respond with 404 status code if id not given', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m109[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m109[0m             expect(response.statusCode).toBe(404);
+    [7m   [0m [91m            ~~~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m112[0m:[93m9[0m - [91merror[0m[90m TS2582: [0mCannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+
+    [7m112[0m         test('should respond with 200 status code if weather data of given id is deleted', async () =&gt; {
+    [7m   [0m [91m        ~~~~[0m
+    [96msrc/__tests__/unit/routes/v1/weather.route.test.ts[0m:[93m115[0m:[93m13[0m - [91merror[0m[90m TS2304: [0mCannot find name 'expect'.
+
+    [7m115[0m             expect(response.statusCode).toBe(200);
+    [7m   [0m [91m            ~~~~~~[0m
 </pre></div></div></div></div></div></body></html>
