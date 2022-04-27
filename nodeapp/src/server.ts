@@ -18,7 +18,6 @@ import { NewsService } from "./services/news.service";
 import { User, UserValidator, AuthUserValidator } from './models/user.entity';
 
 
-
 export class Server {
 
     public express: any = null;

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { IsNotEmpty, IsString,Matches } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 
 @Entity( )
