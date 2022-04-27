@@ -23,7 +23,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*REPO: `${{ github.event.repository.name }}`*\n *RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
+                  "text": "*New issue on REPO: `${{ github.event.repository.name }}`*\n *RUN URL: * <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}> \n> *GITHUB ACTOR:* ${{github.actor}}"
                 }
               }
             ]
