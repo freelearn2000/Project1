@@ -16,9 +16,7 @@ jobs:
       if: always()
       uses: ravsamhq/notify-slack-action@v1
       with:
-       status: ${{ job.status }} 
-       notification_title: '{workflow} has {status_message}'
-       message_format: ' {status_message} in <{repo_url}|{repo}>'
+       notification_title: 'Notification for issue creation'
        footer: 'Linked to Repo <{repo_url}|{repo}>'
         
       env:
