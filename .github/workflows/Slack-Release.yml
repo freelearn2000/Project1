@@ -20,9 +20,7 @@ jobs:
       if: always()
       uses: ravsamhq/notify-slack-action@v1
       with:
-       status: ${{ job.status }} 
        notification_title: '{"New Release ${{github.event.release.tag_name}} is out. <${{github.event.release.html_url}}|check it now.>"}'
-       message_format: ' {status_message} in <{repo_url}|{repo}>'
        footer: 'Linked to Repo <{repo_url}|{repo}>'
         
       env:
