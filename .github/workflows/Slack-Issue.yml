@@ -16,8 +16,7 @@ jobs:
       if: always()
       uses: ravsamhq/notify-slack-action@v1
       with:
-       notification_title: 'Notification for issue creation'
-       footer: 'Linked to Repo <{repo_url}|{repo}>'
+       footer: '<{repo_url}|{repo}>'
         
       env:
        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
