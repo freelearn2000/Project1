@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Report Status
+    - name: Slack message on issue creation
       if: always()
-      uses: rtCamp/action-slack-notify@v2
+      uses: ravsamhq/notify-slack-action@v1
       with:
        notification_title: 'Notification on issue creation'
        footer: '<{repo_url}|{repo}>'
