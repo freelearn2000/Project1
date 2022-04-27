@@ -134,7 +134,7 @@ jobs:
           az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
   
     - name: Slack Message
-      if: always()
+      if: ${{ always() && steps.deploy.outcome == 'success' }}
       uses: ravsamhq/notify-slack-action@v1
       with:
        status: ${{ job.status }} 
