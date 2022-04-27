@@ -1,8 +1,7 @@
 import { DataSource } from 'typeorm';
 
 
-export const AppDataSource = new DataSource({
-    
+const AppDataSource = new DataSource({
     type: 'postgres',
     host: process.env.DATABASE_HOST,
     port: Number(process.env.DATABASE_PORT),
@@ -15,6 +14,19 @@ export const AppDataSource = new DataSource({
     synchronize: true
 });
 
+
+export async function createDatasource( ) {
+    try {
+        const datasource = await AppDataSource.initialize( );
+        console.log(`Database connected.`);
+        return datasource;
+    } catch (error) {
+        console.log(`Database connection failed : `, error);
+        throw error;
+    }
+    
+
+}
 
 // export const AppDataSource = new DataSource({
     
