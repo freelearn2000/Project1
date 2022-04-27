@@ -22,10 +22,11 @@ export class Bootstrap {
             this.server.registerErrorHandlers( );
             console.log(`Registering Routes, Middlewares & Error handlers...`);
 
-            this.server.listen(3000);
+            this.server.listen(Number(process.env.PORT));
 
             // await this.server.initializeDatabase( );
-            // this.server.listen(Number(process.env.PORT));
+            // this.server.listen(3000);
+            
         } catch(error) {
             console.log('Cannot launch application! :', error)
         }

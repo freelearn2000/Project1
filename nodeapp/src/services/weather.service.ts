@@ -1,4 +1,3 @@
-import { getRepository } from 'typeorm';
 import { ServerError, handleAsync, fieldFilter, paging } from '../shared/common';
 import { Service } from './index.service';
 

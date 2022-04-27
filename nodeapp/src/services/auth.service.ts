@@ -6,7 +6,7 @@ export class AuthService extends Service {
 
     public find = async( options: any ) => {
         
-    const [ allResources, error ] = await handleAsync( this.repository.find() );
+    const [ allResources, error ] = await handleAsync( this.repository.find( ) );
     if ( error ) throw new ServerError( error.message, `auth.route->findResource` );
 
     return allResources;

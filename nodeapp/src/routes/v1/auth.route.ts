@@ -2,10 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
 import nconf from '../../shared/config';
-import validationMiddleware from '../../middlewares/validation.middleware';
 import { AuthService } from '../../services/auth.service'
 import { Route } from "./index.route";
-
 
 
 export class AuthV1Route extends Route {
