@@ -3,7 +3,6 @@ import request from "supertest";
 import { newDb, IMemoryDb } from 'pg-mem';
 import { DataSource } from 'typeorm';
 import { App } from '../../../../app';
-// import routerBlogs from '../../../../routes/v1/blogs.route';
 import { News } from '../../../../models/news.entity';
 
 

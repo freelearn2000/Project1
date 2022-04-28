@@ -3,7 +3,6 @@ import request from "supertest";
 import { newDb, IMemoryDb } from 'pg-mem';
 import { DataSource } from 'typeorm';
 import { App } from '../../../../app';
-// import routerBlogs from '../../../../routes/v1/blogs.route';
 import { Blog } from '../../../../models/blog.entity';
 
 
@@ -35,24 +34,6 @@ afterAll(() => {
     app = null;
     express = null;
 });
-
-
-
-// let express: Application = new App().express;
-// let connection: DataSource;
-
-// beforeAll(async() => {
-//     connection = await newDb().adapters.createTypeormConnection({
-//         type: 'postgres',
-//         entities: [Blog],
-//         synchronize: true
-//     })
-// });
-
-// afterAll(() => {
-//     connection.close();
-// });
-
 
 describe('/api/v1/blogs', () => {
 
