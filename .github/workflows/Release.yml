@@ -63,7 +63,7 @@ jobs:
     - name: Conditions for Node Artifact Download failure [Node]
       id: build_node
       if: ${{ always() && steps.download_node.outcome == 'failure' }}
-      run: npm run build
+      run: npm run build:prod
       working-directory: nodeapp
   
     - name: Create Issue (If Build fail) [Node]

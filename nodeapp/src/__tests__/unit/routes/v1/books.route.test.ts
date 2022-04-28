@@ -1,26 +1,40 @@
-import { Application } from 'express';
+import { Express } from 'express';
 import request from "supertest";
-import { newDb } from 'pg-mem';
-import { Connection } from 'typeorm';
-import { Server } from '../../../../server';
+import { newDb, IMemoryDb } from 'pg-mem';
+import { DataSource } from 'typeorm';
+import { App } from '../../../../app';
 // import routerBooks from '../../../../routes/v1/books.route';
 import { Book } from "../../../../models/book.entity";
 
 
-let express: Application = new Server().express;
-let connection: Connection;
+let app: App;
+let datasource: DataSource;
+let express: Express;
+let db: IMemoryDb;
 
 
 beforeAll(async() => {
-    connection = await newDb().adapters.createTypeormConnection({
+
+    db = newDb({autoCreateForeignKeyIndices: true});
+    //==== define current_database
+    db.public.registerFunction({
+        implementation: () => 'test',
+        name: 'current_database',
+    });
+    datasource = await db.adapters.createTypeormConnection({
         type: 'postgres',
-        entities: [Book],
-        synchronize: true
-    })
+        entities: [Book]
+    });
+    await datasource.synchronize();
+
+    app = new App(datasource).initalize();
+    express = app.express;
 });
 
 afterAll(() => {
-    connection.close();
+    datasource.destroy();
+    app = null;
+    express = null;
 });
 
 

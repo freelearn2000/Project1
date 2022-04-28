@@ -85,7 +85,7 @@ jobs:
     - name: Run Build
       id: build
       if: ${{ always() && steps.test.outcome == 'success' }}
-      run: npm run build
+      run: npm run build:stag
   
     - name: Create Issue (If Build fail)
       if: ${{ always() && steps.build.outcome == 'failure' }}
@@ -104,7 +104,7 @@ jobs:
         path: ./nodeapp/build
    
   deploy-staging:
-    needs: [build]
+    needs: [analysis-test-build-upload]
     if: ${{ github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     environment: staging
