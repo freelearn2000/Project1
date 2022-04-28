@@ -77,6 +77,7 @@ jobs:
          
     - name: Login to Azure(using Service Principal) for Production server [Node]
       id: login
+      if: ${{ always() }}
       run: echo "login"
       # uses: azure/login@v1
       # with:
@@ -119,6 +120,8 @@ jobs:
         filename: .github/DEPLOY_TEMPLATE.md       
 
     - name: Create a Release [React & Node]
+      if: ${{ always() && (steps.deploy-node.outcome == 'success' || steps.deploy-react.outcome == 'success' ) }}
       run: npx semantic-release
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}
+         
