@@ -9,19 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-  #  - name: Send Slack Message
-  #    run: |
-  #      curl -X POST \
-  #     -H 'Content-type: application/json' \
-  #      --data '{"text":"New Release ${{github.event.release.tag_name}} is out. <${{github.event.release.html_url}}|check it now.>"}' \
-  #      --url ${{secrets.SLACK_WEBHOOK}}
-        
     - name: Report Status
       if: always()
-      uses: ravsamhq/notify-slack-action@v1
+      uses: slackapi/slack-github-action@v1.18.0
       with:
-       notification_title: '{"New Release ${{github.event.release.tag_name}} is out. <${{github.event.release.html_url}}|check it now.>"}'
-       footer: 'Linked to Repo <{repo_url}|{repo}>'
-        
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text":"New Release ${{github.event.release.tag_name}} is out. <${{github.event.release.html_url}}|check it now.>"          
+                  }
+               }
+            ]
+          }
       env:
-       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

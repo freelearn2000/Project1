@@ -23,7 +23,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "*New issue: `${{ github.event.repository.name }}`*\n<${{ github.server_url }}/${{ github.repository }}//issues/${{ github.issue_id }}"             
+                  "text": "*New issue: `${{ github.event.repository.name }}`*\n${{ github.server_url }}/${{ github.repository }}//issues/${{ github.issue_id }}"            
                   }
                }
             ]
@@ -31,7 +31,3 @@ jobs:
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-
-        
-     
-       
