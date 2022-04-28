@@ -107,7 +107,7 @@ jobs:
         
 
   deploy-staging:
-    needs: [build]
+    needs: [analysis-test-build-upload]
     if: ${{ github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     environment: staging
@@ -135,14 +135,23 @@ jobs:
   
     - name: Slack Message
       if: ${{ always() && steps.deploy.outcome == 'success' }}
-      uses: ravsamhq/notify-slack-action@v1
+      uses: slackapi/slack-github-action@v1.18.0
       with:
-       status: ${{ job.status }} 
-       notification_title: " Successfully deployed to Staging Server(Azure AppService) "
-       message_format: ' {status_message} in <{repo_url}|{repo}>'
-       footer: 'Linked to Repo <{repo_url}|{repo}>'
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text":"Successfully deployed to Staging Server(Azure Blob Storage)"     
+                  }
+               }
+            ]
+          }
       env:
-       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}   
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
         
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && steps.deploy.outcome == 'failure' }}
