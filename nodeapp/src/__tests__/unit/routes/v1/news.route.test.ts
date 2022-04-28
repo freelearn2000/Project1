@@ -1,27 +1,57 @@
-import { Application } from 'express';
+import { Express } from 'express';
 import request from "supertest";
-import { newDb } from 'pg-mem';
-import { Connection } from 'typeorm';
-import { Server } from '../../../../server';
+import { newDb, IMemoryDb } from 'pg-mem';
+import { DataSource } from 'typeorm';
+import { App } from '../../../../app';
+// import routerBlogs from '../../../../routes/v1/blogs.route';
 import { News } from '../../../../models/news.entity';
 
 
-let express: Application = new Server().express;
-let connection: Connection;
-
+let app: App;
+let datasource: DataSource;
+let express: Express;
+let db: IMemoryDb;
 
 beforeAll(async() => {
-    connection = await newDb().adapters.createTypeormConnection({
+
+    db = newDb({autoCreateForeignKeyIndices: true});
+    //==== define current_database
+    db.public.registerFunction({
+        implementation: () => 'test',
+        name: 'current_database',
+    });
+    datasource = await db.adapters.createTypeormConnection({
         type: 'postgres',
-        entities: [News],
-        synchronize: true
-    })
+        entities: [News]
+    });
+    await datasource.synchronize();
+
+    app = new App(datasource).initalize();
+    express = app.express;
 });
 
 afterAll(() => {
-    connection.close();
+    datasource.destroy();
+    app = null;
+    express = null;
 });
 
+
+
+// let express: Application = new App().express;
+// let connection: DataSource;
+
+// beforeAll(async() => {
+//     connection = await newDb().adapters.createTypeormConnection({
+//         type: 'postgres',
+//         entities: [News],
+//         synchronize: true
+//     })
+// });
+
+// afterAll(() => {
+//     connection.close();
+// });
 
 describe('/api/v1/news', ( ) => {
 
