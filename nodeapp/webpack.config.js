@@ -4,7 +4,6 @@ const webpack = require('webpack');
 
 
 module.exports = {
-  mode: 'none',
   target: 'node',
   entry: './src/index.ts',
   output: {
