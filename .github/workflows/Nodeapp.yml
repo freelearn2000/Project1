@@ -95,7 +95,7 @@ jobs:
           TITLE: Build failed
       with:
         assignees: ${{github.actor}}
-        filename: .github/BUILD_TEMPLATE.md     
+        filename: .github/BUILD_TEMPLATE.md   
        
     - name: Upload Build folder to Artifact
       uses: actions/upload-artifact@v2
@@ -122,18 +122,18 @@ jobs:
         name: Node_build
         path: ./nodeapp/build
         
-    - name: Login to Azure(using Service Principal Identity) for Staging server 
+    - name: Login to Azure(using Service Principal Identity) for Staging server
       id: login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-    #- name: Configure Azure App Service (ERROR)
-    #  id: settings
-    #  uses: azure/appservice-settings@v1
-    #  with:
-    #    app-name: 'infra-node-sample'
-    #    app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
+    - name: Configure Azure App Service (ERROR)
+      id: settings
+      uses: azure/appservice-settings@v1
+      with:
+        app-name: 'infra-node-sample'
+        app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
       
     - name: Deploy to Azure App Service for Staging server
       id: deploy
@@ -145,14 +145,23 @@ jobs:
 
     - name: Slack Message
       if: ${{ always() && steps.deploy.outcome == 'success' }}
-      uses: ravsamhq/notify-slack-action@v1
+      uses: slackapi/slack-github-action@v1.18.0
       with:
-       status: ${{ job.status }} 
-       notification_title: " Successfully deployed to Staging Server(Azure AppService) "
-       message_format: ' {status_message} in <{repo_url}|{repo}>'
-       footer: 'Linked to Repo <{repo_url}|{repo}>'
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text":"Successfully deployed to Staging Server(Azure AppService)"          
+                  }
+               }
+            ]
+          }
       env:
-       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
         
     - name: Create Issue (If Deploy fail)
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy.outcome == 'failure' ) }}
