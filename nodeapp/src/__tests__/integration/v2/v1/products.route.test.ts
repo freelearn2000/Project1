@@ -2,8 +2,8 @@ import { Express } from 'express';
 import request from "supertest";
 import { newDb, IMemoryDb } from 'pg-mem';
 import { DataSource } from 'typeorm';
-import { App } from '../../../../app';
-import { Product } from '../../../../models/product.entity';
+import { App } from '../../../app';
+import { Product } from '../../../models/product.entity';
 
 
 let app: App;

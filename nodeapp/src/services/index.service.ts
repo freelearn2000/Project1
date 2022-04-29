@@ -1,14 +1,15 @@
+import { EntityTarget, DataSource, Repository } from 'typeorm';
 import { ServerError, handleAsync, fieldFilter, paging } from '../shared/common';
 
 
 export class Service {
 
-    // public entity: any;
-    public repository: any;
+    public entity: any;
+    public repository: Repository<any>;
 
-    constructor( repository: any ) {
-        // this.entity = entity;
-        this.repository = repository;
+    constructor( entity: EntityTarget<any>, datasource: DataSource ) {
+        this.entity = entity;
+        this.repository = datasource.getRepository(entity);
     }
 
     public create = async( model: any ) => {
@@ -79,7 +80,7 @@ export class Service {
         const [ , error ] = await handleAsync( this.repository.update(id, patchModel) );
         if ( error ) throw new ServerError( error.message, `index.route->patch` );
     
-        const [ resource, error2 ] = await handleAsync( this.repository.findOne(id) );
+        const [ resource, error2 ] = await handleAsync( this.repository.findOneBy({id: id}) );
         if ( error2 ) throw new ServerError( error2.message, `index.route->patch` );
     
         return resource; 

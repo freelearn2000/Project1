@@ -2,9 +2,9 @@ import { Express } from 'express';
 import request from "supertest";
 import { newDb, IMemoryDb } from 'pg-mem';
 import { DataSource } from 'typeorm';
-import { App } from '../../../../app';
+import { App } from '../../../app';
 // import routerBooks from '../../../../routes/v1/books.route';
-import { Book } from "../../../../models/book.entity";
+import { Book } from "../../../models/book.entity";
 
 
 let app: App;
