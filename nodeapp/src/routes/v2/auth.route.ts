@@ -3,7 +3,7 @@ import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
 import nconf from '../../shared/config';
 import validationMiddleware from '../../middlewares/validation.middleware';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/v1/auth.service';
 import { Route } from '../v1/index.route';
 
 
