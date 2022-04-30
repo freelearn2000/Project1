@@ -1,6 +1,5 @@
 import express, { Express } from "express";
 import { DataSource } from 'typeorm';
-// import { AppDataSource } from './data-source';
 import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
 import { unhandledApiRequests, errorHandlingMiddleware } from './middlewares/error.middleware';
@@ -37,16 +36,6 @@ export class App {
         return this;
     }
 
-    // public async initializeDatabase( ) {
-    //     try {
-    //         await new DataSource(config);
-    //         console.log(`Database connected!`);
-    //     } catch( error ) {
-    //         console.log(`Database connection failed : `, error);
-    //         throw error;
-    //     }
-    // }
-
     private registerMiddlewares( ) {
         this.express.use( express.json( ) );
         this.express.use( loggingMiddleware( ) );
@@ -63,16 +52,6 @@ export class App {
         this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User, this.datasource)).router);
         this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(User, this.datasource)).router);
         this.express.use( `/api/v2/auth`, new AuthV2Route(AuthUserValidator, new Service(User, this.datasource)).router);
-
-        // this.express.use( `/api/v1/blogs`, new Route(BlogValidator, new Service(this.datasource.getRepository(Blog))).router);
-        // this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(this.datasource.getRepository(Project))).router);
-        // this.express.use( `/api/v1/weather`, new Route(WeatherValidator, new WeatherService(this.datasource.getRepository(Weather))).router); 
-        // this.express.use( `/api/v1/news`, new Route(NewsValidator, new NewsService(this.datasource.getRepository(News))).router);
-        // this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(this.datasource.getRepository(Book))).router);
-        // this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(this.datasource.getRepository(Product))).router);
-        // this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(this.datasource.getRepository(User))).router);
-        // this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(this.datasource.getRepository(User))).router);
-        // this.express.use( `/api/v2/auth`, new AuthV2Route(AuthUserValidator, new Service(this.datasource.getRepository(User))).router);
     }
     
     private registerErrorHandlers( ) {
