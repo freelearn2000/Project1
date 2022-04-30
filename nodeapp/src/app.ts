@@ -5,8 +5,8 @@ import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
 import { unhandledApiRequests, errorHandlingMiddleware } from './middlewares/error.middleware';
 import { Route } from './routes/v1/index.route';
-import { AuthV1Route } from "./routes/v1/auth.route";
-import { AuthV2Route } from "./routes/v2/auth.route";
+import { AuthRoute1 } from "./routes/v1/auth.route";
+import { AuthRoute2 } from "./routes/v2/auth.route";
 import { Blog, BlogValidator } from './models/blog.entity';
 import { Book, BookValidator } from "./models/book.entity";
 import { Project, ProjectValidator } from "./models/project.entity";
@@ -61,8 +61,8 @@ export class App {
         this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book, this.datasource)).router);
         this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product, this.datasource)).router);
         this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User, this.datasource)).router);
-        this.express.use( `/api/v1/auth`, new AuthV1Route(AuthUserValidator, new Service(User, this.datasource)).router);
-        this.express.use( `/api/v2/auth`, new AuthV2Route(AuthUserValidator, new Service(User, this.datasource)).router);
+        this.express.use( `/api/v1/auth`, new AuthRoute1(AuthUserValidator, new Service(User, this.datasource)).router);
+        this.express.use( `/api/v2/auth`, new AuthRoute2(AuthUserValidator, new Service(User, this.datasource)).router);
 
         // this.express.use( `/api/v1/blogs`, new Route(BlogValidator, new Service(this.datasource.getRepository(Blog))).router);
         // this.express.use( `/api/v1/projects`, new Route(ProjectValidator, new Service(this.datasource.getRepository(Project))).router);
