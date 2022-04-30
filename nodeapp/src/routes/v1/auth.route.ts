@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service'
 import { Route } from "./index.route";
 
 
-export class AuthV1Route extends Route {
+export class AuthRoute1 extends Route {
 
     public router = express.Router( );
     public service: AuthService;
