@@ -12,9 +12,9 @@ import { Project, ProjectValidator } from "./models/project.entity";
 import { Product, ProductValidator } from "./models/product.entity";
 import { News, NewsValidator } from './models/news.entity';
 import { Weather, WeatherValidator } from './models/weather.entity';
-import { Service } from './services/index.service';
-import { WeatherService } from "./services/weather.service";
-import { NewsService } from "./services/news.service";
+import { Service } from './services/v1/index.service';
+import { WeatherService } from "./services/v1/weather.service";
+import { NewsService } from "./services/v1/news.service";
 import { User, UserValidator, AuthUserValidator } from './models/user.entity';
 
 
