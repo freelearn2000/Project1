@@ -1,5 +1,5 @@
 import { Service } from './index.service';
-import { ServerError, handleAsync } from '../shared/common';
+import { ServerError, handleAsync } from '../../shared/common';
 
 
 export class AuthService extends Service {

@@ -1,5 +1,5 @@
 import { EntityTarget, DataSource, Repository } from 'typeorm';
-import { ServerError, handleAsync, fieldFilter, paging } from '../shared/common';
+import { ServerError, handleAsync, fieldFilter, paging } from '../../shared/common';
 
 
 export class Service {
