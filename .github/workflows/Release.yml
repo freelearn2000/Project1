@@ -61,7 +61,7 @@ jobs:
       id: build_node
       if: ${{ always() && steps.download_node.outcome == 'failure' }}
       run: | 
-            npm install
+            npm ci
             npm run build:prod
       working-directory: nodeapp
   
