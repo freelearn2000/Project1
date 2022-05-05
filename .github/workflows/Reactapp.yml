@@ -127,12 +127,18 @@ jobs:
         
     - name: Deploy to Azure blob storage for Staging Server (Todo:Use Identity)
       id: deploy
+      uses: azure/login@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+    
+    - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
-        azcliversion: 2.0.72
         inlineScript: |
-          az storage blob upload-batch --destination ${{ secrets.AZURE_BLOBNAME }} --source ./reactapp/build --account-name ${{ secrets.AZURE_STORAGENAME }}  --account-key  ${{ secrets.AZURE_STORAGEKEY }}
-        #  az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode key
+          az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode login
+    - run: |
+        az logout
+  
     - name: Slack Message
       if: ${{ always() && steps.deploy.outcome == 'success' }}
       uses: slackapi/slack-github-action@v1.18.0
