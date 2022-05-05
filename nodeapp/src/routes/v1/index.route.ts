@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction} from "express";
-import { Service } from '../../services/index.service';
+import { Service } from '../../services/v1/index.service';
 import { handleAsync, EntityNotFoundError } from '../../shared/common';
 import validationMiddleware  from '../../middlewares/validation.middleware';
 
