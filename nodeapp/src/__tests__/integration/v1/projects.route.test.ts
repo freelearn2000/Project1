@@ -6,7 +6,6 @@ import { App } from '../../../app';
 import { Project } from '../../../models/project.entity';
 
 
-let app: App;
 let datasource: DataSource;
 let express: Express;
 let db: IMemoryDb;
@@ -25,13 +24,11 @@ beforeAll(async() => {
     });
     await datasource.synchronize();
 
-    app = new App(datasource).initalize();
-    express = app.express;
+    express = new App(datasource).express;
 });
 
 afterAll(() => {
     datasource.destroy();
-    app = null;
     express = null;
 });
 

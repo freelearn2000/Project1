@@ -1,5 +1,5 @@
 import { Blog } from '../../../models/blog.entity';
-import { Service } from '../../../services/index.service';
+import { Service } from '../../../services/v1/index.service';
 
 
 beforeAll(async() => {

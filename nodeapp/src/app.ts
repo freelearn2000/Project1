@@ -1,11 +1,12 @@
 import express, { Express } from "express";
+import { Server } from "http";
 import { DataSource } from 'typeorm';
 import loggingMiddleware from './middlewares/logging.middleware';
 import responseMiddleware from './middlewares/response.middleware';
 import { unhandledApiRequests, errorHandlingMiddleware } from './middlewares/error.middleware';
 import { Route } from './routes/v1/index.route';
-import { AuthRoute1 } from "./routes/v1/auth.route";
-import { AuthRoute2 } from "./routes/v2/auth.route";
+import { AuthRoute as AuthRoute1} from "./routes/v1/auth.route";
+import { AuthRoute as AuthRoute2} from "./routes/v2/auth.route";
 import { Blog, BlogValidator } from './models/blog.entity';
 import { Book, BookValidator } from "./models/book.entity";
 import { Project, ProjectValidator } from "./models/project.entity";
@@ -26,16 +27,13 @@ export class App {
     constructor( datasource: DataSource ) {
         this.express = express( );
         this.datasource = datasource;
-    }
 
-    public initalize( ): App {
         this.registerMiddlewares( );
         this.registerRoutes( );
         this.registerErrorHandlers( );
         console.log(`Registering Routes, Middlewares & Error handlers...`);
-        return this;
     }
-
+  
     private registerMiddlewares( ) {
         this.express.use( express.json( ) );
         this.express.use( loggingMiddleware( ) );
@@ -63,8 +61,8 @@ export class App {
         this.express.use( errorHandlingMiddleware );
     }
 
-    public listen( port: number ) {
-        this.express.listen(port, ( ) => {
+    public listen( port: number ): Server {
+        return this.express.listen(port, ( ) => {
             console.log( `Server successfully running at ${port}....` )
         })
     }

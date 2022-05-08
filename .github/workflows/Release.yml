@@ -92,8 +92,27 @@ jobs:
       with:
         inlineScript: |
           az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode login
+   
+    - name: Slack Message
+      if: ${{ always() && steps.deploy-react.outcome == 'success' }}
+      uses: slackapi/slack-github-action@v1.18.0
+      with:
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text":"Successfully deployed to Production Server(Reactapp)"     
+                  }
+               }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
   
-        
     - name: Configure Azure App Service [Node]
       id: settings
       if: ${{ always() && steps.login.outcome == 'success' }}
@@ -109,6 +128,26 @@ jobs:
       with:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
         package: ./nodeapp/build
+        
+    - name: Slack Message
+      if: ${{ always() && steps.deploy-node.outcome == 'success' }}
+      uses: slackapi/slack-github-action@v1.18.0
+      with:
+        payload: |
+          {
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text":"Successfully deployed to Production Server(Nodeapp)"     
+                  }
+               }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
     - name: Create Issue (If Deploy fail) [React & Node]
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy-node.outcome == 'failure' || steps.deploy-react.outcome == 'failure' ) }}
@@ -119,7 +158,7 @@ jobs:
       with:
         assignees: ${{github.actor}}
         filename: .github/DEPLOY_TEMPLATE.md       
-
+        
     - name: Create a Release [React & Node]
       if: ${{ always() && (steps.deploy-node.outcome == 'success' || steps.deploy-react.outcome == 'success' ) }}
       run: npx semantic-release
