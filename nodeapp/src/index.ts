@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { Server } from "http";
 import { DataSource } from 'typeorm';
 import { App } from './app';
 import { createDatasource } from './data-source';
@@ -10,9 +11,8 @@ export class Bootstrap {
         try {
             console.log(`Initializing application...`);
             const datasource: DataSource =  await createDatasource();
-            const app: App = new App(datasource).initalize();
+            const server: Server = new App(datasource).listen(Number(process.env.PORT));
 
-            app.listen(Number(process.env.PORT));
         } catch(error) {
             console.log('Cannot launch application! :', error)
         }
