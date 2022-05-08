@@ -77,16 +77,26 @@ jobs:
         assignees: ${{github.actor}}
         filename: .github/BUILD_TEMPLATE.md     
          
-    - name: Login to Azure(using Service Principal) for Production server [Node]
+    - name: Login to Azure(using Service Principal) for Production server [Node&React]
       id: login
-      if: ${{ always() }}
+      if: ${{ always() && (steps.download_react.outcome == 'success' || steps.build_react.outcome == 'success' ) && (steps.download_node.outcome == 'success' || steps.build_node.outcome == 'success') }}
       uses: azure/login@v1
       with:
         working-directory: nodeapp
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
+    - name: Deploy to Azure blob storage for Production Server (Todo:Use Service Principal) [React]
+      id: deploy-react
+      if: ${{ always() && steps.login.outcome == 'success' }}
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode login
+  
+        
     - name: Configure Azure App Service [Node]
       id: settings
+      if: ${{ always() && steps.login.outcome == 'success' }}
       uses: azure/appservice-settings@v1
       with:
         app-name: 'infra-node-sample'
@@ -100,13 +110,6 @@ jobs:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
         package: ./nodeapp/build
 
-    - name: Deploy to Azure blob storage for Production Server (Todo:Use Service Principal) [React]
-      id: deploy-react
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode login
-  
     - name: Create Issue (If Deploy fail) [React & Node]
       if: ${{ always() && (steps.login.outcome == 'failure' || steps.deploy-node.outcome == 'failure' || steps.deploy-react.outcome == 'failure' ) }}
       uses: JasonEtco/create-an-issue@v2
