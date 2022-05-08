@@ -79,7 +79,7 @@ jobs:
          
     - name: Login to Azure(using Service Principal) for Production server [Node&React]
       id: login
-      if: ${{ always() && (steps.download_react.outcome == 'success' || steps.build_react.outcome == 'success' ) && (steps.download_node.outcome == 'success' || steps.build_node.outcome == 'success') }}
+      if: ${{ always() && ((steps.download_react.outcome == 'success' || steps.build_react.outcome == 'success' ) || (steps.download_node.outcome == 'success' || steps.build_node.outcome == 'success')) }}
       uses: azure/login@v1
       with:
         working-directory: nodeapp
