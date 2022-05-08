@@ -150,7 +150,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text":"Successfully deployed to Staging Server(React App)"     
+                  "text":"Successfully deployed to Staging Server(Reactapp)"     
                   }
                }
             ]
