@@ -154,7 +154,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text":"Successfully deployed to Staging Server(Azure AppService)"          
+                  "text":"Successfully deployed to Staging Server(Nodeapp)"          
                   }
                }
             ]
