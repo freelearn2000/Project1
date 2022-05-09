@@ -7,7 +7,6 @@ import { App } from '../../../app';
 import { Book } from "../../../models/book.entity";
 
 
-let app: App;
 let datasource: DataSource;
 let express: Express;
 let db: IMemoryDb;
@@ -27,13 +26,11 @@ beforeAll(async() => {
     });
     await datasource.synchronize();
 
-    app = new App(datasource).initalize();
-    express = app.express;
+    express = new App(datasource).express;
 });
 
 afterAll(() => {
     datasource.destroy();
-    app = null;
     express = null;
 });
 
@@ -46,7 +43,7 @@ describe('/api/v1/books', () => {
 
             const response = await request(express).post('/api/v1/books').send({ name: 'The Diary Of a Young Girl', price: 666, summary: 'summary1' });
 
-            console.log(response.body);
+            // console.log(response.body);
 
             expect(response.statusCode).toBe(200);
             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
@@ -70,7 +67,7 @@ describe('/api/v1/books', () => {
         test('should respond with 200 status code if name, price & summary are correctly fetched', async () => {
 
             const response = await request(express).get('/api/v1/books').send();
-            console.log(response.body);
+            // console.log(response.body);
             expect(response.statusCode).toBe(200);
             expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
             
@@ -97,7 +94,7 @@ describe('/api/v1/books', () => {
         test('should respond with 200 status code if name & price updated', async () => {
 
             const response = await request(express).patch('/api/v1/books/1').send({ name: 'Fear not be strong', price: 899, summary: 'summary...' });
-            console.log(response.body);
+            // console.log(response.body);
             expect(response.statusCode).toBe(200);
             expect(response.body.price).toBeDefined();
         });
@@ -124,14 +121,14 @@ describe('/api/v1/books', () => {
         test('should respond with 404 status code if id not given', async () => {
 
             const response = await request(express).delete('/api/v1/books').send();
-            console.log(response.body);
+            // console.log(response.body);
             expect(response.statusCode).toBe(404);
         });
 
         test('should respond with 200 status code if book with id:1 is deleted', async () => {
 
             const response = await request(express).delete('/api/v1/books/1').send();
-            console.log(response.body);
+            // console.log(response.body);
             expect(response.statusCode).toBe(200);
         });
     });
