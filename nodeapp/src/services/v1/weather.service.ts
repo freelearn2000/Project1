@@ -24,7 +24,7 @@ export class WeatherService extends Service {
         const order: string = options.order ? `entity.${options.order}` : `entity.id`; 
         // Partial selection
         [ allResource, error ] = await handleAsync(
-            this.repository
+            this.datasource.getRepository(this.entity)
             .createQueryBuilder( `entity` )
             .select( filter )
             .where( `LOWER(entity.info) like LOWER(:info)`, { info: `%${where.toLowerCase()}%`} )
