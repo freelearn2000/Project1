@@ -1,0 +1,9 @@
+{
+    "jwt": {
+        "issuer": "localhost",
+        "algorithm": "HS256",
+        "expiresIn": 120000,
+        "secret": "12312312321wqsdsqwe=123",
+        "headerkey": "AUTH_TOKEN"
+    }
+}
