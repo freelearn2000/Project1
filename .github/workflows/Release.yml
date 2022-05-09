@@ -129,7 +129,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-        package: ./nodeapp/build
+        # package: ./nodeapp/build
         
     - name: Slack Message
       if: ${{ always() && steps.deploy-node.outcome == 'success' }}
