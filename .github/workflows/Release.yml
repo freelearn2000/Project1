@@ -88,10 +88,11 @@ jobs:
     - name: Deploy to Azure blob storage for Production Server (Todo:Use Service Principal) [React]
       id: deploy-react
       if: ${{ always() && steps.login.outcome == 'success' }}
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode login
+      run: echo "deploy to Azure blob storage"
+#       uses: azure/CLI@v1
+#       with:
+#         inlineScript: |
+#           az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode login
    
     - name: Slack Message
       if: ${{ always() && steps.deploy-react.outcome == 'success' }}
@@ -116,10 +117,11 @@ jobs:
     - name: Configure Azure App Service [Node]
       id: settings
       if: ${{ always() && steps.login.outcome == 'success' }}
-      uses: azure/appservice-settings@v1
-      with:
-        app-name: 'infra-node-sample'
-        app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
+      run: echo "configure Azure Appservice"
+#       uses: azure/appservice-settings@v1
+#       with:
+#         app-name: 'infra-node-productionapp'
+#         app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
    
     - name: Deploy to Azure App Service for Production server [Node]
       id: deploy-node
