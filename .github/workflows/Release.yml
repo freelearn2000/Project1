@@ -35,7 +35,7 @@ jobs:
       # skip_unpack: true
       
     - name: Add Build Assets for Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      if: ${{ always() &&  steps.download_react.outcome == 'success' }}
       run: zip -r React_build.zip React_build
 
      
