@@ -36,7 +36,7 @@ jobs:
       
     - name: Add Build Assets for Release
       if: ${{ always() &&  steps.download_react.outcome == 'success' }}
-      run: zip -r React_build.zip React_build
+      run: zip -r React_build.zip . -i React_build
 
      
     - name: Conditions for React Artifact Download failure [React]
