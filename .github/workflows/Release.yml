@@ -14,6 +14,9 @@ jobs:
     environment: production
     
     steps:
+    - name: Conditions for Release
+      uses: ahmadnassri/action-workflow-run-wait@v1       # only runs additional steps if [ Nodeapp, Reactapp ] were successful
+      
     - name: Checkout Repository
       uses: actions/checkout@v2
    
