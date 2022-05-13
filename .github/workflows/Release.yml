@@ -33,6 +33,11 @@ jobs:
         name: React_build
         path: ./reactapp/build
       # skip_unpack: true
+      
+    - name: Add Build Assets for Release
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: zip -r React_build.zip React_build
+
      
     - name: Conditions for React Artifact Download failure [React]
       id: build_react
