@@ -14,6 +14,9 @@ jobs:
     environment: production
     
     steps:
+    - name: Conditions for Release
+      uses: ahmadnassri/action-workflow-run-wait@v1       # only runs additional steps if [ Nodeapp, Reactapp ] were successful
+      
     - name: Checkout Repository
       uses: actions/checkout@v2
    
@@ -30,6 +33,11 @@ jobs:
         name: React_build
         path: ./reactapp/build
       # skip_unpack: true
+      
+    - name: Add Build Assets for Release
+      if: ${{ always() &&  steps.download_react.outcome == 'success' }}
+      run: zip -r React_build.zip . -i React_build
+
      
     - name: Conditions for React Artifact Download failure [React]
       id: build_react
@@ -88,10 +96,11 @@ jobs:
     - name: Deploy to Azure blob storage for Production Server (Todo:Use Service Principal) [React]
       id: deploy-react
       if: ${{ always() && steps.login.outcome == 'success' }}
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode login
+      run: echo "deploy to Azure blob storage"
+#       uses: azure/CLI@v1
+#       with:
+#         inlineScript: |
+#           az storage blob upload-batch --destination reactbuild --source ./reactapp/build --account-name infrateamblob --overwrite  --auth-mode login
    
     - name: Slack Message
       if: ${{ always() && steps.deploy-react.outcome == 'success' }}
@@ -116,10 +125,11 @@ jobs:
     - name: Configure Azure App Service [Node]
       id: settings
       if: ${{ always() && steps.login.outcome == 'success' }}
-      uses: azure/appservice-settings@v1
-      with:
-        app-name: 'infra-node-sample'
-        app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
+      run: echo "configure Azure Appservice"
+#       uses: azure/appservice-settings@v1
+#       with:
+#         app-name: 'infra-node-productionapp'
+#         app-settings-json: '${{ secrets.AZURE_APP_SETTINGS }}'
    
     - name: Deploy to Azure App Service for Production server [Node]
       id: deploy-node
@@ -127,7 +137,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_APPSERVICE_NAME }}
-        package: ./nodeapp/build
+        # package: ./nodeapp/build
         
     - name: Slack Message
       if: ${{ always() && steps.deploy-node.outcome == 'success' }}
@@ -160,7 +170,7 @@ jobs:
         filename: .github/DEPLOY_TEMPLATE.md       
         
     - name: Create a Release [React & Node]
-      if: ${{ always() && (steps.deploy-node.outcome == 'success' || steps.deploy-react.outcome == 'success' ) }}
+      if: ${{ always() && (steps.deploy-node.outcome == 'success' && steps.deploy-react.outcome == 'success' ) }}
       run: npx semantic-release
       env:
          GITHUB_TOKEN: ${{ secrets.SEMANTIC_TOKEN1 }}

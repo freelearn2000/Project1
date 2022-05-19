@@ -16,6 +16,7 @@ import { Weather, WeatherValidator } from './models/weather.entity';
 import { Service } from './services/v1/index.service';
 import { WeatherService } from "./services/v1/weather.service";
 import { NewsService } from "./services/v1/news.service";
+import { AuthService } from "./services/v1/auth.service";
 import { User, UserValidator, AuthUserValidator } from './models/user.entity';
 
 
@@ -48,8 +49,8 @@ export class App {
         this.express.use( `/api/v1/books`, new Route(BookValidator, new Service(Book, this.datasource)).router);
         this.express.use( `/api/v1/products`, new Route(ProductValidator, new Service(Product, this.datasource)).router);
         this.express.use( `/api/v1/users`, new Route(UserValidator, new Service(User, this.datasource)).router);
-        this.express.use( `/api/v1/auth`, new AuthRoute1(AuthUserValidator, new Service(User, this.datasource)).router);
-        this.express.use( `/api/v2/auth`, new AuthRoute2(AuthUserValidator, new Service(User, this.datasource)).router);
+        this.express.use( `/api/v1/auth`, new AuthRoute1(AuthUserValidator, new AuthService(User, this.datasource)).router);
+        this.express.use( `/api/v2/auth`, new AuthRoute2(AuthUserValidator, new AuthService(User, this.datasource)).router);
     }
     
     private registerErrorHandlers( ) {
