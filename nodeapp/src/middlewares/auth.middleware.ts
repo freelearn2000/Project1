@@ -31,7 +31,7 @@ const authMiddleware = ( ): RequestHandler => {
         } else {
             next( new AuthenticationError(`Jwt token not present!`, `auth.middleware->authMiddleware`) );
         }
-    }
-}
+    };
+};
 
 export default authMiddleware;

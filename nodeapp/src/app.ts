@@ -64,7 +64,7 @@ export class App {
 
     public listen( port: number ): Server {
         return this.express.listen(port, ( ) => {
-            console.log( `Server successfully running at ${port}....` )
-        })
+            console.log( `Server successfully running at ${port}....` );
+        });
     }
 }

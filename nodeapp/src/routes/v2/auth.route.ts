@@ -37,5 +37,5 @@ export class AuthRoute extends Route {
         } else {
             next( new AuthenticationError(null, `auth.route->post`) );
         }
-    }
+    };
 }

@@ -15,4 +15,4 @@ export const sendReactApplication = ( request: Request, response: Response ) => 
 export const errorHandlingMiddleware = (error: MyError, request: Request, response: Response, next: NextFunction) => {
     
     response.status(error.status).send( {message: error.message} );
-}
+};

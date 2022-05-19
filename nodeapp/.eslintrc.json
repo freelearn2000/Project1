@@ -12,6 +12,7 @@
     ],
     "rules": { 
         "no-console": 0,
+        "semi": [2, "always", { "omitLastInOneLineBlock": true}],
         "import/newline-after-import": ["error", { "count": 2 }],
         "@typescript-eslint/type-annotation-spacing": ["warn", {
           "before": false,

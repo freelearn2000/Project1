@@ -28,7 +28,7 @@ export class Route {
     
         response.send( newResource );
                  
-    }
+    };
 
     public find = async(request: Request, response: Response, next: NextFunction) => {
 
@@ -39,7 +39,7 @@ export class Route {
         if ( error ) return next( error );
     
         response.send( allResources);
-    }
+    };
 
     public get = async(request: Request, response: Response, next: NextFunction) => {
 
@@ -56,7 +56,7 @@ export class Route {
         } else {
             next( new EntityNotFoundError(id, `blogs.route->get/:id`) );
         }
-    }
+    };
 
     public patch = async(request: Request, response: Response, next: NextFunction) => {
 
@@ -72,7 +72,7 @@ export class Route {
         } else {
             next( new EntityNotFoundError( id, `blogs.route->patch`) );
         }
-    }
+    };
 
     public delete = async(request: Request, response: Response, next: NextFunction) => {
 
@@ -87,5 +87,5 @@ export class Route {
         } else {
             next( new EntityNotFoundError( id, `blogs.route->delete`) );
         }
-    }
+    };
 }

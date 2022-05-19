@@ -9,7 +9,7 @@ const loggingMiddleware = ( ): RequestHandler => {
         logger.info( `Request : ${req.method} ${req.path}` );
 
         next( );
-    }
-}
+    };
+};
 
 export default loggingMiddleware;

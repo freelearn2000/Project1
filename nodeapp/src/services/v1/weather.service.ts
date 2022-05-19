@@ -37,7 +37,7 @@ export class WeatherService extends Service {
         if ( error ) throw new ServerError( error.message, `weather.service->find` );
     
         return allResource;
-    }
+    };
 }
 
 
