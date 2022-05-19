@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { validate, ValidationError } from  'class-validator'
-import { plainToClass } from  'class-transformer'
+import { validate, ValidationError } from  'class-validator';
+import { plainToClass } from  'class-transformer';
 import { DataValidationError } from '../shared/common';
 
 
@@ -34,8 +34,8 @@ const valMiddleware = ( validator: any, options = {} ) => {
         .catch( error => {
             next( new DataValidationError( error.message, 'val.middleware->valMiddleware') );
         });
-    }
-}
+    };
+};
             
         
 export default valMiddleware;

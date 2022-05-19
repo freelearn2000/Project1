@@ -20,7 +20,7 @@ export class Service {
         if ( error ) throw new ServerError( error.message, `index.route->create` );
     
         return newResource;
-    }
+    };
 
     public find = async( options: any ) => {
      
@@ -55,7 +55,7 @@ export class Service {
         if ( error ) throw new ServerError( error.message, `index.route->find` );
     
         return allResource;
-    }
+    };
 
     public findOne = async( id: number, options: any ) => {
 
@@ -73,7 +73,7 @@ export class Service {
         if ( error ) throw new ServerError( error.message, `index.route->findOne` );
     
         return resource;
-    }
+    };
 
     public patch = async( id: number, patchModel: any ) => {
 
@@ -84,7 +84,7 @@ export class Service {
         if ( error2 ) throw new ServerError( error2.message, `index.route->patch` );
     
         return resource; 
-    }
+    };
 
     public delete = async( id: number ) => {
 
@@ -92,5 +92,5 @@ export class Service {
         if ( error ) throw new ServerError( error.message, `index.route->delete` );
     
         return result;
-    }
+    };
 }

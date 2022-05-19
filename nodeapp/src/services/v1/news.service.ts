@@ -37,7 +37,7 @@ export class NewsService extends Service {
         if ( error ) throw new ServerError( error.message, `news.service->find` );
     
         return allResource;
-    }
+    };
 }
 
 

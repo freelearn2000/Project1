@@ -10,5 +10,5 @@ export class AuthService extends Service {
     if ( error ) throw new ServerError( error.message, `auth.route->findResource` );
 
     return allResources;
-    }
+    };
 }
