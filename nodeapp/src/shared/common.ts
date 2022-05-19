@@ -4,7 +4,7 @@ export const handleAsync = ( promise: Promise<any> ) => {
     return promise
         .then( (data: any) => [data, null] )
         .catch( (error: any) => [null, error] );
-}
+};
 
 // 1. Filter (based on fields)
 // Format: ?fields=id,title
@@ -12,7 +12,7 @@ export const fieldFilter = ( options: any ) => {
 
     let fields: any = options.fields;
     return fields = fields?.split(`,`).map( (item: string) => `entity.${item}` );
- }
+ };
 
 // 2. Pagination (based on offset and limit) 
 // offset : start of record
@@ -23,7 +23,7 @@ export const paging = ( options: any ) => {
     const offset: any = options.offset ?? 0;
     const limit: any = options.limit; 
     return { offset, limit };
-}   
+};  
 
 export class MyError extends Error {
 

@@ -16,7 +16,7 @@ const responseMiddleware = ( ): RequestHandler => {
         }
 
         return body;
-    })
-}
+    });
+};
 
 export default responseMiddleware;
