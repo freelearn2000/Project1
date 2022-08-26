@@ -14,7 +14,7 @@ export class Bootstrap {
             const server: Server = new App(datasource).listen(Number(process.env.PORT));
 
         } catch(error) {
-            console.log('Cannot launch application! :', error)
+            console.log('Cannot launch application! :', error);
         }
     }
 
