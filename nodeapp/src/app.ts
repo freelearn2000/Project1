@@ -20,6 +20,8 @@ import { AuthService } from "./services/v1/auth.service";
 import { User, UserValidator, AuthUserValidator } from './models/user.entity';
 
 
+const cors = require('cors');
+
 export class App {
 
     public express: Express;
@@ -34,8 +36,12 @@ export class App {
         this.registerErrorHandlers( );
         console.log(`Registering Routes, Middlewares & Error handlers...`);
     }
+
   
     private registerMiddlewares( ) {
+        this.express.use(cors({
+            origin: '*'
+        }));;
         this.express.use( express.json( ) );
         this.express.use( loggingMiddleware( ) );
         this.express.use( responseMiddleware( ) );
