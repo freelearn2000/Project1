@@ -1,57 +1,38 @@
 {
-  "name": "reactapp2",
+  "name": "react3",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.3",
+    "@reduxjs/toolkit": "^1.8.5",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.4.0",
-    "@types/node": "^16.11.25",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
-    "jest-html-reporter": "^3.4.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "semantic-release": "^19.0.2",
-    "typescript": "^4.5.5",
+    "@types/jest": "^27.5.1",
+    "@types/node": "^16.11.36",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "axios": "^0.27.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "redux": "^4.2.0",
+    "typescript": "^4.6.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false",
-    "test:report": "set CI=true && react-scripts test --testResultsProcessor=./node_modules/jest-html-reporter",
-    "coverage:report": "npm test -- --coverage --coverageDirectory='./reports/coverage' --watchAll=false",
-    "eject": "react-scripts eject",
-    "lint": "eslint . & eslint . -f html -o ./reports/lint-results.html"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
-      "!src/**/*.d.ts",
-      "!src/**/index.tsx",
-      "!src/**/reportWebVitals.ts"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
-      }
-    }
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-    "rules": {
-      "semi": 2,
-      "no-console": 1
-    }
+    ]
   },
   "browserslist": {
     "production": [
@@ -64,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3"
   }
 }
