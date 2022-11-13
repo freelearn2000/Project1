@@ -2,14 +2,20 @@ import express, { Request, Response, NextFunction } from "express";
 import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
 import nconf from '../../shared/config';
-import { AuthService } from '../../services/v1/auth.service';
-import { Route } from "./index.route";
+import { AuthService, IAuthService } from '../../services/v1/auth.service';
+import { BaseRoute } from "./index.route";
+import validationMiddleware  from '../../middlewares/validation.middleware';
 
 
-export class AuthRoute extends Route {
+export class AuthRoute extends BaseRoute {
 
-    public router = express.Router( );
-    public service: AuthService;
+    public service: IAuthService;
+
+    constructor( validator: any, service: IAuthService ) {
+        super();
+        this.service = service;
+        this.router.post(`/`, validationMiddleware(validator), this.create);
+    }
     
     // API Endpoint '/auth'
     public create = async(request: Request, response: Response, next: NextFunction) => {

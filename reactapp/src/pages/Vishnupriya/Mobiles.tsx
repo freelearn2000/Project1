@@ -19,7 +19,7 @@ export class Mobiles extends Component<IProps, IState> {
 
     componentDidMount( ) {
 
-        axios.get('/todos')
+        axios.get('/api/v1/products')
             .then(response => {
                 this.setState( {loading: false, content: response.data.splice(0,5), error: null} );
             })
@@ -59,10 +59,10 @@ export class Mobiles extends Component<IProps, IState> {
     renderData( ) {
 
         const datas = this.state.content ? this.state.content : [ ];
-        const dataJsx = datas.map( ( item: {id: number, title: string} ) => {
+        const dataJsx = datas.map( ( item: {id: number, name: string} ) => {
             return (
                 <div className='ui segment'>
-                    <p key={ item.id }>{ item.title }</p>
+                    <p key={ item.id }>{ item.name }</p>
                 </div>
             )
         });

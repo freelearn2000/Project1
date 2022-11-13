@@ -1,15 +1,19 @@
 import express, { Request, Response, NextFunction} from "express";
-import { Service } from '../../services/v1/index.service';
+import { Service, IService } from '../../services/v1/index.service';
 import { handleAsync, EntityNotFoundError } from '../../shared/common';
 import validationMiddleware  from '../../middlewares/validation.middleware';
 
 
-export class Route {
+export class BaseRoute {
 
     public router = express.Router( );
-    public service: Service;
+}
+export class Route extends BaseRoute {
 
-    constructor( validator: any, service: any ) {
+    public service: IService;
+
+    constructor( validator: any, service: IService ) {
+        super();
         this.service = service;
         this.router.post(`/`, validationMiddleware(validator), this.create);
         this.router.get(`/`, this.find);
