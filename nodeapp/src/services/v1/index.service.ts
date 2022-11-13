@@ -2,12 +2,23 @@ import { EntityTarget, DataSource, Repository } from 'typeorm';
 import { ServerError, handleAsync, fieldFilter, paging } from '../../shared/common';
 
 
-export class Service {
+export interface IService {
+    create(model: any): any;
+    find(options: any): any;
+    findOne(id: number, options: any): any;
+    patch(id: number, patchedModel: any): any;
+    delete(id: number): any;
+}
+
+export class BaseService {
 
     public entity: any;
     public datasource: DataSource;
+}
+export class Service extends BaseService implements IService {
 
     constructor( entity: EntityTarget<any>, datasource: DataSource ) {
+        super();
         this.entity = entity;
         this.datasource = datasource;  
     }

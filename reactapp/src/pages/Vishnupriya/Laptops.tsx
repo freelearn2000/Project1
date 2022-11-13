@@ -11,7 +11,7 @@ export const Laptops = ( props: any ) => {
     const [error, setError] = useState<any>(null);
 
     useEffect( () => {
-        axios.get('/comments')
+        axios.get('/api/v1/blogs')
             .then(response => {
                 setLoading(false);
                 setContent(response.data.splice(1,5));

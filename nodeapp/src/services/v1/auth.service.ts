@@ -1,8 +1,19 @@
-import { Service } from './index.service';
+import { EntityTarget, DataSource } from 'typeorm';
+import { BaseService } from './index.service';
 import { ServerError, handleAsync } from '../../shared/common';
 
 
-export class AuthService extends Service {
+export interface IAuthService {
+    find(options: any): any;
+}  
+
+export class AuthService extends BaseService {
+
+    constructor( entity: EntityTarget<any>, datasource: DataSource ) {
+        super();
+        this.entity = entity;
+        this.datasource = datasource;  
+    }
 
     public find = async( model: any ) => {
         
