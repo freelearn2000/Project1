@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 
 @Entity( )
-export class BaseEntity{
+export class BaseEntity {
 
     @PrimaryGeneratedColumn( )
     id?: number;
