@@ -1,12 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { IsNotEmpty, IsString } from 'class-validator';
+import { BaseEntity } from "./base.entity";
 
 
 @Entity( )
-export class News {
-
-    @PrimaryGeneratedColumn( )
-    id?: number;
+export class News extends BaseEntity{
 
     @Column( )
     title?: string;

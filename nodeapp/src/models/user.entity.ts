@@ -1,12 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
+import { BaseEntity, BaseValidator } from "./base.entity";
 
 
 @Entity( )
-export class User {
-
-    @PrimaryGeneratedColumn( )
-    id?: number;
+export class User extends BaseEntity {
 
     @Column( )
     name?: string;
@@ -21,11 +19,7 @@ export class User {
     address?: string;
 }
 
-export  class UserValidator {
-
-    @IsString( {message: 'Name should be a string'} )
-    @IsNotEmpty( {message: 'Name should be defined'} )
-    name?: string;
+export  class UserValidator extends BaseValidator{
 
     @IsEmail( {}, {message: 'Email is not valid'} )
     @IsNotEmpty( {message: 'Email should be defined'} )

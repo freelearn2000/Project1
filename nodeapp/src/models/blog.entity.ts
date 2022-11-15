@@ -1,12 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { IsNotEmpty, IsString } from 'class-validator';
+import { BaseEntity, BaseValidator } from "./base.entity";
 
 
 @Entity( )
-export class Blog {
-
-    @PrimaryGeneratedColumn( )
-    id?: number;
+export class Blog extends BaseEntity {
 
     @Column( )
     name?: string;
@@ -15,12 +13,8 @@ export class Blog {
     content?: string;
 } 
 
-export class BlogValidator {
-
-    @IsString( {message: 'Name should be a string'} )
-    @IsNotEmpty( {message: 'Name should be defined'} )
-    name?: string;
-
+export class BlogValidator extends BaseValidator {
+    
     @IsString( {message: `Content should be a string`} )
     @IsNotEmpty( {message: `Content should be defined`} )
     content?: string;
