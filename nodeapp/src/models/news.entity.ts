@@ -4,7 +4,7 @@ import { BaseEntity } from "./base.entity";
 
 
 @Entity( )
-export class News extends BaseEntity{
+export class News extends BaseEntity {
 
     @Column( )
     title?: string;

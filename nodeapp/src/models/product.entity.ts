@@ -4,7 +4,7 @@ import { BaseEntity, BaseValidator } from "./base.entity";
 
 
 @Entity()
-export class Product extends BaseEntity{
+export class Product extends BaseEntity {
 
     @Column()
     name?: string;
@@ -13,7 +13,7 @@ export class Product extends BaseEntity{
     price?: number;
 }
 
-export class ProductValidator extends BaseValidator{
+export class ProductValidator extends BaseValidator {
     
     @IsNotEmpty( {message: `price should be defined`} )
     price?: number;

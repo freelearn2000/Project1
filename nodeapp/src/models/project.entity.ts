@@ -5,7 +5,7 @@ import { BaseEntity, BaseValidator } from "./base.entity";
 
 
 @Entity( )
-export class Project extends BaseEntity{
+export class Project extends BaseEntity {
 
     @Column( )
     name?: string;
@@ -14,7 +14,7 @@ export class Project extends BaseEntity{
     duration?: string;
 }
 
-export class ProjectValidator extends BaseValidator{
+export class ProjectValidator extends BaseValidator {
   
     @IsString( {message: 'Duration should be a string'} )
     @IsNotEmpty( {message: 'Duration should be defined'} )

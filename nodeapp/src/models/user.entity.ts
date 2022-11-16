@@ -19,7 +19,7 @@ export class User extends BaseEntity {
     address?: string;
 }
 
-export  class UserValidator extends BaseValidator{
+export  class UserValidator extends BaseValidator {
 
     @IsEmail( {}, {message: 'Email is not valid'} )
     @IsNotEmpty( {message: 'Email should be defined'} )
