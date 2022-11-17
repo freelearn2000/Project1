@@ -1,15 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { BaseEntity } from "./base.entity";
+import { BaseEntity } from "./base";
 
 
-@Entity()
+@Entity( )
 export class Weather extends BaseEntity {
 
-    @Column()
+    @Column( )
     place?: string;
 
-    @Column()
+    @Column( )
     info?: string;
 }
 

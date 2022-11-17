@@ -1,8 +1,8 @@
-import express, { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
 import nconf from '../../shared/config';
-import { AuthService, IAuthService } from '../../services/v1/auth.service';
+import { IAuthService } from '../../services/v1/auth.service';
 import { BaseRoute } from "./index.route";
 import validationMiddleware  from '../../middlewares/validation.middleware';
 

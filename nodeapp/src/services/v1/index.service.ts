@@ -1,4 +1,4 @@
-import { EntityTarget, DataSource, Repository } from 'typeorm';
+import { EntityTarget, DataSource } from 'typeorm';
 import { ServerError, handleAsync, fieldFilter, paging } from '../../shared/common';
 
 

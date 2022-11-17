@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, Column } from "typeorm";
 import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
-import { BaseEntity, BaseValidator } from "./base.entity";
+import { BaseEntity, BaseValidator } from "./base";
 
 
 @Entity( )

@@ -1,8 +1,7 @@
-import { Entity, PrimaryGeneratedColumn } from "typeorm";
+import { PrimaryGeneratedColumn } from "typeorm";
 import { IsNotEmpty, IsString } from 'class-validator';
 
 
-@Entity( )
 export class BaseEntity {
 
     @PrimaryGeneratedColumn( )

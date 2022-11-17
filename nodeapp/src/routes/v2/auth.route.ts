@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { handleAsync, AuthenticationError } from '../../shared/common';
 import Jwt from 'njwt';
 import nconf from '../../shared/config';
