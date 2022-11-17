@@ -15,6 +15,7 @@ export class BaseService {
     public entity: any;
     public datasource: DataSource;
 }
+
 export class Service extends BaseService implements IService {
 
     constructor( entity: EntityTarget<any>, datasource: DataSource ) {
