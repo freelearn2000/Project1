@@ -8,6 +8,7 @@ export class BaseRoute {
 
     public router = express.Router( );
 }
+
 export class Route extends BaseRoute {
 
     public service: IService;
