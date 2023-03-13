@@ -15,8 +15,6 @@ export class User extends BaseEntity {
     @Column( )
     password?: string;
 
-    @Column( )
-    address?: string;
 }
 
 export  class UserValidator extends BaseValidator {
@@ -29,9 +27,7 @@ export  class UserValidator extends BaseValidator {
     @IsNotEmpty( {message: 'Password should be defined'} )
     password?: string;
 
-    @IsString( {message: 'Address should be a string'} )
-    @IsNotEmpty( {message: 'Address should be defined'} )
-    address?: string;
+   
 }  
 
 export  class AuthUserValidator {
